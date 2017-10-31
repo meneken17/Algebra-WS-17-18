@@ -1,0 +1,731 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{luatex85}
+\def\pgfsysdriver{pgfsys-pdftex.def}
+\usepackage[utf8]{luainputenc}
+\usepackage{fontspec}
+
+\usepackage[german]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{tikz,pgf}
+\usetikzlibrary{cd}
+\usetikzlibrary{babel}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{tabularx}
+\usepackage{csquotes}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{wrapfig}
+\usepackage{chngcntr}
+\usepackage{makeidx}
+\usepackage[hidelinks]{hyperref}
+
+\setlist[enumerate,1]{label=\alph*)}
+\setlist[enumerate,2]{label=(\roman*)}
+
+\newcounter{exmlistitem}
+\newenvironment{exmlist}
+{\let\oldtheorem\thetheorem
+	\renewcommand{\thetheorem}{\oldtheorem.\arabic{exmlistitem}}
+	\stepcounter{theorem}
+	\let\oldexm\exm
+	\let\oldendexm\endexm
+	\renewenvironment{exm}{\addtocounter{theorem}{-1}\stepcounter{exmlistitem}\oldexm}{\oldendexm}}
+{\setcounter{exmlistitem}{0}}
+
+\counterwithin*{equation}{section}
+\newcommand{\autotag}{\stepcounter{equation}\tag{Gl. \arabic{section}.\arabic{equation}}}
+\newcommand{\indexed}[1]{\textbf{#1}\index{#1}}
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+
+
+\newcommand{\la}{\ensuremath{\lambda}}
+\newcommand{\al}{\ensuremath{\alpha}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\todomark}[1]{\fbox{\Large Hier könnte \sout{Ihre Werbung} #1 stehen}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\scp}[1]{\left\langle#1\right\rangle}
+\newcommand{\mapsfrom}{\ensuremath{\mathrel{\reflectbox{\mapsto}}}}
+\newcommand{\cha}{\mathds{1}}
+\newcommand{\bigtimes}{\operatornamewithlimits{\times}}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\id}{\operatorname{id}}
+\renewcommand{\projlim}[1]{\lim\limits_{\overleftarrow{#1}}}
+
+\newcommand{\Kern}{\operatorname{Kern}}
+\newcommand{\Img}{\operatorname{Im}}
+\newcommand{\Potset}{\mathscr P}
+
+\newcommand{\scA}{\mathscr A}
+\newcommand{\scB}{\mathscr B}
+\newcommand{\scE}{\mathscr E}
+\newcommand{\scF}{\ensuremath{\mathscr{F}}}
+\newcommand{\scG}{\mathscr G}
+\newcommand{\scL}{\mathscr L}
+\newcommand{\scO}{\mathscr O}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lem}[theorem]{Lemma}
+\newtheorem{kor}[theorem]{Korollar}
+\newtheorem{satz}[theorem]{Satz}
+\newtheorem{rem}[theorem]{Erinnerung}
+\newtheorem*{rem*}{Erinnerung}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{prop}[theorem]{Proposition}
+
+\theoremstyle{remark}
+\newtheorem{bem}[theorem]{Bemerkung}
+\newtheorem*{bem*}{Bemerkung}
+\newtheorem{exm}[theorem]{Beispiel}
+\newtheorem*{exm*}{Beispiel}
+
+\title{Algebra WS17-18}
+
+
+\begin{document}
+	\begin{satz}
+		Seien $\mathfrak a\subset A$, dann
+		\begin{enumerate}
+			\item $\mathfrak a$ ist Primideal $\Leftrightarrow$ $A/\mathfrak p$ ist Integritätsbereich (nullteilerfrei)
+			\item $\mathfrak a$ ist maximales Ideal $\Leftrightarrow$ $A/\mathfrak a$ ist ein Körper.
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{enumerate}
+			\item \begin{description}
+				\item[$\Rightarrow$] Sei $a+\mathfrak a\in A/p$ ein Nullteiler, dann existiert $x\in A\setminus p$, sodass
+				\[(a+\mathfrak a)(x+\mathfrak a)=ax+\mathfrak a=p\]
+				Also ist $ax\in \mathfrak a$ und da $\mathfrak a$ Primideal folgt $a\in\mathfrak a$.
+				\item[$\Leftarrow$] Sei $A/\mathfrak a$ Integritätsbereich und sei $ab\in\mathfrak a$, dann ist
+				\[(a+\mathfrak a)(b+\mathfrak a)=ab+\mathfrak a=\mathfrak a\]
+				Da $A/\mathfrak a$ Integritätsbereich ist gilt $a+\mathfrak a=\mathfrak a$ oder $b+\mathfrak a=\mathfrak a$, also $a\in\mathfrak a$ oder $b\in\mathfrak a$.
+			\end{description}
+			\item \begin{description}
+				\item[$\Rightarrow$] Sei $I/\mathfrak a$ ein Ideal in $A/\mathfrak a$.\\
+				Hierbei ist $I$ eine Ideal in $A$ welches $\mathfrak a$ enthält, also $\mathfrak a\subseteq I\subseteq A$.\\
+				Da $\mathfrak a$ maximal ist, muss $\mathfrak a=I$ oder $\mathfrak a=A$. Also ist $A/\mathfrak a$ ein Körper.
+				\item[$\Leftarrow$] Sei $I$ ein Ideal in $A$ mit $\mathfrak a\subseteq I\subseteq A$.\\
+				Dann ist $I/\mathfrak a$ eine Ideal in $A/\mathfrak a$, d.h.
+				\[I/\mathfrak a=\mathfrak a/\mathfrak a\quad\text{oder}\quad I/\mathfrak a=A/\mathfrak a\]
+				
+				Damit folgt $I=\mathfrak a$ oder $I=\mathfrak A$.
+			\end{description}
+		\end{enumerate}
+	\end{proof}
+	\begin{bem*}
+		Insbesondere ist jedes maximale ideal prim.
+	\end{bem*}
+
+	\begin{definition}
+		Sei $A\neq\emptyset$. Eine \textbf{Relation} auf $A$ ist eine Teilmenge $R\subset A\times A$.\\
+		$R$ heißt \textbf{partielle Ordnung} wenn
+		\begin{enumerate}
+			\item $\forall a\in A$ gilt $(a,a)\in R$ (Reflexivität)
+			\item $\forall a,b,c\in A$ gilt $(a,b)\in R$ und $(b,c)\in R$, so gilt auch $(a,c\in R)$ (Transitivität)
+			\item $\forall a,b\in A$ mit $(a,b\in R)$ und $(b,a)\in\R$, dann gilt $a=b$. (Antisymmetrie)
+		\end{enumerate}
+	
+	Ist $R$ eine partielle Ordnungn auf $A$ so schrieben wir für $(a,b)\in R$ auch $a\leq b$.\\
+	Zwei Elemente $a,b\in A$ heißen \textbf{vergleichbar}, wenn $a\leq b$ oder $b\leq a$ ist.\\
+	Eine Teilmenge $B\subset A$ heißt \textbf{Kette}, wenn für alle $a,b\in B$ gilt, dass $a\leq b$ oder $b\leq a$.
+	\end{definition}
+
+	\begin{lem}
+		Sei $A\neq \emptyset$ partielle geordnet. Hat jede Kette $B\neq \emptyset$ in $A$ eine obere Schranke in $A$, d.h. es gibt ein $a\in A$,sodass $b\leq a$ für alle $b\in B$., so besitzt $A$ ein maximales Element.
+	\end{lem}
+
+	\begin{theorem}
+		Sei $A\neq 0$ ein Ring, dann besitzt $A$ ein maximales Ideal.
+	\end{theorem}
+	\begin{proof}
+		Sei $\Sigma=\{I\subset A\mid \text{$I$ ist Ideal}\}$. Dann ist $O\in\Sigma$ und $\Sigma$ ist partielle geordnet durch die mengentheoretische Inklusion.\\
+		Sei $(C_i)_{i\in I}$ eine Kette in $\Sigma$. Dann ist
+		\[C=\bigcup_{i\in I}C_i\]
+		ein Ideal in $A$. Aus $I\notin C_i$ für alle $i\in I$ folgt, dass $I\notin C$,d.h. $C\in\Sigma$. Somit hat $\Sigma$ ein maximales Element.
+	\end{proof}
+
+	\begin{kor}
+		Sei $A$ ein Ring und $I\subsetneq A$ ein Ideal, dann ist $I$ in einem maximalen Ideal enthalten.
+	\end{kor}
+	\begin{kor}
+		Sei $A$ ein Ring und $a\in A\setminus A^*$. Dann ist $a$ in einem maximalen Ideal enthalten.\\
+	\end{kor}
+	\begin{proof}
+		Betrachte $(a)=Aa\neq A$.
+	\end{proof}
+
+	\subsection{Lokale Ringe}
+	\begin{definition}
+		Ein Ring $A$ mit nur eine maximalen Ideal $\mathfrak m$ heißt \textbf{lokaler Ring} und $A/\mathfrak m$ heißt \textbf{Restklassenkörper} von $A$.
+	\end{definition}
+	
+	\begin{satz}
+		Sei $A$ ein Ring und $\mathfrak m\neq A$ eine Ideal in $A$.\\
+		Ist jedes $x\in A\setminus \mathfrak+ m$ eine Einheit, si ist $A$ ein lokaler Ring mit maximalen Ideal $\mathfrak m$.
+	\end{satz}
+	\begin{proof}
+		Für jedes Ideal $I\subsetneq A$ gilt $I\cap A^*=\emptyset$, enthält also keine Einheiten und ist somit in $\mathfrak m$ enthalten. Somit ist $\mathfrak m$ das einzige maximale Ideal.
+	\end{proof}
+
+	\begin{satz}
+		Sei $A$ ein Ring und $\mathfrak m\subset A$ eine maximales Ideal, sodass jedes Element $m$ eine Einheit in $A$ ist. Dann ist $A$ ein lokaler Ring.
+	\end{satz}
+
+	\begin{exmlist}
+		\begin{exm}
+			Jedes Ideal in $\Z$ ist der Form $(m)=\Z m$ mit $m\in\Z_{\geq 0}$.\\
+			Es gilt, dass $(m)$ genau dann Primideal ist, wenn $m=0$ oder $m$ Primzahl.\\
+			Ist $\mathfrak p$ Primzahl, so ist $(p)$ maximal.
+			\item Sei $K$ ein Körper und $A=K[X_1,...,X_n]$. Dann ist der Kern des Homomorphismus $\phi:A\to K,f\mapsto f(0)$ ein maximales Ideal in $A$.
+		\end{exm}
+	\end{exmlist}
+
+	\subsection{Radikale}
+	\begin{satz}
+		Sei $A$ eine Ring und $N=\{a\in A\mid \text{$a$ ist nilpotent}\}$. Dann ist $N$ ein Ideal in $A$ und $A/N$ enthält keine nilpotenten Elemente $\neq 0$.
+	\end{satz}
+	\begin{proof}
+		\begin{itemize}
+			\item Zz: $N$ ist eine additive Untergruppe von $A$\\
+			Seien $x,y\in N$ mit $x^n=y^m=0$. Dann ist
+			\[(x+y)^{n+m}=\sum_{k=0}^{n+m}\binom{n+m}{k}x^ky^{n+m-k}=0\]
+			denn kann nicht sowohl $k<n$, als auch $n+m-k<m$ sein.
+			\item Z.z. $AN\subset N$.\\
+			Sei $x\in N$ mit $x^n=0$ und $a\in A$.
+			Dann ist $(ax)^n=a^nx^n=0$, also $ax\in N$.\\
+			Also ist $N$ Ideal in $A$.\\
+			Sei nun $a+N\in A/N$ nilpotent. Dann ist $(a+N)^n=0$ für ein $n>0$. Also ist $a^n+N=0$, also $a^n\in N$.\\
+			Dann ist $(a^n)^m=0$ udn somit $a^{nm}=0$, also nilpotent. Es folgt, dass $a\in N$.
+		\end{itemize}
+	\end{proof}
+
+	\begin{definition}
+		Das Ideal $N=\{a\in A\mid\text{$a$ ist Nilpotent}\}$ heißt das \textbf{Nilradikal} von $A$.
+	\end{definition}
+
+	\begin{definition}
+		Sei $A$ ein Ring dann nennt man $J=\{x\in A\mid \forall y\in A:\text{$1-xy$ ist Einheit}\}$ das \textbf{Jacobsonradikal}.
+	\end{definition}
+
+	\begin{satz}
+		Sei $A$ eine Ring, dann ist 
+		\begin{enumerate}
+			\item das Nilradikal von $A$ der Schnitt aller Primideal von $A$.
+			\item das Jacobsonradikal von $A$ der Schnitt aller Maximalen Ideale von $A$.
+		\end{enumerate}
+	\end{satz}
+
+	\begin{definition}
+		Sei $A$ ein Ring und $\mathfrak a\subset A$ ein Ideal in $A$. Dann wird
+		\[r(a):=\{x\in A\mid \text{$x^n\in \mathfrak a$ für ein $n>0$}\}\]
+		als \textbf{Radikal} von $\mathfrak a$ bezeichnet. (auch $\mathrm{Rad}(\mathfrak a),\sqrt{\mathfrak a}$)
+	\end{definition}
+	\begin{proof}
+		Sei $\pi:A\to A/\mathfrak a$ die Kanonische Projektion. Dann ist $r(a)=\pi^{-1}\left(N_{A/\mathfrak a}\right)$.\\
+		Also ist $r(a)$ ein Ideal.
+	\end{proof}
+	
+	\begin{satz}
+		Sei $\mathfrak a,\mathfrak b$ ein Ideal, dann gilt
+		\begin{enumerate}
+			\item $\mathfrak a\subseteq r(\mathfrak a)$
+			\item $r\big(r(\mathfrak a)\big)=r(\mathfrak a)$
+			\item $r(\mathfrak a\mathfrak a)=r(\mathfrak a\cap \mathfrak b)=r(\mathfrak a)\cap r(\mathfrak b)$
+			\item $r(\mathfrak a)=A\Leftrightarrow\mathfrak a=A$.
+			\item $r(\mathfrak a+\mathfrak b)=r\big(r(\mathfrak a)+r(\mathfrak b)\big)$.
+		\end{enumerate}
+	\end{satz}
+
+	%VL 23.10.2017
+	\subsubsection{Operationen auf Radikalen}
+	%TODO Zerlegen in Definition und Satz
+	\begin{definition}
+		Sein $A$ ein Ring.
+		\begin{enumerate}
+			\item Seien $\mathfrak a,\mathfrak b\subset A$ Ideale in $A$.\\
+			Dann ist
+			\[a+b=:\{x+y\mid x\in\mathfrak{a},y\in\mathfrak{b}\}\]
+			ein Ideal in $A$.
+			\item Analog: Sei $(\mathfrak{a}_i)_{i\in I}$ eine Familie von Idealen in $A$, für eine Indexmenge $I$. Dann ist
+			\[\sum_{i\in I}\mathfrak{a}_i=:\left\{\sum_{i\in I}x_i\mid \text{$x_i\in \mathfrak{a}_i$ und fast alle $x_i=0$}\right\}\]
+			ein Ideal in $A$.
+			\item Sei $(\mathfrak{a}_i)_{i\in I}$ eine Familie von Idealen in $A$, für eine Indexmenge $I$. Dann ist der Schnitt
+			\[\bigcap_{i\in I}\mathfrak a_i\]
+			ein Ideal in $A$.
+			\item Seien $\mathfrak a,\mathfrak b\subset A$ Ideal in $A$. Dann ist
+			\[\mathfrak a\mathfrak b=\left\{\sum_{i=1}^{n}a_ib_i\mid a_i\in\mathfrak a,b_i\in\mathfrak b,n\in\N\right\}\] 
+			ein Ideal in $A$.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{satz}
+		Die Operationen Summe, Durchschnitt und Produkt auf Idealen sind kommutativ und Assoziativ und es gilt das Distributivgesetz.
+	\end{satz}
+
+	\begin{definition}
+		Sei $A$ ein Ring. Zwei Ideale $\mathfrak a,\mathfrak b\subseteq A$ heißen \textbf{teilerfremd}, wenn $\mathfrak a+\mathfrak b=A=(1)$.
+	\end{definition}
+
+	\begin{satz}
+		Sei $A$ ein Ring, $\mathfrak a,\mathfrak b\subset A$ Ideale in $A$. Dann sind äquivalent:
+		\begin{enumerate}
+			\item $\mathfrak a,\mathfrak b$ sind Teilerfremd
+			\item Es gibt ein $x\in\mathfrak a,y\in\mathfrak b$, sodass $x+y=1$.
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[2)$\Rightarrow$1)] Sei $z\in A$ und $x\in\mathfrak a,y\in\mathfrak b$, mit $x+y=1$.\\
+			Dann ist $z=zx+zy$, wobei $zx\in\mathfrak a,zy\in\mathfrak b$, also $z\in\mathfrak a+\mathfrak b$.
+			\item[1)$\Rightarrow$2)] 
+		\end{description}
+	\end{proof}
+	
+	\begin{satz}
+		Sei $A$ ein Ring und seinen $\mathfrak a_1,...,\mathfrak a_n$ paarweise teilerfremde Ideal in $A$. Dann gilt
+		\begin{enumerate}
+			\item Jedes $\mathfrak a_i$ ist teilerfremd zu $\prod_{\substack{j=1\\j\neq i}}^{n}\mathfrak a_j$.
+			\item Es gilt
+			\[\prod_{i=1}^{n}\mathfrak a_i=\bigcap_{i=1}^n \mathfrak a_i\]
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{enumerate}
+			\item Sei $i$ fest. Es gibt Elemente $x_j\in \mathfrak a_i, y_j\in\mathfrak a_j$ mit $1=x_j+y_j$ für $i\neq j$. Dann ist
+			\[
+			1=\prod_{\substack{j=1\\j\neq i}}(x_j+y_j)
+			=\underbrace{x}_{\mathclap{\in\mathfrak a_i}}+\underbrace{\prod_{\substack{j=1\\j\neq i}}}_{\in \prod_{\substack{j=1\\j\neq i}}\mathfrak a_j}
+			\in\mathfrak a_i+\prod_{\substack{j=1\\j\neq i}}\mathfrak a_j
+			\]
+			\item Durch Induktion über $n$.
+			\begin{description}
+				\item[$n=2$] Sei $z\in\mathfrak a\cap\mathfrak b$. Schreieb $1=x+y$ mit $x\in\mathfrak a,y\in\mathfrak b$. Dann ist $z=zx+zy\in\mathfrak a\mathfrak b$.
+				\item[$n>2$] Sei 
+				\[\mathfrak b=\prod_{i=1}^{n-1}a_i\]
+				Wir nehmen an es gelte
+				\[\prod_{i=1}^{n-1}a_i=\prod_{i=1}^{n-1}\mathfrak a_i\]
+				Dann ist aber
+				\[\prod_{i=1}^n \mathfrak a_i=\mathfrak a_i\mathfrak b_i=\mathfrak a_i\cap\mathfrak b=\bigcap_{i=1}^n a_i\]
+			\end{description}
+		\end{enumerate}
+	\end{proof}
+
+	\begin{definition}
+		Sei $A$ ein Ring und seinen $\mathfrak a_i,....,\mathfrak a_n$ Ideale in $A$.\\
+		Wir definieren die Abbildung 
+		\begin{align*}
+		\phi:A&\to\prod_{i=1}^n(A/\mathfrak a_i)\\
+		a&\mapsto(a+\mathfrak a_1,...,a+\mathfrak a_n)
+		\end{align*}
+	\end{definition}
+
+	\begin{prop}
+		\begin{enumerate}
+			\item $\phi$ ist ein Ringhomomorphismus und
+			\[\Kern(\phi)=\bigcap_{i=1}^n\mathfrak a_i\]
+			\item $\phi$ ist genau dann surjektiv, wenn die $\mathfrak a_i$ paarweise disjunkt sind.
+		\end{enumerate}
+		Insbesondere ist
+		\[A/\prod_{i=1}^n\mathfrak a_i\simeq \prod_{i=1}^nA/\mathfrak a_i\]
+	\end{prop}
+	\begin{proof}
+		\begin{enumerate}
+			\stepcounter{enumi}
+			\item \begin{description}
+				\item[$\Rightarrow$] Sei $\phi$ surjektiv. Wir zeigen, dass $\mathfrak a_1$ und $\mathfrak a_2$ teilerfremd sind.\\
+				Es gibt ein $x\in A$ mit $\phi(x)=(1_{A/\mathfrak a_1},0,...,0)$.\\
+				Also ist $x=1\mod \mathfrak a_i$ und $x=x\mod \mathfrak a_2$.\\
+				Dann ist
+				\[1=\underbrace{(1-x)}_{\in\mathfrak a_i}+\underbrace{x}_{\mathclap{\in\mathfrak a_2}}\in \mathfrak a_1+\mathfrak a_2\]
+				\item[$\Leftarrow$] Seien un die $\mathfrak a_i$ paarweise teilerfremd.\\
+				Es reicht zu zeigen,dass es Elemente $x_i\in A$ mit
+				\[\phi(x_i)=(0,...,0,1,0,...,0)\]
+				($1$ an der $i$-ten Position) gibt.\\
+				Wir zeigen für $i=1$:\\
+				Da $\mathfrak a_1+\mathfrak a_j=A$ für alle $j>1$, gibt es $x_j\in \mathfrak a_1, y_j\in\mathfrak a_j$ mit $x_j+y_j=1$\\
+				Sei nun
+				\[x:=\prod_{i=2}^ny_j=\prod_{i=2}^n1-x_j=1\mod\mathfrak a_1\]
+				und $x=0\mod\mathfrak a_j$ für $j>1$.
+			\end{description}
+		\end{enumerate}
+	\end{proof}
+	
+	\subsection{Ringe von Brüchen}
+	\begin{definition}
+		Sei $A$ ein Ring. Eine Teilmenge $S\subset A$ heißt \textbf{multiplikativ abgeschlossen}, wenn
+		\begin{enumerate}
+			\item Für alle $s,t\in S$ gilt, dass $st\in S$
+			\item $1\in S$.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{bem}
+		Auf $A\times S$ wird durch 
+		\[(a,s)\sim (b,t)\Leftrightarrow (at-bs)u=0\text{ für ein $u\in S$}\]
+		eine Äquivalenzklasse definiert.\\
+		Für die Transitivität wird die multiplikative Abgeschlossenheit von $S$ benötigt.\\
+		Die Äquivalenzklassen von $(a,s)$ wird mit $a/s$ bezeichnet.\\
+		Die Menge der Äquivalenzklasssen wir als $S^{-1}A$ geschrieben.
+	\end{bem}
+
+	\begin{definition}		
+		Seien $a/s,b/t\in S^{-1}A$. Man definiert
+		\begin{itemize}
+			\item $a/s+b/t:=(at+bs)/st$
+			\item $a/s\cdot b/t:=ab/st$
+		\end{itemize}
+	\end{definition}
+
+	\begin{definition}
+		Diese Verknüpfungen sind wohldefiniert und versehen $S^{-1}A$ mit einer Ringstruktur.\\
+		$S^{-1}A$ wird als der \textbf{Ring der Brüche} von $A$ bezüglich $S$ bezeichnet.
+	\end{definition}
+
+	\begin{exm}
+		Sei $A=\Z$ und $S=\Z\setminus\{0\}$. Dann ist $S^{-1}A$ isomorph zu $\Q$.
+	\end{exm}
+
+
+	\begin{kor}
+		Die Abbildung
+		\begin{align*}
+			\varphi_S:A&\to S^{-1}A\\
+			a\mapsto a/1
+		\end{align*}
+		hat folgende Eigenschaften:
+		\begin{enumerate}
+			\item $\varphi_S$ ist ein Ringhomomorphismus. (i.A. nicht injektiv)
+			\item Sei $s\in S$, dann ist $\varphi_S(s)$ eine Einheit in $S^{-1}A$.
+			\item $\Kern(\varphi_S)=\{a\in A\mid\text{$as=0$ für ein $s\in S$}\}$.
+			\item Jedes Element in $S^{-1}A$ ist der Form $\varphi_S(a)\varphi_S(s)^{-1}$ für ein $a\in A$, $s\in S$.
+		\end{enumerate}
+	\end{kor}
+	\begin{proof}
+		\begin{enumerate}
+			\stepcounter{enumi}
+			\item Sei $s\in S$, dann ist $s/1\cdot 1/s=s/s=1/1=1_{S^{-1}A}$
+			\item Sei $a\in\Kern(\varphi_S)$, dann ist $a/1=0/1$, also $(a1-01)s=0$ für ein $s\in S$. Also ist $as=0$ für ein $s\in S$.
+			\item  Sei $a/s\in S^{-1}A$. Dann ist
+			\begin{align*}
+			\varphi_S(a)&=a/1& \varphi_S(s)&=s/1 &\varphi_S(s)^{-1}&=1/s
+			\end{align*}
+			Es folgt
+			\[\varphi_S(a)\varphi(s)^{-1}=a/1\cdot 1/s=a/s\]
+		\end{enumerate}
+	\end{proof}
+
+	\begin{satz}
+		Seien $A,B$ Ringe und $S\subset A$ multiplikativ abgeschlossen. Sei $g:A\to B$ ein Ringhomomorphismus, der 1)-3) aus %TODO ref Kor
+		erfüllt, dann gibt es einen eindeutigen Isomorphismus $h:S^{-1}A\to B$ mit $h\circ \varphi_S=g$.
+		%TODO Komm Diag
+			\[
+			\begin{tikzcd}
+				A \ar[r,"g"] \arrow[d,"\varphi_S"] & B\\
+				S^{-1}A \arrow[ur,"h"']&
+			\end{tikzcd}
+			\]
+	\end{satz}
+
+%VL 25.10.2017
+	\begin{definition}
+		Sei $A$ ein Integritätsbereich und $S=A\setminus \{0\}$. Dann nennt man $S^{-1}A$  den \textbf{Quotientenkörper}
+	\end{definition}
+
+	\begin{lem}
+		Der Quotientenkörper ist ein Körper, $\varphi_S$ ist injektiv und wir können $A$ mit seinem Bild in $S^{-1}A$ identifizieren.
+	\end{lem}
+
+	\begin{definition}
+		Sei $A$ ein Ring. Sei $\mathfrak p$ ein Primideal in $A$. Man schreibt $A_{\mathfrak p}$ für $S^{-1}A$ und nennt $A_{\mathfrak p}$ die \textbf{Lokalisierung} von $A$ bezüglich $\mathfrak p$.
+	\end{definition}
+
+	\begin{lem}
+		Sei $A$ ein Ring. Sei $\mathfrak p$ ein Primideal in $A$.\\
+		Dann ist $S=A\setminus \mathfrak p$ multiplikativ Abgeschlossen.
+	\end{lem}
+
+	\begin{lem}
+		Sei $A=\Z$ und $p\in\Z$ eine Primzahl. Dann ist $\Z_{(p)}=\{m/n\mid m/n\in\Q,p\not|n\}$.
+	\end{lem}
+
+	\begin{satz}
+		Sei $A$ ein Ring und $S\subset A$ multiplikativ abgeschlossen. Dann ist
+		\begin{enumerate}
+			\item Ist $I$ ein Ideal in $A$ so ist auch $S^{-1}I=\{a/s\mid a\in I\}$ ein Ideal in $S^{-1}A$\\
+			\item Die Ideale in $S^{-1}A$ sind der Form $S^{-1}I$, wobei $I$ ein Ideal in $A$ ist.
+			\item Sind $I,J$ Ideal in $A$, dann gilt
+			\begin{align*}
+				S^{-1}(I+J)&=S^{-1}I+S^{-1}J\\
+				S^{-1}(I\cap J)&=S^{-1}I\cap S^{-1}J\\
+				S^{-1}(IJ)&=(S^{-1}I)(S^{-1}J)
+			\end{align*}
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		Wir beweisen nur 2).\\
+		Sei $J$ ein Ideal in $S^{-1}A$. Dann ist $I=\varphi_S^{-1}(J)$ ein Ideal in $A$ und $J=S^{-1}I$:\\
+		Sei $a/s\in S^{-1}I$. Aus $I=\varphi^{-1}_S(J)$ folgt, dass $\varphi_S(a)\in J$. Also ist
+		\[a/s=\underbrace{a/1}_{\varphi_S(a)}\cdot\underbrace{1/s}_{\in S^{-1}A}\in J\]
+		d.h. $s\in\varphi^{-1}_S(J)=I$ und $a/s\in S^{-1}I$.
+	\end{proof}
+
+	\subsection{Integritätsbereiche und Hauptidealringe}
+	\begin{definition}
+		Sei $A$ ein Ring. Ein Ideal der Form $(a)=Aa$ heißt \textbf{Hauptideal}.
+	\end{definition}
+
+	\begin{definition}
+		Ein Ring $A$ heißt \textbf{Hauptidealring}, wenn jede Ideal in $A$ Hauptideal ist.
+	\end{definition}
+
+	\begin{definition}
+		Ein Ring $A$ heißt \textbf{euklidisch}, wenn es eine Abbildung 
+		\[\la:A\setminus \{0\}\to \N_0\]
+		gibt, sodass zu je zwei Elementen $a,b\in A$ mit $b\neq 0$ Elemente $q,r\in A$ existieren mit $a=qb+r$ wobei $\la(r)<\la(b)$ oder $r=0$ .
+	\end{definition}
+
+	\begin{exm}
+		\begin{enumerate}
+			\item $\Z$ ist euklidisch unter $\la(x)=|x|$.
+			\item Sei $K$ ein Körper. Dann ist $K[X]$ euklidisch mit $\la(f)=\deg(f)$.
+		\end{enumerate}
+	\end{exm}
+
+	\begin{satz}
+		Sei $A$ ein euklidischer Ring. Dann ist $A$ ein Hauptidealring.
+	\end{satz}
+	\begin{proof}
+		Sei $\mathfrak a\neq 0$ in Ideal in $A$. Dann hat
+		\[\la(x)\mid x\in a,x\neq 0\] ein kleinstes Element, d.h. es gibt ein $x\in \mathfrak a\setminus\{0\}$ mit $\la(x)\leq\la(y)$ für alle $y\in \mathfrak a\setminus \{0\}$.\\
+		Es gilt $\mathfrak a=(x)$.\\
+		Sei $y\in a\setminus\{0\}$. Schreibe $y=qx+r$ mit $r=0$ oder $\la(r)<\la(x)$.\\
+		Dann ist $r\in\mathfrak a$ und aus der Minimalität von $\la(x)$ folgt $r=0$ und damit $\mathfrak a\subset (x)$.
+	\end{proof}
+
+	\begin{definition}
+		Sei $A$ ein Ring und seinen $a,b\in A$.\\
+		$d\in A$ heißt \textbf{Größter gemeinsamer Teiler} von $a$ und $b$, wenn gilt
+		\begin{enumerate}
+			\item $d|a$ und $d|b$.
+			\item Wenn es $g\in A$ gibt mit $g|a$ und $g|b$, dann muss $g|d$.
+		\end{enumerate}
+		Wir schreiben $d=\gcd(a,b)=(a,b)$
+	\end{definition}
+
+	\begin{definition}
+		Sei $A$ ein Ring und seinen $a,b\in A$.\\
+		$d\in A$ heißt \textbf{kleinstes gemeinsames Vielfaches} von $a$ und $b$, wenn gilt
+		\begin{enumerate}
+			\item $a|v$ und $b|v$.
+			\item Wenn es $g\in A$ gibt mit $a|g$ und $b|g$, dann muss $v|v$.
+		\end{enumerate}
+		Wir schreiben $v=\lcm(a,b)=(a,b)$
+	\end{definition}
+
+	\begin{satz}
+		Sei $A$ ein Hauptidealring und seien $a,b\in A$.\\
+		Dann existiert ein $d=\gcd(a,b)$ und $v=\lcm(a,b)$ von $a,b$ und es gilt
+		\begin{enumerate}
+			\item $(a)+(b)=(d)$
+			\item $(a)\cap (b)=(v)$
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{itemize}
+			\item Da $A$ ein Hauptidealring ist, gilt $(a)+(b)=(d)$ für ein $d\in A$.\\
+			Es gilt $a,b\in(d)$, also $d|a$ und $d|b$.\\
+			Sei $g\in A$ mit $g|a$ und $g|b$. Dann ist $(a)\subset (g)$ und $(b)\subset(g)$.\\
+			Daraus folgt, dass $(a)+(b)\subseteq(g)$, also $(d)\subset (g)$. Damit folgt $g|d$.
+			\item Analog für $\lcm$.
+		\end{itemize}
+	\end{proof}
+
+	\begin{definition}
+		Sei $A$ in Integritätsbereich. Zwei Elemente $a,b\in A$ heißen \textbf{assoziiert}, wenn
+		 \begin{itemize}
+		 	\item $a|b$ und $b|a$.
+			\item (äquivalent) $a=bu$ für ein $u\in A^*$.
+			\item (äquivalent) $(a)=(b)$.
+		 \end{itemize}
+	 Man schreibt dann $a\sim b$.
+	\end{definition}
+
+	\begin{definition}
+		Sei $A$ in Integritätsbereich. Ein Element $p\in A$ heißt \textbf{prim}, \textbf{Primelement}, wenn
+		\begin{itemize}
+			\item $p\notin A^*$, $p\neq0$ und aus $p|ab$ folgt $p|a$ oder $p|b$.
+			\item (äquivalent) $p\neq 0$ und $(p)$ ist Primideal.
+		\end{itemize}
+	\end{definition}
+
+	\begin{definition}
+		Sei $A$ in Integritätsbereich. $c\in A$ heißt \textbf{irreduzibel} oder \textbf{unzerlegbar}, wenn
+		\begin{enumerate}
+			\item für $c\notin A^*$ und $c\neq 0$ aus $c=ab$ folgt, dass $a\in A^*$ oder $b\in A^*$.
+			\item (äquivalent) für $c\neq 0$ für alle $a\in A$ gilt, dass aus $(c)\subset(a)$ folgt, dass $(a)=A$ oder $(a)=(c)$.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{satz}
+		Sei $A$ ein Integritätsbereich und $p\in A$ prim. Dann ist $p$ irreduzibel.
+	\end{satz}
+	\begin{proof}
+		Sei $p=ab$, dann gilt $p|ab$. Es folgt $p|a$ oder $p|b$.\\
+		Angenommen $p|a$, dann ist $a=px$ für ein $x\in A$ und $p=pxb$. Es folgt, dass $p(1-bx)=0$ und da $A$ Integritätsbereich ist $1-bx=0$.\\
+		Also muss $bx=1$ also ist $b\in A^*$.
+	\end{proof}
+
+	\begin{satz}
+		Sei $A$ ein Hauptidealring und Integritätsbereich. Dann gilt für $c\in A$
+		\[\text{$c$ prim}\Leftrightarrow\text{$c$ irreduzibel}\]
+	\end{satz}
+	\begin{proof}
+		Sei $c$ irreduzibel, also ist $(c)$ maximal. Daraus folgt, dass $(c)$ Primideal ist und somit $c$ prim.
+	\end{proof}
+
+	\begin{definition}
+		Ein Integritätsbereich heißt \textbf{faktoriell}, wenn
+		\begin{enumerate}
+			\item Jedes $a\in A\setminus A^*$, $a\neq 0$ zerfällt in ein Produkt von irreduziblen Elementen.
+			\item Die Zerlegung ist bis auf Reihenfolge und Einheiten eindeutig. D.h.
+		\end{enumerate}
+		D.h. wenn $a=c_1\cdot ...\cdot c_m=d_1\cdot...\cdot d_n$ mit $c_1,d_1$ irreduzibel, so folgt $m=n$ und es gibt $\pi\in S_n$ mit $c_1\sim d_{\pi(i)}$ für alle $i=1,...,n$.
+	\end{definition}
+
+	\begin{bem}
+		Die Eindeutigkeit der Faktorisierung impliziert, dass es irreduzibles Element in einem faktoriellen Integritätsbereich prim ist.
+	\end{bem}
+
+%VL 30.10.2017
+
+	\begin{lem}
+		Sei $A$ ein Hauptidealring und $S$ eine nichtleere Menge von Idealen in $A$. Dann hat $S$ ein maximales Element (bezüglich $\subset$)
+	\end{lem}
+	\begin{proof}
+		Angenommen $S$ hat kein maximales Element. Dann gibt es zu jedem $\mathfrak a_1\in S$ ein $\mathfrak a_2\in S$ mit $\mathfrak a_1\subsetneq \mathfrak a_2$. Es gibt also eine unendliche Kette
+		\[\mathfrak a_1\subsetneq \mathfrak a_2\subsetneq...\]
+		von Idealen in $S$. Sei nun $\mathfrak a:=\bigcup_{j=1}^\infty \mathfrak a_i$.\\
+		Dann ist $a$ ein Ideal in $A$, also ist $\mathfrak a$ ein Hauptideal und $\mathfrak a=(x)$ für ein $x\in A$.\\
+		Dann folgt insbesondere, dass $x\in\mathfrak a$. Damit folgt, dass es $j_0\in\N$ gibt, mit $x\in \mathfrak a_{j_0}$.\\
+		Somit ist $(x)\subset\mathfrak a_{j_0}$ und somit $\mathfrak a=\mathfrak a_{j_0}$.\\
+		Dies bedeutet aber, dass die Kette stationär wird, was ein Widerspruch zur Annahme ist.
+	\end{proof}
+	
+	\begin{theorem}
+		Sei $A$ ein Integritätsbereich. Ist $A$ ein Hauptidealring, so ist $A$ faktoriell.
+	\end{theorem}
+	\begin{proof}
+		\begin{description}
+			\item[Zerlegbarkeit der Elemente] Sei $S=\{(a)\mid a\in A,a\notin A^*,a\neq 0\text{a zerfällt nicht in irreduzible Faktoren}\}$.\\
+			Angenommen $S\neq\emptyset$. Dann hat $S$ eine maximales Element $(a)$ und $a$ ist nicht irreduzibel.\\
+			Dann gibt es $b,c\in A\setminus A^*$, mit $a=bc$.\\
+			Also ist $(a)\subsetneqq (b)$ und $(a)\subsetneqq (c)$. Da $(a)$ maximal in $S$ ist folgt daraus, dass $(b),(c)\notin S$.\\
+			Somit zerfallen $b,c$ in irreduzible Faktoren und damit gilt $a\in S$. Widerspruch!.
+			\item[Eindeutigkeit der Zerlegung] Sei $a\in A$. Angenommen es gäbe zwei irreduzible Zerlegungen $a=c_1...c_m=d_1...d_n$ mit $m\leq n$.\\
+			Dann ist $c_1$ irreduzibel und somit prim. Also muss $c_1|d_i$ für ein $i$ gelte.\\
+			Nach Umnummerierung gilt $c_1|d_1$, also $d_1=u_1c_1$ für $u_1\in A^*$.\\
+			Also ist
+			\begin{align*}
+			c_1...c_m&=u_1c_1d_2...d_n\\
+			\Rightarrow\quad c_2...c_m&=d_2...d_n\\
+			\end{align*}
+			Fortsetzen des Argumentes liefert
+			\[1=u_1...u_md_{m+1}...d_n\]
+			für geeignete $u_i\in A^*$.\\
+			Dann sind aber $d_{m+1},...,d_n$ Einheiten und damit Eindeutig bis auf Einheiten und Reihenfolge.
+		\end{description}
+	\end{proof}
+
+\subsection{Inverse und direkte Limiten}
+
+	\begin{definition}
+		Man nennt $I$ eine unter $\leq$ partiell geordnete Menge, wenn für alle $x,y,z\in I$ gilt
+		\begin{enumerate}
+			\item $x\leq x$.
+			\item Aus $x\leq y$ und $y\leq z$ folgt $x\leq z$.
+			\item Aus $x\leq y$ und $y\leq x$ folgt $x=y$.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{definition}
+		Für jedes $i\in I $sei $A_i$ ein Ring und sei für jedes Paar $i,j\in I$ mit $i\leq j$ die Abbildung $f_{ij}:A_j\to A_i$ ein Ringhomomorphismus, sodass
+		\begin{enumerate}
+			\item $f_{ii}=\id_{A_i}$ für alle $i\in I$
+			\item $f_{ik}=f_{ij}\circ f_{jk}$ falls $i\leq j\leq k$.
+		\end{enumerate}
+		Dann nennt man das System $(A_i,f_{ij})_{i,j\in I}$ \textbf{projektives System} von Ringen.
+	\end{definition}
+
+	\begin{definition}
+		Ein Ring $A$ zusammen mit dem Homomorphismus $f_i:A\to A_i$, sodass $f_i=f_{ij}\circ f_{j}$ für $i\leq j$ heißt \textbf{projektiver Limes} oder \textbf{inverser Limes} des Systems $(A_i,f_{ij})$, wenn folgende universelle Eingenschaft erfüllt ist:\\
+		Sind $h_u:B\to A_i$ für alle $i\in I$ Ringhomomorphismen mit $h_i=f_{ij}\circ h_j$ für $i\leq j$, so existiert genau ein Ringhomomorphismus $h:B\to A$ mit $h_i=f_i\circ h$ für alle $i\in I$.
+		%TODO Tikzcd 1
+		\[\begin{tikzcd}
+		B \ar[rr,"\exists!h"] \ar[rdd,"h_i"] \ar[rd,"h_j"] && A \ar[ld,"f_j"] \ar[ldd,"f_i"]\\
+		& A_j \ar[d,"f_j"]&\\
+		& A_i &
+		\end{tikzcd}\]
+	\end{definition}
+
+	\begin{bem}
+		Falls ein projektiver Limes existiert, so ist er bis auf kanonische Isomorphie eindeutig:\\
+		Sind $(A,f_i)$ und $(B,h_i)$ projektive Limiten von $(A_i,f_{ij})$, so gibt es Homomorphismen $h:B\to A$ und $g:A\to B$, die die oben beschrieben Verträglichkeitsbedingungen erfüllen.\\
+		Durch Zusammensetzen dieser Homomorphismen erhalten wir Abbildungen
+		%TODO tikzcd 2,3,4,5
+		Die Eindeutigkeitsbedingung Impliziert nun, dass $g\circ h=\id_B$ und $h\circ g=\id_A$.\\
+		Man schreibt auch $A=\projlim{i\in I}A_i$ für den projektiven Limes des Systems $(A_i,f_{ij})$.
+	\end{bem}
+
+	\begin{proof}[Existenz des Projektiven Limes]
+		Sei $(A_i,f_{ij})_{i,j\in I}$ ein projektives System von Ringen.\\
+		Setze 
+		\[A=\{(x_i)_{i\in I\mid \text{$f_{ij}(x_j)=x_i$ für $i\leq j$}}\}\subset\prod_{i\in I}A_i\]
+		und $h_j:A\to A_j,(x_i)_{i\in I}\mapsto x_j$.\\
+		Dann ist $(A,h_i)_{i\in I}$ ein projektiver Limes von $(A_i,f_{ij})$.\\
+		Insebsondere definiert jede Famiele $(x_i)_{i\in I}$ mit $f_{ij}(x_j)=x_i$ ein eindeutiges Element $x\in\projlim{i\in I}A_i$.
+	\end{proof}
+
+	\begin{exm}
+		Ein Beispiel für einen projektiven Limes sind die $p$-adisches ganzen Zahlen.\\
+		Sei $p\in\Z$ eine Primzahl, $I=\N$, mit der Ordnung $\leq$.\\
+		Für $n\geq 1$ sei $A_n=\Z/p^n\Z$. Sei
+		\begin{align*}
+		f_{mn}:A_n=\Z/p^n\Z&\to A_m=\Z/p^m\Z\\
+		x&\mapsto x\mod p^m
+		\end{align*}
+		Dann ist $(A_m,f_{mn})_{m,n\geq 1}$ ein projektives System. Der projektive Limes wird als Ring der $p$-adischen ganzen Zahlen 
+		\[\Z_p=\projlim{n\geq 1}A_n\]
+		bezeichnet. Also ist
+		\begin{align*}
+		\Z_p&=\{(x_n)_{n\geq 1}\mid x_n\in\Z/p^n\Z,f_{mn}(x_n)=x_n\text{ für }m\leq n\}\\
+		&=\{(x_n)_{n\geq 1}\mid x_n\in\Z/p^n\Z,x_n\mod p^{n-1}=x_{n-1}\}
+		\end{align*}
+		Wir schreiben die Elemente aus $\Z_p$ auch als Folgen
+		\[x=(x_n)_{n\geq 1}=(...,x_{n+1},x_n,....,x_1)\]
+		mit $x_n\mod p^{n-1}=x_{n-1}$.\\
+		Addition und Multiplikation erfolgen komponentenweise.\\
+		Sie Abbildung
+		\begin{align*}
+		\Z&\to\Z_p\\
+		m&\mapsto(...,m+p^n,...,m+p)
+		\end{align*}
+		ist in injektiver Ringhomomorphismus.
+	\end{exm}
+\end{document}
