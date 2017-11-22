@@ -60,11 +60,13 @@
 \newcommand{\norm}[1]{\left\|#1\right\|}
 \newcommand{\scp}[1]{\left\langle#1\right\rangle}
 \newcommand{\mapsfrom}{\ensuremath{\mathrel{\reflectbox{\mapsto}}}}
-\newcommand{\cha}{\mathds{1}}
+\newcommand{\cha}{\operatorname{char}}
 \newcommand{\bigtimes}{\operatornamewithlimits{\times}}
 \newcommand{\lcm}{\operatorname{lcm}}
 \newcommand{\id}{\operatorname{id}}
 \renewcommand{\projlim}[1]{\lim\limits_{\overleftarrow{#1}}}
+\newcommand{\isom}{\overset{\sim}{=}}
+\newcommand{\ord}{\operatorname{ord}}
 
 \newcommand{\Kern}{\operatorname{Kern}}
 \newcommand{\Img}{\operatorname{Im}}
@@ -656,7 +658,7 @@
 \subsection{Inverse und direkte Limiten}
 
 	\begin{definition}
-		Man nennt $I$ eine unter $\leq$ partiell geordnete Menge, wenn für alle $x,y,z\in I$ gilt
+		Man nennt $I$ eine unter $\leq$ \textbf{partiell geordnete Menge}, wenn für alle $x,y,z\in I$ gilt
 		\begin{enumerate}
 			\item $x\leq x$.
 			\item Aus $x\leq y$ und $y\leq z$ folgt $x\leq z$.
@@ -726,6 +728,627 @@
 		\Z&\to\Z_p\\
 		m&\mapsto(...,m+p^n,...,m+p)
 		\end{align*}
-		ist in injektiver Ringhomomorphismus.
+		ist in injektiver Ringhomomorphismus.\\
+		\\
+		%VL 01.11.2017
+		
+		Sei $x=(...,x_n,x_{n-1},...,x_1)$. Ist $x\neq 0$, so ist $x$ der Form $(...,x_{n+1},x_n,0,...,0)$ und für $j\leq n$ sind alle Einträge $x_j\neq$.\\
+		Weiterhin gilt
+		\[p|x\Leftrightarrow\text{$x|x_n$ für alle $n\geq 1$}\]
 	\end{exm}
+
+	\begin{satz}
+		Sei $x\in\Z_p$. Dann ist
+		\begin{enumerate}
+			\item $x\in\Z_p^*$ $\Leftrightarrow$ $p\not| x$
+			\item Ist $x\neq 0$, so lässt sich $x$ eindeutig schreiben als $x=p^nu$ mit $u\in\Z_p^*$ und $n\geq 0$.
+		\end{enumerate}
+	\end{satz}
+
+	\begin{proof}
+		\begin{enumerate}
+			\item \begin{description}
+				\item[$\Rightarrow$] Sei $x=(...,x_n,...,x_1)\in\Z_p^*$. Dann exitsiert ein $y=(...,y_n,...,y_1)\in\Z^p$ mit
+				\begin{align*}
+				xy&=(...,x_n,...,x_1)(...,y_n,...,y_1)\\
+				&=(...,x_ny_n,...,x_1y_1)\\
+				&=(...,1,...,1)=1
+				\end{align*}
+				d.h. jeder Eintrag von $x_j$ von $x$ ist invertierbar, d.h. $p\not| x_n$ für alle $n\geq 1$.
+				\item[$\Leftarrow$] Angenommen $p\not| x$, dann muss $p\not| x_n$ für ein $n\geq 1$.\\
+				Dann muss aber $p\not|x_n$ für alle $n\geq 1$.\\
+				d.h. jedes $x_n$ ist invertierbar. Sei
+				\[y=(...,x_n^{-1},...,x_1^{-1})\in\prod_{n\geq 1}\Z/p\Z\]
+				dann erfüllt $y$ die Kompatibilitätsbedingungen, d.h. $y\in\Z_p$ und $xy=1$.
+			\end{description}
+			\item Ist klar.
+		\end{enumerate}
+	\end{proof}
+
+	\begin{definition}
+		Sei $x\in\Z_p$, $x\neq 0$. Schreibe $x=p^nu$ mit $u\in \Z_p^*$. Dann heißt\\
+		\[n=\nu_p(x)\]
+		die \textbf{$p$-adische Bewertung} von $x$.\\
+		Man setzt $\nu_p(0)=\infty$.\\
+		Man bezeichnet $|x|_p=p^{-\nu_p(x)}$ als den \textbf{$p$-adischen Betrag}.
+	\end{definition}
+
+	\begin{lem}
+		Für die $p$-adische Bewertung gilt:
+		\begin{enumerate}
+			\item $\nu_p(xy)=\nu_p(x)+\nu_p(y)$
+			\item $\nu_p(x+y)\geq\inf\big\{\nu_p(x),\nu_p(y)\big\}$
+		\end{enumerate}
+	\end{lem}
+
+	\begin{satz}
+		$\Z_p$ ist ein Integritätsbereich.\\
+		Der Quotientenkörper $\Q_p$ von $\Z_p$ wird als Körper der $p$-adischen Zahlen bezeichnet.\\
+		$\Q_p$ kann auch (analytisch) als Vervollständigung von $\Q$ bezüglich des $p$-adischen Betrage konstruiert werden.
+	\end{satz}
+
+	\begin{definition}
+		Man nennt $I$ eine unter $\leq$ \textbf{gerichtete Menge}, wenn für alle $x,yz\in I$ gilt
+		\begin{enumerate}
+			\item $x\leq x$
+			\item Aus $x\leq y$ und $y\leq z$ folgt $x\leq z$
+			\item Für alle $x,y$ exitsiert ein $z\in I$mit $x\leq z$,$y\leq z$
+		\end{enumerate}
+	\end{definition}
+
+	\begin{definition}
+		Für jedes $i\in I$ sei ein Ring $A_i$ und für jedes Paar $i,j\in I$ mit $i\leq j$ sei ein Ringhomomorphismus $f_{ij}:A_i\to A_j$ gegeben, mit
+		\begin{enumerate}
+			\item $f_{ii}=\id_{A_i}$ für alle $i\in I$
+			\item $f_{ik}=f_{jk}\circ f_{ij}$ für alle $i\leq j\leq k$
+		\end{enumerate}
+		\[\begin{tikzcd}
+			A_i\ar[r,"f_{ij}"] \ar[rr,"f_{ik}"',bend right] &A_j\ar[r,"f_{jk}"]&A_k
+		\end{tikzcd}\]
+		Ein solches System $(A_j,f_{ij})$ heißt \textbf{induktives System} von Ringen.
+	\end{definition}
+
+	\begin{definition}
+		Ein Ring $A$ zusammen mit dem einem Homomorphismus $f_i:A_i\to A$, sodass gilt $f_i=f_j\circ f_{ij}$ für $i\leq j$ heißt \textbf{induktiver Limes} oder \textbf{direkter Limes} des Systems $(A_i,f_{ij})$, wenn folgende Universelle Eigenschaft erfüllt ist:\\
+		Ist $B$ ein Ring, und sind $h_i:A_i\to B$, $i\in I$ Ringhomomorphismen mit $h_i=h_j\circ f_{ij}$ für $i\leq j$, so existiert genau ein Ringhomomorphismus $h:A\to B$ mit $h_i=h\circ f_i$ für alle $i\in I$.
+	\end{definition}
+
+	\begin{lem}
+		Falls ein indktiver Limes existiert, so ist er eindeutig.
+	\end{lem}
+	\begin{proof}
+		Sei 
+		\[\hat A=\dot\bigcup_{i\in I}A_i=\bigcup_{i\in I}\{(i,x)\mid x\in A_i\}\]
+		Wir definieren die Äquivalenzrelation $\sim$ auf $\hat A$:\\
+		Seien $x,y\in \hat A$, d.h. $x\in A_i,y\in A_j$.
+		\[x\sim y\Leftrightarrow \text{ ex gibt ein $k\in I$ mit $i\leq k$ und $j\leq k$ und $f_{ik}(x)=f_{jk}(x)$}\]
+	\end{proof}
+%VL 06.11.2017
+%TODO
+
+%VL 08.11.2017
+	\subsection{Nullstellen von Polynomen}
+	\begin{definition}
+		Sei $f\in A[X]$, $f\neq 0$.\\
+		$a\in A$ heißt \textbf{Nullstelle} von $f$, wenn $f(a)=0$.
+	\end{definition}
+
+	\begin{satz}
+		Sei $f\in A[X]$, $f\neq 0$ und $a\in A$. Dann gilt
+		\[\text{$a$ ist Nullstelle von $f$}\Leftrightarrow (x-a)|f\]
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[$\Rightarrow$] Sei $f(a)=0$. Division mit Rest liefert
+			\[ f=q(x-a)+r\]
+			mit $\deg(r)< 1$. Aus $f(a)=r$ folgt $(x-a)|f$
+		\end{description}
+	\end{proof}
+
+	\begin{satz}
+		Sei $f\in A[X]$, $f\neq 0$ ein Polynom das eine Nullstelle in $A$ hat.\\
+		Dann gibt es paarweise verschiedene Elemente $a_1,...,a_m\in A$ und $n_1,...,n_m\in\N$ und ein Polynom $g\in A[X]$, welchen keine Nullstellen in $A$ hat, sodass
+		\[f=g\prod_{i=1}^m(x-a_i)^{n_i}\]
+		ist.\\
+		Es gilt
+		\[\sum_{i=1}^{m}n_i\leq\deg(f)\]
+	\end{satz}
+	\begin{proof}
+		Teilen mit Rest.
+	\end{proof}
+
+	\begin{definition}
+		Lässt sich $f\in A[X]$, $f\neq 0$ schreiben als
+		\[f=c\prod_{i=1}^{m}(x-a_i)^{n_i}\]
+		mit $c,a_1,...,a_m\in A$ und $n_1,...,n_m\in\N$, dann sag man $f$ \textbf{zerfällt in Linearfaktoren}.
+	\end{definition}
+
+	\begin{satz}
+		Sei $A$ ein Integritätsbereich. Dann hat $f\in A[X]$ mit $f\neq 0$ höchsten $n=\deg(f)$ verschiedene Nullstellen in $A$.
+	\end{satz}
+	\begin{proof}
+		Durch Induktion über $n$:
+		\begin{description}
+			\item[Induktionanfang:] Sei $n=0$. (Konstantes Polynom $\Rightarrow$ keine Nullstelle)
+			\item[Induktionsschritt:] Sei $n>0$. Ist $a\in A$ eine Nullstelle von $f$, so ist $f=g(x-a)$ mit $\deg(q)=n-1$.\\
+			Sei $b\neq a$ eine weitere Nullstelle von $f$, dass ist $0=f(b)=q(b)(b-a)$.\\
+			Da aber $(b\neq a)$ ist, muss $b$ Nullstelle von $q$ sein.\\
+			Nach Induktionsannahme hat $q$ höchstens $n-1$ verschiedene Nullstellen.
+		\end{description}
+	\end{proof}
+
+	\begin{kor}
+		Sei $A$ ein unendlicher Integritätsbereich und $f\in A[X]$, $f\neq0$. Dann gibt es ein $a\in A$ mit $f(a)\neq 0$.
+	\end{kor}
+
+	\begin{exm}
+		Sei $K$ ein endlicher Körper und sei
+		\[f=\prod_{a\in K}(x-a)\]
+		Dann ist $f(a)=0$ für alle $a\in K$.
+	\end{exm}
+
+	\begin{satz}
+		Sei $G_1$ zyklische Gruppe der Ordnung $n_1$, $G_2$ zyklische Gruppe der Ordnung $n_2$.\\
+		Sein $n_1,n_2$ Teilerfremd, so ist $G_1\times G_2$ zyklisch.
+	\end{satz}
+
+	\begin{proof}
+		Sei $G_1=<x_1>$ und $G_2=<x_2>$. Die Abbildung
+		\begin{align*}
+		\Z&\to G_1\times G_2\\
+		m&\mapsto (mx_1,mx_2)
+		\end{align*}
+		hat den Kern $n_1,n_2\in\Z$ und ist surjektiv nach \ref{ChiRestSatz}.\\
+		Dann ist
+		\[\Z/n_1n_2\Z\isom G_1\times G_2\] 
+	\end{proof}
+
+	\begin{theorem}
+		Sei $K$ ein Körper und $G\subset K^*$ Untergruppe. Ist $G$ endlich, so ist $G$ zyklisch.
+	\end{theorem}
+	\begin{proof}
+		Da $G$ einen endliche abelsche Gruppe ist zerfällt $G$ in
+		\[g=\bigotimes_{\text{$p$ prim}}G_p\]
+		Dabei ist $G_p=\{g\in G\mid \text{$g^q=1$ für ein $q=p^n$}\}$.\\
+		\\
+		Angenommen $G_p$ ist nicht zyklisch. Dann ist $\ord(g)\leq |G_p|$ für alle $g\in G_p$ und es gibt ein $q=p^n<|G_p|$ mit $g^q=1$ für alle $q\in G_p$.\\
+		Dann hat aber das Polynom $X^q-1$ mehr als $q$ Nullstellen in $K$. Widerspruch!\\
+		\\
+		Also sind alle $G_p$ zyklisch. Dann folgt nach \ref{Satz davor}, dass $G$ zyklisch ist.
+	\end{proof}
+
+	\begin{kor}
+		Ist $K$ endlicher Körper, so ist $K^*$ zyklisch.
+	\end{kor}
+
+	\begin{satz}
+		Sie $A$ ein faktorieller Integritätsbereich mit Quotientenkörper $K$.\\
+		Sei
+		\[f=a_nX^n+a_{n-1}X^{n-1}+...+a_iX^1+a_0\]
+		ein Polynom in $K[X]$.\\
+		Ist $b=c/d$ eine Nullstelle von $f$ in $K$ mit teilerfremden $c,d$, so gilt
+		\[\text{$c|a_0$ und $d|a_n$}\]
+	\end{satz}
+	\begin{proof}
+		Aus $f(b)=0$ folgt\[a_n\left(c/d\right)_{n}+a_{n-1}(c/d)^{n-1}+...+a_0\]
+		Dann ist (nach Multiplikation mit $d^n$)
+		\[a_nc^n+a_{n-1}c^{n-1}d+...+a_nd^n=0\]
+		Dann ist
+		\begin{align*}
+		a_nd^n&=c(...)\\
+		a_nc^n&=d(...)
+		\end{align*}
+		Also gilt $c|a_0$ und $d|a_n$
+	\end{proof}
+
+	\begin{definition}
+		Sei $f\in A[X]$, $f\neq 0$. Ist $a\in A$ eine Nullstelle von $f$, so gibt es ein $n\in\N$ mit
+		\begin{align*}
+		(x-a)^n&|f\\
+		(x-a)^{n-1}&\not |f
+		\end{align*} 
+		Dann heißt $n$ die \textbf{Vielfachheit} oder \textbf{Multiplizität} von $a$ und man nennt $a$ eine \textbf{$n$-fache Nullstelle} von $f$.
+	\end{definition}
+
+	\begin{definition}
+		Die Abbildung
+		\begin{align*}
+		D: A[X]&\to A[X]\\
+		\sum_{j=0}^{n}a_jX^j&\mapsto\sum_{j=1}^n ja_jX^{j-1}
+		\end{align*}
+		Man schreibt $f':=D(f)$.
+	\end{definition}
+	\begin{lem}
+		Seien $f,g\in A[X]$, $a,b\in A$
+		Für die Ableitung $D$ gilt
+		\begin{enumerate}
+			\item $D(af+bg)=aD(f)+bD(g)$ (Linearität)
+			\item $D(fg)=(Df)g+f(Dg)$ (Produktregel)
+		\end{enumerate}
+	\end{lem}
+
+	\begin{satz}
+		Sei $f\in A[X]$, $f\neq 0$. Sei $a\in A$ eine Nullstelle von $f$. Dann gilt
+		\[\text{$a$ hat Vielfachheit $1$}\Leftrightarrow f'(a)\neq 0\]
+	\end{satz}
+	\begin{proof}
+		Da $a$ eine Nullstelle von $f$ ist gilt
+		\[f=q(x-a)\]
+		für ein $q\in A[X]$. Es folgt
+		\[f'=q+q'(X-a)\]
+		und $a$ hat genau dann Vielfachheit 1, wenn $(x-a)\not| q$, also $(x-a)\not | f'$, bzw. $f'(a)\neq 0$.
+	\end{proof}
+
+	\begin{definition}
+		Die Abbildung
+		\begin{align*}
+		\chi:\Z&\to A\\
+		n&\mapsto n\cdot 1
+		\end{align*}
+		
+			Ist ein Ringhomomorphismus und
+		\[\Kern(\chi)=(n)=n\Z\]
+		für ein $n\in\Z$, $n\geq 0$.\\
+		$n$ heißt die \textbf{Charakteristik} von $A$ und man schreibt $n=\cha(A)$.
+	\end{definition}
+
+	\begin{lem}
+		Ist $A$ ein Integritätsbereich, so ist $n=0$ oder $n$ ist prim.
+	\end{lem}
+	
+	\begin{satz}
+		Sei $K$ ein Körper und $f\in K[X]$ $f\neq $const, dann gilt
+		\begin{enumerate}
+			\item Ist $\cha(K)=0$, so gilt 
+			\[\deg(f')=\deg(f)-1\]
+			\item Ist $\cha(K)=p>0$, so gilt
+			\[\deg(f')\leq \deg(f)-1\]
+		\end{enumerate}
+		Weiterhin gilt
+		\[f'=0\Leftrightarrow f(X)=g(X^p)\text{ für ein $g\in K[X]$}\]
+	\end{satz}
+
+	%VL 13.11.2017
+	%VL 15.11.2017
+	
+	\subsection{Bewertungen}
+	\begin{definition}
+		Sei $K$ ein Körper. Ein \textbf{Betrag} auf $K$ ist eine Abbildung
+		\[|\cdot|:K\to\R\] mit
+		\begin{enumerate}
+			\item $\abs{x}\geq 0$ und $\abs{x}=0\Leftrightarrow x=0$
+			\item $\abs{xy}=\abs x\abs y$
+			\item $\abs{x+y}\leq \abs x\abs y$
+		\end{enumerate}
+	\end{definition}
+	\begin{definition}
+		Ein Betrag $\abs{\cdot}$ heißt \textbf{Archimedisch}, wenn es $x,y\in K$ gibt, sodass
+		\[\abs{x+y}>\max\{\abs x\abs y\}\]
+		bzw \textbf{nicht-archimedisch}, wenn für alle $x,y$ gilt, dass$|x+y|\leq \max\{\abs x,\abs y\}$.
+	\end{definition}
+
+	\begin{satz}
+		Sei $\abs\cdot$ ein  nicht-archimedischer Betrag auf $K$. Ist $\abs x\neq \abs y$, so gilt
+		\[\abs{x+y}=\max\{\abs x,\abs y\}\]
+	\end{satz}
+	\begin{proof}
+		Sei $\abs x\leq \abs y$. Dann ist 
+		\[\abs{x+y}\leq\max\{\abs x,\abs y\}=\abs x\]
+		Andererseits ist $x=(x+y)+(-y)$, sodass
+		\[\abs x=\abs{(x+y)+(-y)}\leq\max\{\abs{x+y},\abs y\}=\abs{x+y}\]
+		also $\abs x\leq\abs{x+y}$.
+	\end{proof}
+
+	\begin{definition}
+		Sei $A$ ein Integritätsbereich. Eine \textbf{Bewertung} auf $A$ ist eine Abbildung
+		\[\nu:A\to\R\cup\{\infty\}\]
+		mit
+		\begin{enumerate}
+			\item $\nu(a)=\infty\Leftrightarrow a=0$
+			\item $\nu(ab)=\nu(a)+\nu(b)$
+			\item $\nu(a+b)\geq\min\{\nu(a),\nu(b)\}$
+		\end{enumerate}
+	\end{definition}
+
+	\begin{satz}
+		Sei $A$ ein Integritätsbereich und $\nu:A\to\R\cup\{\infty\}$ eine Bewertung auf $A$.
+		\begin{enumerate}
+			\item $\nu$ kann zu einer Bewertung auf dem Quotientenkörper $K$ von $A$ fortgesetzt werden, durch
+			\[\nu(a/b)=\nu(a)-\nu(b)\]
+			\item Sei $c\in\R$ und $c> 1$. Dann definiert
+			\[\abs{x}=c^{-\nu(x)}\]
+			einen nciht-archimedischen Betrag auf $K$.
+		\end{enumerate}
+	\end{satz}
+
+	\begin{exmlist}
+		\begin{exm}
+			Sei $A$ ein faktorieller Integritätsbereich und $p\in A$ prim. Dann lässt sich ein beliebiges $a\in A\setminus\{0\}$ schreiben als
+			 \[a=a'p^{\nu_p(a)}\]
+			 mit $\gcd(a',p)=1$ und $\nu_p(a)\in\N_0$.\\
+			 Mit der Bedingung, dass $\nu_p(0)=\infty$, ist die Abbildung
+			 \[\nu:A\to\R\cup\{\infty\}\]
+			 eine Bewertung auf $A$.\\
+			 Diese setzt sich zu einer Bewertung auf dem Quotientenkörper fort.
+		\end{exm}
+		\begin{exm}
+			Sei $p\in \Z$ eine positive Primzahl. Dann definiert
+			\[\nu_p:\Z\to\R\cup\{\infty\}\]
+			wie Oben einen Bewertung auf $\Z$. Diese setzt sich zu einer Bewertung auf $\Q$ fort. Man definiert für $x\in\Q$ 
+			\[\abs{x}_p:=p^{-\nu_p(x)}\]
+			Dies liefert einen Betrag auf $Q$.\\
+			\\
+			Sei $x\in\Q$. Schreibe $x=a/bp^n$ mit $p\not|ab$. Dann ist $\abs{x}_p=p^{-n}$ und die Folge $1,p,p^2,...$ ist eine Nullfolge, bzgl $\abs{\cdot}_p$.\\
+			Die Vervollständigung von $Q$ bezüglich $\abs{\cdot}_p$ ist isomorph zu $\Q_p$.
+		\end{exm}
+	\end{exmlist}
+
+	\begin{theorem}[Lemma von Gauß]
+		Sei $A$ in Integritätsbereich mit Quotientenkörper $K$ und sei $\nu:A\to\R\cup\infty$ eine Bewertung auf $A$.\\
+		Setze $\nu$ fort zu einer Bewertung auf $K$ durch
+		\[\nu(a/b)=\nu(a)-\nu(b)\]
+		Für $f=\sum a_jX^j\in K[X]$ definieren wir
+		\[\nu(f)=\min\{\nu(a_i)\}\]
+		für $f\neq0$ und $\nu(0)=\infty$.\\
+		Dann ist $\nu$ eine Bewertung auf $K[X]$.
+	\end{theorem}
+	\begin{proof}
+
+		Wir zeigen
+		\[\nu(fg)=\nu(f)+\nu(g).\]
+		\begin{itemize}
+			\item Seien $f,g$ Konstant, dann ist die Aussage klar.\\
+			\item Sei nun $g=c\in K$. Dann ist 
+				\begin{align*}
+				\nu(gf)&=\nu(cf)\\
+				&=\min\{\nu(ca_i)\}=\min\{\nu(c)+\nu(a_i)\}\\
+				&=\nu(c)+\min\{\nu(a_i)\}\\
+				&=\nu(g)+\nu(f)
+				\end{align*}
+			\item Seien nun $f,g$ nicht Konstant.\\
+			Durch multipliaktion mit geeigenter Konstante können wir erreichen, dass 
+			\[\nu(f)=\nu(g)=0\]
+			Es ist zu zeigen, dass $\nu (fg)=0$.\\
+			Sei dazu $f=\sum_{i=0}^{n}a_iX^i$, $g=\sum_{j=0}^mb_jx^j$. Dann ist
+			\[fg=\sum_{k=0}^{m+n}c_kX^k\]
+			mit
+			\[c_k=\sum_{i+j=k}a_ib_j\]
+			Es gilt
+			\[\nu(c_k)\geq \min\{\underbrace{\nu(a_ib_j)}_{=\nu(a_i)+\nu(b_j)\geq 0}\}\geq 0\]
+			sodass $\nu(fg)\geq 0$.\\
+			\\
+			Aus $c_{s+t}=a_0b_{s+t}+a_1b_{s+t-1}+...+a_sb_t+...+a_{s+t}b_0$ folgt
+			\[a_sb_t=c_{s+t}-a_0b_{s+t}-a_1b_{s+t-1}-....-a_{s+t}b_0\]
+			Dann ist also
+			\[\nu(a_sb_t)\geq \min\{\nu(c_{s-t}),\underbrace{\nu(a_0b_{s+t})}_{=\nu(a_0)+\nu(b_{s+t}>0)},...,\nu(a_{s+t}b_0)\}>0\]
+			damit $\nu(a_s)+\nu(b_t)>0$. Widerspruch!
+		\end{itemize}
+	\end{proof}
+
+	\subsection{Der Satz von Gauß}
+
+	\begin{definition}
+		Sei $A$ ein faktorieller Integritätsbereich mit Quotientenkörper $K$.\\
+		Ein Polynom
+		\[f=a_nX^n+a_{n-1}X^{n-1}+...+a_o\in A_[X]\]
+		heißt \textbf{primitiv}, wenn für seine Koeffizienten gilt: $\gcd(a_0,...,a_n)=1$.\\
+		Äquivalent dazu $\nu_p(f)=1$ für alle Primelemente $p\in A$.\\
+		Ein Polynom $f\in K[X]$, $f\neq 0$ lässt sich schreiben als $f=c\tilde f$ mit $\tilde f\in A[X]$ primitiv und $c\in K$.
+	\end{definition}
+	
+	%VL 20.11.2017
+	\begin{satz}\label{vorsatzvong}
+		Sei $A$ ein faktorieller Integritätsbereich mit Quotientenkörper $K$ und $f\in A[X]$ primitiv mit $\deg(f)\geq1$.\\
+		Dann gilt
+		\[\text{$f$ ist irreduzibel in $A[X]$ }\Leftrightarrow \text{ $f$ ist irreduzibel in $K[X]$}\]
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[$\Rightarrow$] Sei $f$ irreduzibel in $A[X]$. Sei $f=gh$ eine Zerlegung von $f$ in $K[X]$.\\
+			Schreibe
+			\begin{align*}
+			g&=c\tilde g&h&=d\tilde h
+			\end{align*}
+			mit $\tilde{g},\tilde h\in A[X]$ primitiv. Dann ist
+			\[f=cd\tilde g\tilde h\]
+			und insbesondere
+			\[\underbrace{\nu_p(f)}_{\geq 0}=\nu_p(cd)+\underbrace{\nu_p(\tilde g)}_{=0}+\underbrace{\nu_p(\tilde h)}_{=0}\]
+			Also $\nu_p(cd)\geq 0$ für alle $p\in A$ prim.\\
+			Dann muss aber die Potenz von jedem Primfaktor des Nenners $=0$ sein.\\
+			Also ist $a=cd\in A$. Da $A[X]^*=A^*$ und $f=a\tilde g\tilde h$ und da $f$ irreduzibel ist muss $a\tilde g$ oder $\tilde h$ eine Einheit in $A[X]$ sein.\\
+			Dann ist $a\tilde g$ oder $\tilde h$ in $A^*$, also $g$ oder $h$ Konstant und somit in $K^*=K[X]^*$.
+			\item[$\Leftarrow$] Sei $f$ irreduzibel in $K[X]$. Sei $f=gh$ in $A[X]$. Dann ist $g$ oder $h$ in $K[X^*]$, also konstant.\\
+			Sei $g=c$ für ein $c\in A$, dann ist
+			\[\nu_p(f)=\nu_p(c)+\nu_p(h)\]
+			Da $f$ primitiv ist, ist $\nu_p(f)=0$.\\
+			Dann gilt $\nu_p(c)=\nu_p(h)=0$ für alle $p\in A$ prim.\\
+			Also muss $c\in A^*=A[X]^*$.
+		\end{description}
+	\end{proof}
+
+	\begin{bem*}
+		Sei $A$ wie Oben, $f\in A[X]$, nicht zwingend Primitiv mit $\deg(f)\geq1$ und $f$ irreduzible in $K[X]$, dann ist $f$irreduzibel in $A[X]$.
+	\end{bem*}
+
+	\begin{theorem}[Satz von Gauß]
+		Sei $A$ ein faktorieller Integritätsbereich. Dann ist auch $A[X]$ ein faktorieller Integritätsbereich.
+	\end{theorem}
+	\begin{proof}
+		Sei $K$ der Quotientenkörper von $A$. Sei $f\in A[X]\setminus(A[X^*]\cup\{0\})$.\\
+		Wir zeigen, dass $f$ über $A[X]$ in irreduzible Faktoren zerfällt.\\
+		Wir schreiben $f=c\tilde f$ mit $\tilde f\in A[X]$ primitiv und $c\in A$.\\
+		$c$ zerfällt in $A$ in irreduzible Faktoren.\\
+		Diese sind auch irreduzibel in $A[X]$.\\
+		Da $K[X]$ auch faktoriell ist, zerfällt $\tilde f$ in $K[X]$ in irreduzible Faktoren $\tilde f=\tilde f_1\cdot...\cdot\tilde f_n$ mit $\deg(\tilde f_i)\geq 1$.\\
+		Es gibt insbesondere eine Zerlegung
+		\[\tilde f=d\tilde f_1\cdot...\cdot \tilde f_n\]
+		mit $d\in K$ und $\tilde f_i\in A[X]$ primitiv und $\deg(\tilde f_i)\geq 1$.\\
+		Mit \ref{vorsatzvong} sind die $\tilde f_i$ auch irreduzible in $A[X]$.\\
+		Aus
+		\[\underbrace{\nu_p(\tilde f)}_{=0}=\nu_p(d)+\underbrace{\nu_p(\tilde f_1)}_{=0}+...+\underbrace{\nu_p(\tilde f_n)}_{=0}\]
+		folgt $\nu_p(d)=0$ für alle $p\in A$ prim.\\
+		\\
+		Jetzt ist noch zu zeigen, dass die gefundenen Zerlegung eindeutig ist. Se
+		\begin{align*}
+		f&=c_1\cdot..\cdot c_mg_1\cdot...\cdot g_r\\
+		&=d_1\cdot...\cdot d_nh_1\cdot ...\cdot h_s
+		\end{align*}
+		mit $c_i,d_j\in A$ irreduzibel und $g_i.h_j\in A[X]$ irreduzibel mit $\deg\geq 1$.\\
+		Dann ist
+		\[c/d\cdot g_1\cdot...\cdot g_r=h_1\cdot...\cdot h_s\]
+		mit $c=c_1\cdot...\cdot c_m$, $d=d_1\cdot...\cdot d_n$ sind die $g_i,h_j$ irreduzible in $A[X]$ und somit auch in $K[X]$.\\
+		Da $K[X]$ faktoriell ist, ist $r=s$ und nach Umsortierung ist
+		\begin{align*}
+		c/d\cdot g_1&=x_1h_1\\
+		g_j&=x_jh_j
+		\end{align*}
+		für alle $j>1$.\\
+		Dann ist
+		\begin{align*}
+		\nu_p(c/d)+\underbrace{\nu_p(g_1)}_{=0}&=\nu_p(x_1)+\underbrace{\nu_p(h_1)}_{=0}\\
+		\nu_p(x_i)-\nu_p(c/d)&=0\\
+		\nu_p(x_i\cdot d/c)&=0
+		\end{align*}
+		Wir definieren $\epsilon_1:=x_i\cdot d/c$. Dann ist $\epsilon_1\in A^*$.\\
+		Zusätzlich ist
+		\[\underbrace{\nu_p(g)}_{\geq 0}=\nu_p(x_j)+\underbrace{\nu_p(h_j)}_{=0}\]
+		Sei $\epsilon_j=x_j$ für $j\geq 1$.
+		Dann ist $\epsilon_j=x_j\in A^*$.\\
+		Also ist
+		\[g_i=\underbrace{\epsilon_i}_{\in A^*}h_i\]
+		Weiterhin folgt $c=\epsilon d$ für ein $\epsilon\in A^*$.\\
+		\\
+		Da $A$ faktoriell ist, gilt $m=n$ und nach Umnummerieren $c_i\eta_id_i$ mit $\eta_id\in A^*$.
+	\end{proof}
+
+	\begin{kor}
+		Sie $K$ ein Körper, dann ist $K[X_1,....,X_n]$ ein faktorieller Integritätsbereich.
+	\end{kor}
+
+	\begin{exmlist}
+		\begin{exm}
+			$\Z[X]$ ist ein faktorieller Integritätsbereich aber kein Hauptidealring.
+		\end{exm}
+		\begin{exm}
+			Sei $K$ ein Körper. $K[X]$ ist ein Hauptidealring und somit faktorieller. $K[X,Y]$ ist kein Hauptidealring aber faktoriell.
+		\end{exm}
+	\end{exmlist}
+	
+	
+	\subsection{Der Hilbertsche Basissatz}
+	\begin{theorem}[Hilbertscher Basissatz]
+		Sei $A$ ein noetherscher Ring. Dann ist auch $A[X]$ noethersch.
+	\end{theorem}
+	\begin{proof}
+		Sei $I\subset A[X]$ ein Ideal. Wr zeigen, dass $I$ endlich erzeugt ist. Für $n\in\N_0$ sei
+		\[I_n:=\{f\in I\mid\deg(f)\leq n\}\]
+	\end{proof}
+	Für $f=\sum_{a_iX^i\in A[X]}$ sei $b_n(f)=a_n$.\\
+	Dann gilt
+	\begin{align*}
+	b_n(f+g)&=n_b(f)+b_n(g)\\
+	b_n(af)&=ab_n(f)
+	\end{align*}
+	für alle $f,g\in A[X]$ und $a\in A$.\\
+	Die Menge $I(n):=b_n(I_n)$ ist ein Ideal in $A$ und es gilt
+	\[I(0)\subset I(1)\subset...\]
+	den $f\in I_n$ impliziert $Xf\in I_{n+1}$. Dann ist $b_n(f)=b_{n+1}(Xf)\in I(n+1)$.\\
+	Da $A$ noethersch ist wird jede Folge stationär. Also gibt es $m\in\N$, mit 
+	\[I(m)=I(m+1)=...\]
+	Für jedes$ n=0,1,....$ wähle Polynome $f_{n_j}$, sodass $I(n)$ von den Koeffizienten $b_n(f_{n_j})$ erzeugt wird.\\
+	Dann wird $I$ von den $f_{n_j}$ über $A[X]$ erzeugt:\\
+	Sei $f\in I$ vom Grad $t$. 
+	\begin{itemize}
+		\item Ist $t\leq m$, so hat
+		\[f-\sum_t a_{t_j} f_{t_j}\in I\]
+		Grad $\leq t-1$.\\
+		Nach endlich vielen Schritten hat man $f$ als Linearkombination der $f_{n_j}$ dargestellt. 
+		\item Ist $t>m$, so reduziert man den Grad von $f$ durch
+		\[f-\sum a_{t_j}X^{t-m}f_{m_j}\in I\]
+	\end{itemize}
+
+	\subsection{Eigenschaften von Polynomringen}
+	Sei $A$ ein Ring.
+	\begin{enumerate}
+		\item $A$ Integritätsbereich $\Leftrightarrow$ $A[X_1,...,X_n]$ Integritätsbereich.\\
+		Dann gilt $A[X-1,...,X_n]^*=A^*$.
+		\item (Gauss) $A$ faktorieller Integritätsbereich $\Leftrightarrow$ $A[X_1,...,X_n]$ faktorieller Integritätsbereich.
+		\item (Hilbert) $A$ noethersch $\Leftrightarrow$ $A[X_1,...,X_n]$ noethersch.
+		\item Sei $A$ zusätzlich Integritätsbereich, dann ist\\
+		$A$ Körper $\Leftrightarrow$ $A[X]$ Hauptidealring.
+		%TODO Referenzen angeben
+	\end{enumerate}
+
+	\subsection{Irreduziblitätskriterien}
+	\begin{theorem}[Eisenstein]
+		Sei $A$ ein faktoriell Integritätsbereich mit Quotientenkörper $K=Q(A)$.\\
+		Sei
+		\[f=a_nX^n+...+a_0\in A[X]\]
+		mit $\deg(f)=n\geq 1$. Sei $p\in A$ prim mit $p|a_i$ für $i=0,...,n-1$ und $a\not|a_n$ und $p^2\not |a_0$.\\
+		Dann ist $f$ irreduzibel in $K[X]$.\\
+		Ist $f$ zusätzlich primitiv, so ist $f$ auch irreduzibel in $A[X]$.
+	\end{theorem}
+	\begin{proof}
+		Sei $f=c\tilde f$ mit $\tilde f\in A[X]$ primitv und $c\in A$.\\
+		Es reciht zu ziegen, dass $\tilde f$ irreduzibel in $A[X]$ ist.\\
+		Angenommen $f=gh$ mit $g,h\in A[X]\setminus A$. Sei
+		\begin{align*}
+		\tilde f&=\sum_{k=0}^{n}\tilde a_kX^k\\
+		g&=\sum_{k=0}^{s}b_kX^k\\
+		h&=\sum_{k=0} a_kX^k
+		\end{align*}
+		Dann folgt aus $p\not|a_n$, dass $p\not|c$ und aus $p|a_0$, dass $p|\tilde a_0=b_0d_0$.\\
+		Wir können annehmen. dass $p|b_0$.\\
+		Aus $p^2\not |a_0$ folgt, das $p\not| d_0$. Es gibt aber $j$, sodass $p\not|b_j$ (da sonst $p|g$).\\
+		Wähle nun $j$, sodass $p|b_i$ für alle $i<j$ und $p\not| b_j$.\\
+		Dann muss $1\leq j\leq s\leq n$. Aus 
+		\[\tilde a_j=b_0d_j+b_1d_{j-1}+...+b_jd_0\]
+		folgt, (da $p|\tilde a_j$), dass $p|b_jd_0$ und $p|d_0$. Widerspruch!.
+	\end{proof}
+
+	\begin{exm}
+		Sei $p\in\Z$ eine positive Primzahl. dann ist das $p$-te Kreisteilunsgpolynom
+		\[f=X^{p-1}üX^{p-2}+...+1\]
+		irreduzibel in $Z[X]$.
+	\end{exm}
+
+	\begin{satz}[Reduktionskriterium]
+		Sei $A$ ein faktorieller  Integritätsbereich mit Quotientenkörper $K$, $p\in A$ prim und $d=a_nX^n+...+a_0$ ein Polynom in $A[X]$ mit $\deg(f)\geq 1$ und $\neq a_n$.\\
+		Sei
+		\[\pi:A[X]\to\big(A/(p)\big)[X]\]
+		und $\pi(f)$ irreduzible in $\big(A/(p)\big)[X]$, dann ist $f$ irreduzibel in $K[X]$.
+	\end{satz}
+	\begin{proof}
+		Wir nehmen an, dass $f$ primitv ist.\\
+		Ist $f$ reduzibel über $K[X]$ so auch über $A[X]$.\\
+		Sei $f=gh$ mit $g,h\in A[X]\setminus A$. Da $p$ den höchsten Koeffiezienten von $f$ nicht teilt, gilt dies auch für $g$ und $h$ dun es gilt
+		\[\pi(f)=\pi(gh)=\pi(g)\pi(h)\]
+		d.h. $\pi(f)$ zerfällt in $\big(A/(p)\big)[X]$.\\
+		Sei $f$ nun beliebig. Schreibe $f=c\tilde f$ mit $x\in A$ und $\tilde f\in A[X]$ primitv.\\
+		Angenommen $f$ ist nicht irreduzibel in $K[X]$, dann gilt $f$ reduzibel in $K[X]$ $\Rightarrow$ $\tilde f$ ist reduzibel in $K[X]$ $\Rightarrow $ $\tilde f$ ist reduzzibel in $A[X]$ $\Rightarrow$ $\tilde f=gh$ mit $g,h\in A[X]\setminus A$ $\Rightarrow$ $f=cgh$.\\
+		Somit ist
+		\[\pi(f)=\pi(cg)\pi(h)\]
+		eine Zerlegung von $\pi(f)$.
+	\end{proof}
+
+	\begin{exmlist}
+		\begin{exm}
+			Wir zeigen, dass $F=X^2+3X^2$ irreduzibel in $\Q[X]$ ist. Wir fassen $f$ als Polynom über $\Z$ auf und reduzierten die Koeffizienten $\mod 3$.\[\pi(f)=X^3-X-1\]
+			Da $\pi(f)(t)\neq 0$ für alle $t\in\Pi_3$ ist, ist $\pi(f)$ irreduzibel über $\Pi_3$ und somit auch über $\Q$.
+		\end{exm}
+		\begin{exm}
+			Das Polynom $f=X^4+1$ ist irreduzibel in $\Q[X]$ und in $Z[X]$. Allerdings ist $\pi(f)\in\Pi_p[X]$ reduzibel für alle positiven Primzahlen $p$.
+		\end{exm}
+	\end{exmlist}
+
+	\subsection{Symmetrische Polynome}
+	\begin{definition}
+		Für $f\in A[X_1,...,X_n]$ und $\sigma\in S_n$ sei
+		\[\sigma(f)=\sigma(f(X_1,...,X_n)):=f(X_{\sigma(1)},...,X_{\sigma(n)})\]
+		Dies liefert eine Operation von $S_n$ auf $A[X_1,...,X_n]$.
+	\end{definition}
+
+	\begin{bem}
+		Insbesondere gilt für $\sigma,\tau\in S_n$, dass $(\sigma\tau)(f)=\sigma(\tau(f))$.
+	\end{bem}
 \end{document}
