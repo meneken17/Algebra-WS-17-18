@@ -49,7 +49,7 @@
 \newcommand{\Q}{\ensuremath{\mathbb{Q}}}
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\C}{\ensuremath{\mathbb{C}}}
-
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
 
 \newcommand{\la}{\ensuremath{\lambda}}
 \newcommand{\al}{\ensuremath{\alpha}}
@@ -67,10 +67,12 @@
 \renewcommand{\projlim}[1]{\lim\limits_{\overleftarrow{#1}}}
 \newcommand{\isom}{\overset{\sim}{=}}
 \newcommand{\ord}{\operatorname{ord}}
+\newcommand{\weight}{\operatorname{gew}}
 
 \newcommand{\Kern}{\operatorname{Kern}}
 \newcommand{\Img}{\operatorname{Im}}
 \newcommand{\Potset}{\mathscr P}
+\newcommand{\Hom}{\operatorname{Hom}}
 
 \newcommand{\scA}{\mathscr A}
 \newcommand{\scB}{\mathscr B}
@@ -1345,10 +1347,585 @@
 	\begin{definition}
 		Für $f\in A[X_1,...,X_n]$ und $\sigma\in S_n$ sei
 		\[\sigma(f)=\sigma(f(X_1,...,X_n)):=f(X_{\sigma(1)},...,X_{\sigma(n)})\]
-		Dies liefert eine Operation von $S_n$ auf $A[X_1,...,X_n]$.
+		Dies liefert eine Operation von $S_n$ auf $A[X_1,...,X_n]$.\\
 	\end{definition}
 
 	\begin{bem}
 		Insbesondere gilt für $\sigma,\tau\in S_n$, dass $(\sigma\tau)(f)=\sigma(\tau(f))$.
 	\end{bem}
+
+%VL 27.11.2017
+
+	\begin{definition}
+		Die Polynome in $A[X_1,...,X_n]^{S_n}$ (invariant unter $S_n$) werden als \textbf{symmetrische Polynome} bezeichnet.
+	\end{definition}
+	
+	\begin{prop}
+		Die Gruppenoperationen $\sigma\in S_n$ sind Automorphismen auf $A[X_1,...,X_n][X]$.
+	\end{prop}
+	
+	\begin{satz}
+		\begin{enumerate}
+			\item $A[X_1,...X_n]^{S_n}$ enthält $A$ und ist ein Unterring von $A[X_1,...,X_n]$.\\
+			\item $S_n$ operiert auf $A[X_1,...,X_n][X]$ durch
+			\[\sigma\left(\sum_{j=0}^n a_jX^j\right)=\sum_{j=0}^{n}\sigma(a_j)X^j\]
+			\item Sei $f=(X-X_1)(X-X_2)...(X-X_n)$. Dann ist
+			\[f=X^n+\sum_{j=1}^{n}(-1)^js_jX^{n-j}\]
+			für eindeutig bestimmte Polynome $s_j\in A[X_1,...,X_n]$
+			\item $\sigma(f)=f$
+
+		\end{enumerate}
+	\end{satz}
+
+	\begin{definition}
+		Sei $f\in[X-1,...,X_n][X]$, $\sigma\in S_n$.\\
+		Dann bezeichnet man die $s_j$ in
+		\[f=\sigma(f)=\sigma\left(X^n+\sum_{j=1}^{n}(-1)^js_jX^{n-j}\right)\]
+		als \textbf{elementarsymmetrische Polynome}.
+	\end{definition}
+
+	\begin{lem}
+		Die elementarsymmetrischen Polynom sind symmetrisch, d.h. $\sigma(s_j)=s_j$. Sie sind gegeben durch
+		\begin{align*}
+		s_1&=X_1+X_2+...+X_n
+		s_2&=X_1X_1+X_1X_3+...+X_1X_n+X_2X_3+...+X_{n-1}X_n\\
+		&=\sum_{i\leq j} X_iX_j
+		\vdots&\\
+		s_n&=X_1...X_n
+		\end{align*}
+	\end{lem}
+
+	\begin{satz}
+		Die Polynome $s_j$ sind homogen vom Grad $j$.\\
+	\end{satz}
+
+	\begin{definition}
+		Das Monom $X_1^{i_1}...X_n^{i_n}\in A[X_1,...,X_n]$ hat Grad $i_1+...+i_n$.\\
+		Für den \textbf{Grad} $\deg(f)$ für $f\in A[X_1,...,X_n]$ ist das Maximum über den Grad der Monome.
+	\end{definition}
+
+	\begin{definition}
+		Das Monom $X_1^{i_1}...X_n^{i_n}\in A[X_1,...,X_n]$ hat Gewicht $i_1+2i_2+...+ni_n$.\\
+		Das Gewicht $\weight(f)$ für $f\in A[X_1,...,X_n]$ ist das Maximum über das Gewicht der Monome.
+	\end{definition}
+
+	\begin{theorem}
+		\begin{enumerate}
+			\item Sei $f\in A[X_1,..,X_n]^{S_n}$ mit  $\deg(f)=d$.\\
+			Dann gibt es eine Polynom $g\in A[X_1,...,X_n]$ mit $\weight(g)\leq d$, sodass $f=g(s_1,...,s_n)$.\\
+			\item Ist $f$ zusätzlich homogen, so hat jedes Monom Gewicht $d$.
+		\end{enumerate}
+
+	\end{theorem}
+
+	\begin{proof}
+		\begin{enumerate}
+			\item Wir beweisen durch vollständige Induktion über $n$.
+			Für $n=1$ gilt die Behauptung, da $s_1=x_1$.\\
+			Angenommen die Behauptung gilt für Polynome in $A[X_1,...,X_{n_1}]^{S_{n-1}}$.\\
+			Sei $f\in A[X-1,...,X_n]$. Es ist zu zeigen, dass $f$ ein Polynom in $s_1,...,s_n$ ist.\\
+			Setzt man $X_n=0$ in 
+			\[\prod_{j=1}^{n}(X-X_j)=X^n+\sum_{j=1}^{n}(-1)^js_jX^{n-j}\]
+			für $s_j=s_j(X_1,...,X_n)$, so erhält man
+			\[(X-X_1)(X-X_2)...(X-X_{n-1})(X)=X^n\sum_{j=1}^{n}(-1)^j (s_j)_0X^{n-j}\]
+			mit $(s_j)_0:=s_j(X_1,...,X_{n-1},0)$.\\
+			Andererseits ist
+			\[(X-X_1)(X-X_2)...(X-X_{n-1})(X)=X\left(X^{n-1}\sum_{j=1}^{n-1}(-1)^j \tilde s_j X^{n-1-j}\right)\]
+			Dann muss aber $(s_1)_0=\tilde s_1$,...,$(s_{n-1})_0=\tilde{s}_{n-1}$ und $(s_n)_0=0$.\\
+			Wir beweisen die Aussage durch Induktion über $d=\deg(f)$.\\
+			Hat $f$ Grad $0$, so ist die Behauptung trivial.\\
+			Sei also $\deg(f)=d>0$. Dann gibt es ein Polynom $g_1\in A[X_1,...,X_{n-1}]$ mit $\weight(g)\leq d$, sodass
+			\[f(X_1,...,X_{n-1},0)=g_1\big((s_1)_0,...,(s_{n-1})_0\big)\]
+			Grad $\leq d$ in $X_1,...,X_{n-1}$ hat, da $f(X_1,...,X_{n-1},0)$ symmetrisch unter $S_{n-1}$ ist.\\
+			Das Polynom $g_1(s_1,...,s_{n-1})\big)$ hat Grad $\leq d$ in $X_1,...,X_n$ weil die $s_j$ homogen sind.\\
+			Das Polynom
+			\[f_1(X_1,...,X_n)=\underbrace{f(X_1,...,X_n)}_{\substack{\text{Grad $\leq d$}\\\text{in $X_1,...,X_n$}}}
+			-\underbrace{g(s_1,...,s_{n-1})}_{\substack{\text{Grad $\leq d$}\\\text{in $X_1,...,X_n$}}}\]
+			hat Grad $\leq d$ in $X_1,...,X_n$ uns ist symmetrisch. \\
+			Aus $f_1(X_1,...,X_{n-1},0)\geq 0$ folgt $X_n|f_1$. Damit auch $X_i|f_1$ und somit $s_n|f_1$.\\
+			Dann gibt es $f_2$, sodass $f_1=s_nf_2$.\\
+			Dabei ist $f_2$ symmetrisch unter $S_n$ und hat Grad $\leq d-n$.\\
+			Nach Induktionshypothese gibt es ein Polynom $g_2\in A[X_1,...,X_n]$ mit Gewicht $\leq d-n$, sodass
+			\[f_2=g_2(s_1,...,s_n)\]
+			Es folgt $f=f_1+g_1=s_ng_2+g_1$.\\
+			Dann ist
+			\[f(X_1,...,X_n)=g_1(s_1,...,s_{n-1})+s_ng_2(s_1,...,s_n)=g(s_1,...,s_n)\]
+			mit
+			\[g(X_1,...,X_n)=\underbrace{g_1(X_1,...,X_n)}_{\text{Gewicht $\leq d$}}+\underbrace{\underbrace{X_n}_{\text{Gew $n$}}\underbrace{g_2(X_1,....,X_n)}_{\text{Gew $\leq d-n$}}}_{\text{Gew $\leq d$}}\]
+			\item Siehe Lang
+		\end{enumerate}
+	\end{proof}
+
+
+	\begin{theorem}
+		Sie elementarsymmetrischen Polynome $s_1,...,s_n\in A[X-1,...,X_n]$ sind algebraisch unabhängig über $A$.
+	\end{theorem}
+	\begin{proof}
+		Durch Induktion über $n$.\\
+		Für $n=1$ ist die Behauptung klar.\\
+		Sei $n>1$ und die $s_1,...,s_n$ seien nicht algebraisch unabhängig.\\
+		Wähle $f\in A[X_1,...,X_n]$ mit kleinstem Grad und $f\neq 0$, sodass
+		\[f(s_1,...,s_n)=0\]
+		Schreibe $f$ als Polynom in $X_n$ mit Koeffizienten in $A[X_1,...,X_{n_1}]$.\\
+		\[f(X_1,...,X_n)=f_0(X_1,...,X_{n-1})+f_1(X_1,...,X_{n-1})X_n+...+f_d(X_1,...,X_{n-1})X_n^d\]
+		Angenommen $f=X_n\psi$ für ein $\psi\in A[X-1,...,X_n]$ und $x_n\psi(s_1,...,s_n)=0$, dann muss $\psi(s_1,...,s_n=0)$ sein.\\
+		Dies ist ein Wiederspruch zu der Annahme, dass $f$ minimalen Grad hat.\\
+		Also muss $f_0\neq 0$ sein.\\
+		Wir setzen nun $x_i=s_i$ und erhalten
+		\begin{align*}
+		0&=f(s_1,...,s_n)\\
+		&=f_0(s_1,...,s_n)+...+f_d(s_1,...,s_{n-1})s_n^d
+		\end{align*}
+		Nun setzen wir $X_n=0$. Dann ist 
+		\[0=f\big((s_1)_0,...,(s_{n-1})_0\big)=f_0(\tilde s_1,...,\tilde s_{n-1})\]
+		Nach Induktionshypothese sind die $\tilde s_1,...,\tilde s_n$ algebraisch unabhängig. Widerspruch!
+	\end{proof}
+
+	
+	\begin{exm}
+		Sei $n=3$ Dann ist $X_1^3+X-2^3+X_3^3$ ein symmetrisches Polynom. Es gilt \[X_1^3+X_2^3+X_3^3=s_1^3-3s_1s_2+3s_3\]
+	\end{exm}
+
+%VL 29.11.2017
+
+	\begin{definition}
+		Sei $f\in A[X]$ ein normiertes Polynom vom Grad $n$.\\
+		Dann ist die \textbf{Diskriminante}  von $f$ definiert als
+		\[D(f):=d_n(-c_1,c_2,-c_3,...,(-1)^nc_n)\in A\]
+		Dabei ist $d_n\in\Z[X-1,...,X_n]$ mit
+		\[d_n(s_1,...,s_n):=\prod_{i\leq j}(X_i-X_j)^2\]
+		%TODO.. sauber Definieren
+	\end{definition}
+
+	\begin{satz}
+		Sei $f\in A[X]$ ein normiertes Polynom. Ist
+		\[f=\prod_{i=1}^n(X-\al i)\]
+		eien Faktorisierung von $f$ in einem Oberring $B\supset A$, dann ist
+		\[D(f)=\prod_{i\leq j}(\al_i-\al_j)^2\]
+	\end{satz}
+	\begin{proof}
+		Es ist
+		\[\prod_{i=1}^n=X^n+\sum_{i=1}^n(-1^i)s_iX^{n-i}\]
+		so dass
+		\[f=\prod_{i=1}^n(X-\al_i)=X^n+\sum_{i=1}^{n}(-1)^is_i(\al_1,...,\al_n)X^{n-1}=X^n+\sum_{i=1}^{n}x_iX^{n-i}\]
+		d.h.
+		\[c_i=(-1)^is_i(\al_1,..,\al_n)\]
+		und
+		\begin{align*}
+		D(f)&=d_n(-c_1,c_2,...,(-1)^nc_n)\\
+		&=d_n\big(s_1(\al_1,...,\al_n),...,s_n(\al_1,...,\al_n)\big)\\
+		&=\prod_{i\leq j}(\al_1-\al_j)^2
+		\end{align*}
+	\end{proof}
+
+	\begin{satz}
+		Ist $B\supset A$ ein Integritäsbereich so gilt
+		\[D(f)=0\Leftrightarrow\text{ $f$ hat Mehrfache Nullstellen in $B$}\]
+	\end{satz}
+
+	\begin{exmlist}
+		\begin{exm}
+			Für $f=X^2+aX+b$ ist $D(f)=a^2-4b$ (Wurzel der pq-Formel)
+		\end{exm}
+		\begin{exm}
+			Für $f=X^3+aX+b$ ist $D(f)=-4a^3-27b^2$.
+		\end{exm}
+	\end{exmlist}
+
+
+\section{Körpererweiterungen}
+	\subsection{Grundbegriffe}
+	
+	\begin{definition}
+		Sei $L$ ein Körper, $K\subset L$ heißt \textbf{Teilkörper} von $L$, wenn $K$ abgeschlossen beglich Addition und Multiplikation ist und unter diesen Operationen selbst wieder Körper ist.
+	\end{definition}
+
+	\begin{definition}
+		Sei $K$ ein Körper. Sei $L\supset K$ selbst wieder Körper, dann bezeichnet man $L$ als \textbf{Erweiterungskörper} von $K$ und spricht von der \textbf{Körpererweiterung} $L/K$.
+	\end{definition}
+
+	\begin{definition}
+		Sei $L/K$ eine Körpererweiterung. Dann heißt der Körper $M$ mit $K\subset M\subset L$ \textbf{Zwischenkörper} der Erweiterung $L/K$.
+	\end{definition}
+
+	\begin{definition}
+		Sei $L/K$ eine Körpererweiterung und $M\subset L$. Dann bezeichnet man mit $K(M)$ den \textbf{kleinsten Teilkörper} von $L$, der $K\cup M$ enthält.\\
+		Man sagt, dass $K(M)$ durch Adjunktion von $M$ zu $K$ entsteht.
+	\end{definition}
+
+	\begin{prop}
+		Sei $L/K$ eine Körpererweiterung und $M\subset L$. Dann besteht $K(M)$ aus allen Elementen der Form
+		\[\frac{f(a_1,...,a_n)}{g(a_1,...,a_n)}\]
+		mit $f,g\in K[X_1,...,X_n]$, $g(a_1,...,a_n)\neq 0$ und $a_1,...,a_n\in M$.
+	\end{prop}
+	\begin{proof}[Beweisskizze]
+		Die angegebenen Elemente bilden einen Teilkörper von $L$, der $K\cup M$ enthält und jeder Teilkörper von $L$ der $K\cup M$ enthält, enthält auch die angegebene Elemente.
+	\end{proof}
+
+	\begin{prop}
+		Für jedes $a\in K(M)$ gibt es eine endliche Teilmenge $M'\subset M$, sodass $a\in K(M')$.
+	\end{prop}
+
+	\begin{definition}
+		Sei $K$ ein Körper. Sei\begin{align*}
+		\Z&\xrightarrow{\phi}K\\
+		n&\mapsto n\cdot 1
+		\end{align*}
+		Dann ist $\Kern(\phi)=(n)$ für ein eindeutiges $n\in \N$. $n$ wird als \textbf{Charakteristik} von $K$ bezeichnet.
+	\end{definition}
+
+	\begin{kor}
+		Sei $K$ ein Körper, dann ist $\cha(K)=0$ oder prim.
+	\end{kor}
+	\begin{proof}
+		Da $\Z/(n)=\Z/\Kern(\phi)\isom\Img(f)\subset K$ keine Nullteiler hat.
+	\end{proof}
+
+	\begin{exm}
+		\begin{enumerate}
+			\item $\Q,\R,\C$ haben Charakteristik 0.
+			\item Sei $p\in\Z$ eine positive Primzahl. Dann hat $\F_p=\Z/p\Z$ Charakteristik $p$.
+		\end{enumerate}
+	\end{exm}
+
+	\begin{prop}
+		Ist $K$ ein Teilkörper von $L$, so gilt
+		\[\cha(K)=\cha(L)\]
+	\end{prop}
+
+	\begin{definition}
+		Sei $K$ ein Körper. Dann heißt
+		\[P:=\bigcap_{\text{$L$ Teilkörper von $K$}}L\]
+		der \textbf{Primkörper} von $K$.
+	\end{definition}
+
+	\begin{satz}
+		Sei $K$ ein Körper und $P$ der Primkörper von $K$. Dann gilt
+		\begin{enumerate}
+			\item $\cha(K)=p$ für $p>0$, $p$ prim $\Leftrightarrow$ $P\isom F_p$
+			\item $\cha(K)=0$ $\Leftrightarrow$ $P\isom\Q$.
+		\end{enumerate}
+	\end{satz}
+
+	\begin{definition}
+		Ist $K$ ein Teilkörper von $L$, sokönnen wir $L$ als Vektorraum über $K$ auffassen.\\
+		Die Dimension diese Vektorrausm heißt \textbf{Grad} von $L$ über $K$.
+		\[[L:K]:=\dim_K(L)\]
+	\end{definition}
+
+	\begin{definition}
+		Die Erweiterung $L/K$ heißt \textbf{endlich}, wenn $[L:K]<\infty$.\\
+	\end{definition}
+
+	\begin{prop}
+		Ist $L$ endlich und $K$ kein Teilkörper von $L$, so gilt \[\abs{L}=\abs{K}^m\]
+		mit $m=[L:K]$.
+	\end{prop}
+
+	\begin{theorem}[Gradsatz]
+		Seien $K\subset L\subset M$ Körpererweitungen. Dann gilt
+		\[[M:K]=[M:L][L:K]\]
+		Ist $(x_i)_{i\in I}$ eine Basis von $L/K$ und $(y_j)_{j\in J}$ eine Basi von $M/L$, so ist $(x_iy_j)_{(i,j)\in I\times J}$ eine Basis von $M/K$.
+	\end{theorem}
+	\begin{proof}
+		Es reicht die zweite Behauptung zu zeigen.\\
+		Sei $z\in M$.Dann ist
+		\[z=\sum_{j\in J}a_jy_j\]
+		mit $a_j\in L$ und $a_j=0$ für fast alle $j\in J$.\\
+		Wir können $a_j$ schreibe als
+		\[a_j=\sum_{i\in I}b_{ji}x_i\]
+		mit $b_{ij}\in K$ und $j_{ij}=0$ für fast alle $i\in I$.\\
+		Also ist
+		\[z=\sum_{i\in I,j\in J}b_{ij}x_iy_j\]
+		d.h. $(x_i,y_j)_{(i,j)\in I\times J}$ ist ein Erzeugendensystem von $M/K$.\\
+		Wir zeigen, dass die Vektoren $x_i,y_i$ linear unabhängig über $K$ sind.\\
+		Sei
+		\[\sum_{i,j}\underbrace{c_{ij}}_{\in K}\underbrace{x_i}_{\in K}\underbrace{y_i}_{\in M}=0\]
+		Dann gilt für jedes $j$, dass
+		\[\sum_{i\in I}c_{ij}x_i=0\]
+		weil die $y_i$ linear unabhängig über $L$ sind.\\
+		Aus der linearen Unabhängigkeit der $x_i$ über $K$ folgt $c_{ij}=0$.
+	\end{proof}
+
+	\subsection{Algebraische Körpererweiterungen}
+	\begin{definition}
+		Sei $L/K$ eine Körpererweiterung. $\al\in L$ heißt \textbf{algebraische} über $K$, wenn es eine 
+	\end{definition}
+
+	%VL 04.12.2017
+	%TODO
+	%VL 06.12.2017
+	\begin{definition}
+		Ein Körper $K$ heißt \textbf{algebraisch abgeschlossen} wenn jedes Polynom $f\in K[X]\setminus K$ eine Nullstelle in $K$ hat.\\
+		(Äquivalent: $f$ zerfällt in Linearfaktoren)
+	\end{definition}
+
+	\begin{satz}
+		Ein Körper $K$ ist genau dann algebraisch abgeschlossen wenn es keine echte algebraische Erweiterung $L/K$ zulässt.
+	\end{satz}
+
+	\begin{theorem}
+		Sei $K$ ein Körper. Dann gibt es einen algebraische abgeschlossen Körper $L$ mit $K\subseteq L$.
+	\end{theorem}
+	\begin{proof}[Artin]
+		Sei $K\hookrightarrow L_i$ eine Einbettung, sodass jedes nicht Konstante Polynome in $K[X]$ eine Nullstelle in $L_i$ hat. Sei$I=K[X]\setminus K$.\\
+		Wir betrachten den Polynomring
+		\[K[(X_i)_{i\in I}]\]
+		Sei
+		\[A=\left\{f(X_f)\mid f\in I\right\}\]\\
+		
+		Dann ist $A\neq K[(X_i)_{i\in I}]$, denn:\\
+		Angenommen $A=K[(X_i)_{i\in I}]$, dann ist $1\in A$, d.h.
+		\[1=\sum_{j=1}^{n}g_jf_j(X_{f_j})\]
+		für geeignete $g_j\in K[(X_i)_{i\in I}]$ und $f_i\in I$.\\
+		Es gibt aber einen Erweiterungskörper $K'$ von $K$, sodass jedes $f_j$ eine Nullstelle $a_j\in K'$ hat.\\
+		Definiere 
+		\[K([(X_i)_{i\in I}\to K[(X_i)_{i\in I}]\]
+		mit $\varphi|_K=\id$.\\
+		Dann ist $\varphi(X_i)=X_i$ für $i\in I\setminus \{f_1,...,f_n\}$ und $f(X_{f_i})=a_i$ für $i\in\{1,...,n\}$ und
+		\[1=\varphi(1)=\sum_{j=1}^{m}f(g_j)\underbrace{f\big(f(x_{f_j})}_{=0}\big)=0\]
+		Widerspruch, da in Körpern $1\neq 0$ sein muss.\\
+		Also ist $A\subsetneq K[(X_i)_{i\in I}]$.\\
+		\\
+		Dann ist $A$ in einem maximalen Ideal $M$ enthalten und es gibt $\pi$
+		\[K\hookrightarrow K[(X_i)_{i\in I}]\xrightarrow{\pi}\underbrace{K[(X_i)_{i\in I}]/M}_{=L_i}\]
+		Setze $K=L_0$. Dann ist
+		\[L_0\xhookrightarrow{\varphi_{01}}L_1\]
+		Sei $f\in I$. Dann ist
+		\[\underbrace{\varphi_{01}}_{\in L_1[X]}\big(\pi(X_f)\big)=\pi\big(f(X_f)\big)=0\]
+		d.h. $\varphi_{01}(f)$ hat eine Nullstelle in $L_1$. Durch Fortführung dieser Konstruktion erhalten wir eine Sequenz
+		\[L_0\xhookrightarrow[]{\varphi_{01}}L_1\xhookrightarrow[]{\varphi_{12}}...\]
+		und die Abbildungen
+		\[L_i\xhookrightarrow[]{\varphi_{ij}}\]
+		Sei nun
+		\[L=\projlim{ }L_i=\operatornamewithlimits{\dot{\bigcup}}_{i=1}^\infty L_i/\sim\]
+		der Direkten $L_i$ und sein die Abbildungen
+		\[\varphi_i:L_i\to L\]
+		die entsprechenden Einbettungen.\\
+		Dann ist $L$ ein Ring und die $\varphi_i$ Ringhomomorphismen.\\
+		\\
+		Seien $a,b\in L$. Dann existieren $a_i,b_i\in L_i$, mit $a\varphi_i(a_i)$, $b=\varphi_i(b_i)$ und
+		\begin{align*}
+		a+b&=\varphi_i(a_i+b_i)\\
+		ab&=\varphi_i(a_ib_i)
+		\end{align*}
+		Somit ist $L$ Körper.\\
+		\\
+		Sei $g\in L[X]\setminus L$. Dann gibt es ein $i$ und ein $g_i\in L[X]\setminus L_i$, sodass
+		\[g=\varphi_i(g_i)\]
+		Dei Abbildung $\varphi_{ii+1}(g_i)$ zerfällt über $L_{i+1}$ in Linearfaktoren. Somit zerfällt auch
+		\[g=\varphi_i(g_i)=\varphi_{j}\big(f_{ij}(g_i)\big)\]
+ 	\end{proof}
+ 
+ 	\begin{satz}
+ 		Sei $K$ ein Körper, dann gibt es einen algebraisch abgeschlossenen Körper $\overline{K}$, der $K$ enthält und algebraisch über $K$ ist. $\overline{K}$ wird als der algebraische Abschluss von $K$ bezeichnet.
+ 	\end{satz}
+ 	\begin{proof}
+ 		Es gibt einen algebraisch abgeschlossenen Körper $L$ der $K$ enthält. Setze\[\overline{K}=\{a\in L\mid \text{$a$ algebraisch über $K$}\}\]
+ 		Dann ist $\overline{K}$ ein Teilkörper von $L$ der $K$ enthält.\\
+ 		\\
+ 		Zz: $\overline{K}$ ist algebraisch abgeschlossen:\\
+ 		Sei $f\in\overline{K}[X]\setminus\overline{K}$. Dann hat $f$ eine Nullstelle $\al$ in $L$. $\al$ ist algebraisch über $\overline{K}$. Da $\overline{K}$ algebraisch über $K$ ist ist $\al$ auch algebraisch über $K$. Damit ist $\al\in\overline{K}$.\\
+ 	\end{proof}
+ 
+ 	\begin{kor}
+ 		Seien $L,L'$ algebraische Abschlüsse des Körpers $K$, dann ist $L\isom L'$.
+ 	\end{kor}
+ 	\begin{proof}
+ 		Ist $\sigma:K\to L$ ein Homomorphismus von Körpern, so induziert $\sigma$ einen Homomorphismus $K[X]\to L[X]$.\\
+ 		Ist $\al$ eine Nullstelle von $f\in K[X]$ in $K$, so ist $\sigma(\al)$ eine Nullstelle von $\sigma(f)$ in $L$.
+ 		%TODO Beweis neu machen
+ 	\end{proof}
+ 
+ 	\begin{satz}
+ 		Sei $K$ ein Körper und $K'=K(\al)$ eine einfache algebraische Körpererweiterung von $K$ und $\sigma:K\to L$ ein Homomorphismus. Dann gilt
+ 		\begin{enumerate}
+ 			\item Ist $\sigma':K'\to L$ ein Homomorphismus der $\sigma$ fortsetzt, so ist $\sigma'(\al)$ Nullstelle von
+ 			\[\sigma'(m_{\al,K})=\sigma(m_{\al,K})\]
+ 		\end{enumerate}
+ 	\end{satz}
+ 
+ %VL 11.12.2017
+ 	\begin{satz}\label{satz:nsterhaltung}
+ 		Sei $K$ ei Körper $K'=K(\al)$ eine einfache algebraische Erweiterung von $K$ und $\sigma:K\to L$ ein Körperhomomorphismus.
+ 		\begin{enumerate}
+ 			\item Ist $\sigma':K'\to L'$ ein Homomorphismus, der $\sigma$ Fortsetzt, so ist $\sigma'(\al)$ Nullstelle von $\sigma(m_{\al,K})=\sigma'(m_{\al,K})$.
+ 			\item Es gibt zu jeder Nullstelle $\beta\in L$ von $\sigma(m_{\al,K})$ genau eine Fortsetzung $\sigma':K'\to L'$ von $\sigma$ mit $\sigma'(\al)=\beta$.
+ 		\end{enumerate}
+ 	\end{satz}
+ 	\begin{proof}
+ 		\begin{itemize}
+ 			\setcounter{enumi}{1}
+ 			\item Sei $\beta\in L$ Nullstelle von $\sigma(m_{\al,K})$ und sei
+ 			\begin{align*}
+ 			\phi:K[X]&\to K[\al]&\psi:K[X]\to L\\
+ 			g&\mapsto g(\al)&g&\mapsto \sigma(g)(\beta)
+ 			\end{align*}
+ 			Dann ist $(m_{\al,K})=\Kern(\varphi)$ und $(m_{\al,K})\subset\Kern(\psi)$.\\
+ 			Wir erhalten das kommutierende Diagramm \ref{fig:cdiag-alg-einf-KE}
+ 			\begin{figure}
+ 				\centering
+ 				\begin{tikzcd}
+ 					&K[X] \ar[ld,"\varphi"] \ar[d,"\pi"] \ar[rd,"\psi"]&\\
+ 					K[\al] & K[X]/(m_{\al,K})\ar[l,"\ol{\varphi}"]\ar[r,"\ol{\psi}"] & L
+ 				\end{tikzcd}
+ 			\caption{Kommutierndes Digaramm der Algebraischen Körpererweitunergen}
+ 			\label{fig:cdiag-alg-einf-KE}
+ 			\end{figure}
+ 			invertierbar. Definiere $\sigma':=\ol{\psi}\circ\ol{\varphi}^{-1}$.\\
+ 			Dann ist $\sigma:K[\al]\to L$ und \[\sigma'(\al)=\ol{\psi}\big(X+(m_{\al,K})\big)=\psi(X)=\beta\]
+ 			Das beweist die Existenz von $\sigma'$. Die Eindeutigkeit folgt draus, dass jedes Fortsetzung $\sigma'$ durch ihren Wert auf $\al$ festgelegt ist.
+ 		\end{itemize}
+ 	\end{proof}
+ 
+	 \begin{theorem}[Fortsetzungssatz]\label{satz:Fortsetzung}
+	 	Sei $K$ ein Körper, $L$ ein algebraich abegshclossener Körper und $\sigma:K\to L$ ein Körperhomomorphismus. Sei $K'/K$ eine algebraische Körpererweiterung.\\
+	 	Dann lässt sich $\sigma$ fortsetzen zu einem Homomorphismus $\sigma':K'\to L$.\\
+	 	Ist $K'$ zusätzlich abgeschlossen und $L$ algebraisch über $\sigma(K)$, so ist jedes Fortsetzung $\sigma'$ von $\sigma$ ein Isomorphismus.
+	 \end{theorem}
+ 	\begin{proof}
+ 		Sei $M$ die Menge der Paare $(F,\tau)$, wobei $K\subset F\subset K'$ ein Zwischenkörper und $\tau:F\to L$ eine Fortsetzung von $\sigma$ ist. Dann ist $M$ partiell geordnet durch
+ 		\[(F_1,\tau_1)\leq (F_2\tau_2)\Leftrightarrow F_1\subset F_2\text{ und }\tau_2|F_1=\tau_1\]
+ 		Es gilt $M\neq\emptyset$, weil $(K,\sigma)\in M$.\\
+ 		Jede Kette in $M$ hat eine obere Schranke. somit hat $M$ ein maximales Element $(F,\tau)$. \\
+ 		Es gilt $F=K'$, denn:\\
+ 		Angenommen $F\neq K'$. Sei $\al\in K'\setminus F$. Dann lässt sich $\tau$ fortsetzen zu einem Homomorphismus $\tau:F(\al)\to L$. Widerspruch!\\
+ 		\\
+ 		Sei nun $K'$ algebraisch abgeschlossen, $L$ algebraisch über $\sigma(K)$ und $\sigma':K'\to L$ eine Fortsetzung von $\sigma$.\\
+ 		$L$ ist algebraisch über $\sigma(K)$ und damit über  $\sigma'(K')$.\\
+ 		$\sigma'(K')$ ist aber bereits algebraisch abgeschlossen.\\
+ 		Es folgt $\sigma'(K')=L$.
+ 	\end{proof}
+ 
+ 	\begin{kor}
+ 		Sei $K$ ein Körper und seien $\ol K_1$ und $\ol K_2$ algebraische Abschlüsse von $K$. Dann gibt es einen Isomorphismus $\sigma:\ol K_1\to \ol K_2$ der die Identität auf $K$ fortsetzt.
+ 	\end{kor}
+ 	\begin{proof}
+ 		Die Einbettung $\sigma:K\hookrightarrow \ol K_2$ lässt sich fortsetzen zu einem Homomorphismus $\sigma:\ol K_1\to\ol K_2$ . Diese ist ein Isomorphismus.\\
+ 		(Dieser ist i.a. nicht Kanonisch)
+ 	\end{proof}
+ 
+ 	\begin{exm}
+ 		Der algebraische Abschluss $\ol{\Q}=\{a\in\C\mid\text{$a$ ist algebraisch über $\Q$}\}$ von $\Q$ in $\C$ ist ein algebraischer Abschluss von $\Q$.
+ 	\end{exm}
+
+
+ 
+
+\subsection{Zerfallskörper}
+	
+	\begin{definition}
+		Seien $K/L$ und $L'/K$ Körpererweiterungenund sien $\sigma:L\to L'$ ein Homomorphismus.\\
+		$\sigma$ wird als \textbf{$K$-Homomorphismus} ($\sigma|_K=\id|_K$) bezeichnet, wenn $\sigma$ eine Fortsetzung der Identität auf $K$ ist.
+	\end{definition}
+
+	\begin{definition}
+		Sei $L/K$ eine Körpererweiterung und $F\subset K[X]\setminus K$eine Menge nicht-konstanter Polynome.\\
+		Eine Erweiterung $L/K$ heißt \textbf{Zerfällungskörper} von $F$, über $K$, wenn
+		\begin{enumerate}
+			\item Jedes $f\in K$ zerfällt in Linearfaktoren über $L$
+			\item Die Körpererweiterung $L/K$ wird con Nullstellen der $f\in F$ erzeugt.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{lem}
+		Sei $\ol K$ ein algebraischer Abschluss von $K$ und $M$ die Menge der Nullstellen der Polynome von $F$ in $\ol K$. Dann ist $L=K(M)\subset \ol K$ ein Zerfällungskörper von $F$.
+	\end{lem}
+
+	\begin{satz}\label{satz:abbZFK}
+		Sei $F\subset K[X]\setminus K$ und seine $L_1$ und $L_2$ zwei Zerfällungskörper von $F$ über $K$.
+		Sei $\sigma:L_1\to\ol L_2$ ein $K$-Homomorphismus in einen algebraischen Abschluss von $L_2$.\\
+		Dann gilt $\sigma(L_1)=L_2$.
+	\end{satz}
+	\begin{proof}
+		Wir beweisen schrittweise:
+		\begin{itemize}
+			\item Wir nehmen zuerst an, dass $F$ nur eine Polynom $f$ enthält.\\
+			Seien $a_1,...,a_n$ die Nulsstelle von $f$ in $L_1$ und $b_1,...,b_n$ die Nullstelle von $f$ in $L_2$. Dann ist
+			\[f=\cal\prod_{i=1}^{n}(X-a_i)\]
+			mit $c\in K$ und
+			\[\sigma(f)=c\prod_{i=1}^{n}\big(X-\sigma(a_i)\big)=c\prod_{i=1}^n(X-b_i)\]
+			d.h. nach Umnummerierung also $\sigma(a_i)=b_i$.\\
+			Es folgt
+			\[L_2=K(b_1,...,b_n)=K\big(\sigma(a_1),...,\sigma(a_n)\big)=\sigma\big(K(a_1,...,a_n)\big)=\sigma(L_1)\]
+			\item Falls $f$ endlich viele Polynome enthält, so argumentiert man anlog mit dem Produkt der Polynome.
+			\item Sei $F$ nun unendlich, $M_1$ die Menge der Nullstelle von $F$ in $L_1$, $M_2$ die Menge der Nullstellen von $F$ in $L_2$ und sei $a\in L_1$.\\
+			Dann gibt es eine endliche Teilmenge $M_1'\subset M_1$, sodass $a\in K(M_1')$, d.h. es gibt eine endliche Teilmenge $F'\subset F$, sodass $a$ im Zerfällungskörper $L_1'$ von $F'$ über $K$ in $L_1$ liegt.\\
+			Dann gilt $\sigma(L_1')=L_2'$, d.h. $\sigma(a)\in L_2$ und $\sigma(L_1)\subset L_2$.\\
+			Analog gilt $L_2\subset\sigma(L_1)$.
+		\end{itemize}
+	\end{proof}
+
+	\begin{kor}
+		Sei $F\in K[X]\setminus K$ und seien $L_1$ und $L_2$ Zerfällungskörper von $F$ über $K$.\\
+		Dann gibt es einen $K$-Isomorphismus $L_1\to L_2$
+	\end{kor}
+	\begin{proof}
+		Die Inklusion $K\hookrightarrow \ol L_2$ lässt sich zu einer $K$-Homomorphismus $L_1\xrightarrow{\sigma} \ol{L_2}$ fortsetzen. Für diesen gilt $\sigma(L_1)=L_2$
+	\end{proof}
+
+	\begin{theorem}\label{thm:zfk}
+		Sei $L/K$ eine algebraische Körpererweiterung. Dann sind äquivalent:\begin{enumerate}
+			\item $L$ ist der Zerfällungskörper einer Menge nicht-konstanter Polynome in $K[X]$.
+			\item Ist $\sigma:L\to\ol L$ ein $K$-Homomorphismus, so gilt $\sigma(L)=L$.
+			\item Jedes irreduzible Polynom $f\in K[X]$, das mindestens eine Nullstelle hat zerfällt in $L$ vollständig in Linearfaktoren.
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		\begin{description}
+			\item[$1)\Rightarrow 2)$] Folgt aus \ref{satz:abbZFK} mit $L_1=L_2=L$
+			\item[$2)\Rightarrow 3)$] Sei $f\in K[X]$ irreduzibel und $a\in L$ eine Nullstelle von $f$ in $L$. Dann ist $f$ bis auf eine Konstante das Minimalpolynom $m_{\al,K}$. Ist $b$ eine weitere Nullstelle von $f$ in $\ol L$, so hat die Einbettung $K\hookrightarrow\ol L$ eine Fortsetzung $\sigma:K(\al)\to\ol L$ mit $\sigma(a)=b$ (\ref{satz:nsterhaltung}). Diese lässt sich Fortsetzen (\ref{satz:Fortsetzung}) zu einm $K$-Homomorphismus $\sigma:L\to \ol L$.\\
+			Aus $\sigma(L)=L$ folgt $b\in L$.
+			\item[$3)\Rightarrow1)$] Es ist $L=K(M)$ für eine Teilmenge $M\subset L$ bestehend aus algebraischen Elememten (über $K$).\\
+			Für $a\in M$ ist $m_{a,K}$ irreduzibel über $K$ und hat $a$ als Nullstelle in $L$. Somit zerfällt $m_{a,K}$ in Linearfaktoren über $L$.\\
+			Also ist $L$ der Zerfällungskörper der $m_{a,K}$.
+		\end{description}
+	\end{proof}
+
+	\begin{definition}
+		Eine algebraische Körpererweiterung $L/K$ die eine der Bedingungen von \ref{thm:zfk} erfüllt heißt \textbf{normal}.
+	\end{definition}
+
+	\begin{satz}
+		Sei $L/K$ eine normale Körpererweiterung und $K\subset M\subset L$ ein Zwischenkörper. Dann ist auch $L/M$ normal.
+	\end{satz}
+	\begin{proof}
+		Sei $\sigma\in\Hom_M(L,\ol L)$, dann ist $\sigma\in \Hom_K(L,\ol L)$. Dann ist $\sigma(L)=L$.
+	\end{proof}
+
+	\begin{exm}
+		\begin{enumerate}
+			\item Sei $L/K$ eine Körpererweiterung von Grad 2, dann ist $L/K$ normal.
+			\item Die Erweiterungen $\Q(\sqrt[4]{2})/(\Q(\sqrt{2}))$ und $\Q(\sqrt{2})/\Q$ sind normal.\\
+			Die Erweiterung $\Q(\sqrt[4]{2})/\Q$ hingegen nicht.
+		\end{enumerate}
+	\end{exm}
+
+
+\subsection{Separabel Körpererweiterungen}
+In diesem Abschnitt bezeichne $K$ ein Körper.
+
+	\begin{definition}
+		Ein Polynom $f\in K[X]$ heißt \textbf{separabel}, wenn $f$ nur einfache Nullstellen in einem algebraischen Abschluss $\ol K$ von $K$ hat.\\
+		(Dies ist unabhängig von der Wahl von $\ol K$)
+	\end{definition}
+
+	\begin{satz}
+		Sei $f\in K[X]$ irreduzible, dann
+		\[\text{$f$ separabel}\Leftrightarrow f'\neq 0\]
+	\end{satz}
+	\begin{proof}
+		Sei $\al\in K$ eine Nullstelle von $f$. Dann ist $f=cm_{\al,K}$ für ein $c\in K^*$ und  es gilt
+		\[\text{$\al$ ist mehrfache Nullstelle}\Leftrightarrow f(\al)=f'(\al)=\Leftrightarrow \text{$f'=0$ weil $\deg(f')<\deg(f)$}\]
+	\end{proof}
+
+	\begin{definition}
+		Sei $L/K$ eine algebraische Körpererweiterung. $a\in L$ heißt \textbf{separabel} über $K$, wenn $m_{a,K}$ separabel ist.
+	\end{definition}
+
+	\begin{definition}
+		Sei $L/K$ eine algebraische Körpererweiterung. $L$ heißt \textbf{separabel} über $K$, wenn jedes $a\in L$ separabel über $K$ ist
+	\end{definition}
+
+
 \end{document}
