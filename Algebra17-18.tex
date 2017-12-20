@@ -68,11 +68,14 @@
 \newcommand{\isom}{\overset{\sim}{=}}
 \newcommand{\ord}{\operatorname{ord}}
 \newcommand{\weight}{\operatorname{gew}}
+\newcommand{\grp}[1]{\left\langle#1\right\rangle}
 
 \newcommand{\Kern}{\operatorname{Kern}}
 \newcommand{\Img}{\operatorname{Im}}
 \newcommand{\Potset}{\mathscr P}
 \newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Fr}{\operatorname{Fr}}
 
 \newcommand{\scA}{\mathscr A}
 \newcommand{\scB}{\mathscr B}
@@ -1291,7 +1294,7 @@
 		Ist $f$ zusätzlich primitiv, so ist $f$ auch irreduzibel in $A[X]$.
 	\end{theorem}
 	\begin{proof}
-		Sei $f=c\tilde f$ mit $\tilde f\in A[X]$ primitv und $c\in A$.\\
+		Sei $f=c\tilde f$ mit $\tilde f\in A[X]$ primitiv und $c\in A$.\\
 		Es reciht zu ziegen, dass $\tilde f$ irreduzibel in $A[X]$ ist.\\
 		Angenommen $f=gh$ mit $g,h\in A[X]\setminus A$. Sei
 		\begin{align*}
@@ -1321,12 +1324,12 @@
 		und $\pi(f)$ irreduzible in $\big(A/(p)\big)[X]$, dann ist $f$ irreduzibel in $K[X]$.
 	\end{satz}
 	\begin{proof}
-		Wir nehmen an, dass $f$ primitv ist.\\
+		Wir nehmen an, dass $f$ primitiv ist.\\
 		Ist $f$ reduzibel über $K[X]$ so auch über $A[X]$.\\
 		Sei $f=gh$ mit $g,h\in A[X]\setminus A$. Da $p$ den höchsten Koeffiezienten von $f$ nicht teilt, gilt dies auch für $g$ und $h$ dun es gilt
 		\[\pi(f)=\pi(gh)=\pi(g)\pi(h)\]
 		d.h. $\pi(f)$ zerfällt in $\big(A/(p)\big)[X]$.\\
-		Sei $f$ nun beliebig. Schreibe $f=c\tilde f$ mit $x\in A$ und $\tilde f\in A[X]$ primitv.\\
+		Sei $f$ nun beliebig. Schreibe $f=c\tilde f$ mit $x\in A$ und $\tilde f\in A[X]$ primitiv.\\
 		Angenommen $f$ ist nicht irreduzibel in $K[X]$, dann gilt $f$ reduzibel in $K[X]$ $\Rightarrow$ $\tilde f$ ist reduzibel in $K[X]$ $\Rightarrow $ $\tilde f$ ist reduzzibel in $A[X]$ $\Rightarrow$ $\tilde f=gh$ mit $g,h\in A[X]\setminus A$ $\Rightarrow$ $f=cgh$.\\
 		Somit ist
 		\[\pi(f)=\pi(cg)\pi(h)\]
@@ -1769,7 +1772,7 @@
  					&K[X] \ar[ld,"\varphi"] \ar[d,"\pi"] \ar[rd,"\psi"]&\\
  					K[\al] & K[X]/(m_{\al,K})\ar[l,"\ol{\varphi}"]\ar[r,"\ol{\psi}"] & L
  				\end{tikzcd}
- 			\caption{Kommutierndes Digaramm der Algebraischen Körpererweitunergen}
+ 			\caption{Kommutierendes Diagramm der Algebraischen Körpererweitungen}
  			\label{fig:cdiag-alg-einf-KE}
  			\end{figure}
  			invertierbar. Definiere $\sigma':=\ol{\psi}\circ\ol{\varphi}^{-1}$.\\
@@ -1779,7 +1782,7 @@
  	\end{proof}
  
 	 \begin{theorem}[Fortsetzungssatz]\label{satz:Fortsetzung}
-	 	Sei $K$ ein Körper, $L$ ein algebraich abegshclossener Körper und $\sigma:K\to L$ ein Körperhomomorphismus. Sei $K'/K$ eine algebraische Körpererweiterung.\\
+	 	Sei $K$ ein Körper, $L$ ein algebraisch abgeschlossener Körper und $\sigma:K\to L$ ein Körperhomomorphismus. Sei $K'/K$ eine algebraische Körpererweiterung.\\
 	 	Dann lässt sich $\sigma$ fortsetzen zu einem Homomorphismus $\sigma':K'\to L$.\\
 	 	Ist $K'$ zusätzlich abgeschlossen und $L$ algebraisch über $\sigma(K)$, so ist jedes Fortsetzung $\sigma'$ von $\sigma$ ein Isomorphismus.
 	 \end{theorem}
@@ -1876,7 +1879,7 @@
 			\item[$1)\Rightarrow 2)$] Folgt aus \ref{satz:abbZFK} mit $L_1=L_2=L$
 			\item[$2)\Rightarrow 3)$] Sei $f\in K[X]$ irreduzibel und $a\in L$ eine Nullstelle von $f$ in $L$. Dann ist $f$ bis auf eine Konstante das Minimalpolynom $m_{\al,K}$. Ist $b$ eine weitere Nullstelle von $f$ in $\ol L$, so hat die Einbettung $K\hookrightarrow\ol L$ eine Fortsetzung $\sigma:K(\al)\to\ol L$ mit $\sigma(a)=b$ (\ref{satz:nsterhaltung}). Diese lässt sich Fortsetzen (\ref{satz:Fortsetzung}) zu einm $K$-Homomorphismus $\sigma:L\to \ol L$.\\
 			Aus $\sigma(L)=L$ folgt $b\in L$.
-			\item[$3)\Rightarrow1)$] Es ist $L=K(M)$ für eine Teilmenge $M\subset L$ bestehend aus algebraischen Elememten (über $K$).\\
+			\item[$3)\Rightarrow1)$] Es ist $L=K(M)$ für eine Teilmenge $M\subset L$ bestehend aus algebraischen Elementen (über $K$).\\
 			Für $a\in M$ ist $m_{a,K}$ irreduzibel über $K$ und hat $a$ als Nullstelle in $L$. Somit zerfällt $m_{a,K}$ in Linearfaktoren über $L$.\\
 			Also ist $L$ der Zerfällungskörper der $m_{a,K}$.
 		\end{description}
@@ -1927,5 +1930,435 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 		Sei $L/K$ eine algebraische Körpererweiterung. $L$ heißt \textbf{separabel} über $K$, wenn jedes $a\in L$ separabel über $K$ ist
 	\end{definition}
 
+%VL 13.12.2017
 
+	\begin{satz}
+		Sei $\cha(K)=0$ und $L/K$ eine algebraische Körpererweiterung. Dann ist $L/K$ separabel.
+	\end{satz}
+
+	\begin{definition}
+		Sei $L/K$ eine algebraische Körpererweiterung und $\ol K$ der algebraische Abschluss von $K$.\\
+		Der \textbf{Separabilitätsgrad} $[L:K]_S$ von $L$ über $K$ ist definiert als
+		\[[L:K]_S:=\abs{\Hom_K(L,\ol K)}\]
+		Diese Definition ist unabhängig von $\ol K$.
+	\end{definition}
+
+	\begin{satz}
+		Sei $K(a)/K$ eien einfach algebraische Körpererweiterung. Dann gilt
+		\begin{enumerate}
+			\item Der Separabilitätsgrad $[K(a):K]_S$ ist gleich der Anzahl der verschiedenen Nullstellen von $M_{a,K}$ in einem algebraischen Abschluss $\ol K$ von $K$.
+			\item $a$ist genau dann separabel über $K$, wenn $[K(a):K]_S=[K(a),K]$.
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{enumerate}
+			\item \ref{satz:Fortsetzung} gibt, dass die Anzahl der verschiedene $K$-Homomorphismen $\varphi:K(a)\to\ol K$ gelilch der Anzahl der verschiedenen Nullstellen von $m_{a,K}$ in $\ol K$ ist.
+			\item Es gilt
+			\begin{align*}
+			&\text{$a$ ist separabel über $K$ }\\
+			&\Leftrightarrow \text{ $m_{a,K}$ ist separabel }\\
+			&\Leftrightarrow\text{ $m_{a,K}$ hat nur einfache Nullstellen in $\ol K$ }\\
+			&\Leftrightarrow\text{ die Anzahl der Nullstellen von $m_{a,K}$ ist $\deg(m_{a,K})$}\\
+			&\Leftrightarrow [K(a):K]_S=[K(a):K]
+			\end{align*}
+		\end{enumerate}
+	\end{proof}
+
+	\begin{theorem}[Gradsatz der Separabilität]
+		Sei $K\subset L\subset M$ algebraische Körpererweiterungen. Dann gilt\[[M:K]_S=[M:L]_S[L:K]_S\]
+	\end{theorem}
+	\begin{proof}
+		Sei $\ol K$ eine algebraischer Abschluss von $M$. Dann ist $\ol K$ auch ein algebraischer Abschluss von $K$ und $K\subset L\subset M\subset\ol K$. Sei
+		\begin{align*}
+		\Hom_K(L,\ol K)&=\{\sigma_i\mid i\in I\}\\
+		\Hom_L(M,\ol K)&=\{\tau_i\mid i\in J\}\\
+		\end{align*}
+		mit paarweise verschiedenen $\sigma_i$ und $\tau_i$.\\
+		Wir können $\sigma_i:L\to\ol K$ zu einerm $K$-Automorphismus $\ol{\sigma_i}:\ol K\to\ol K$ fortsetzen. Es gilt
+		\begin{enumerate}
+			\item Die Abbildung $\ol{\sigma_i}\circ\ol{\tau_j}$ sind paarweise verschiedene, denn:\\
+			Sei $\ol{\sigma_i}\circ \tau_j=\ol{\sigma}_{i'}\circ\tau_{j'}$. Die Restriktionen beider Seiten auf $L$ liefert $\sigma_i=\sigma_{i'}$, d.h. $i=i'$. Es folgt $\tau_j=\tau_{j'}$ und $j=j'$.
+			\item $\Hom_K(M,\ol K)=\{\ol{\sigma}\circ \tau_j\mid i\in I,j\in J\}$, denn:\\
+			Die Abbildungen $\ol{\sigma}_i\circ \tau_i$ sind $K$-Homomorphismen. Es beleibt zu zeigen, dass jedes Element in $\Hom_K(M,\ol K)$ dieser Form ist.\\
+			Sei $\tau\in\Hom_K(M,\ol K)$. Dann ist $\tau|_L=\sigma_i$ für ein $i$. Die Abbildung $\ol{\sigma}_i^{-1}\circ \tau$ ist in $\Hom_L(M,\ol K)$. d.h.$\ol{\sigma_i}^{-1}\circ\tau=\tau_j$ für ein $j\in J$. Also ist $\tau=\ol{\sigma_i}\circ\tau_j$.
+		\end{enumerate}
+	Es folgt die Behauptung.
+	\end{proof}
+
+	\begin{satz}\label{satz:abschSepGrad}
+		Sei $L/K$ eine endliche Körpererweiterung. Dann gilt\[[L:K]_S\leq [L:K]\]
+	\end{satz}
+	\begin{proof}
+		$L/K$ ist algebraisch, d.h. $L=K(a_1,...,a_n)$ für geeigente $a_1,...,a_n\in L$.\\
+		Sei $L_0=K$, $L_1=K(a_1)$,..., $L_n=K(a_1,...,a_n)$.\\
+		Äquivalent dazu ist $L_i=L_{i-1}(a_i)$ für $1\leq i\leq n$.\\
+		Dann gilt 
+		\begin{align*}
+		[L_{i}:L_{i-1}]&=[L_{i-1}(a_i):L_{i-1}]=\deg(m_{a_i,L_{i-1}})\\
+		&\geq\text{ Anzahl der verschidenen Nullstellen von $m_{a_iL_{i-1}}$ in $\ol K$}
+		&=[L_i:L_{i-1}]_S
+		\end{align*}
+		
+		Da aber zusätzlich
+		\begin{align*}
+		[L:K]&=\prod_{i=1}^{n}[L_i:L_{i-1}]\\
+		[L:K]_S&=\prod_{i=1}^{n}[L_i:L_{i-1}]_S
+		\end{align*}
+		folgt $[L:K]_S\leq[L:K]$
+	\end{proof}
+
+	\begin{theorem}
+		Sei $L/K$ eine endliche Körpererweiterung. Dann sin äquivalent
+		\begin{enumerate}
+			\item $L/K$ ist separabel.
+			\item Es gibt über $K$ separabele Elemente $a_1,...,an\in L$, sodass $L=K(a_1,...a_n)$.
+			\item $[L:K]_S=[L:K]$
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		\begin{description}
+			\item[$1)\Rightarrow 2)$] ist klar.
+			\item[$2)\Rightarrow 3)$] Setze $L_0=K$, $L_I=L_{i-1}(a_i)$.\\
+			Dann ist $a_i$ separable über $K$, d.h. $m_{a_i,K}$ hat nur einfache Nullstellen in $\ol K$. Es gilt $m_{a_i,L_{i-1}}|m_{a_i,K}$.\\
+			Also hat auch $m_{a_i,L_{i-1}}$ nur einfache Nullstellen in $\ol K$.\\
+			Somit ist $a_i$ separabel über $L_{i-1}$ und daher gilt $[L_i:L_{i-1}]_S=[L_1:L_{i-1}]$.\\
+			Es folgt
+			\[[L:K]_S=\prod_{i=1}^{n}[L_i:L_{i-1}]_S=\prod_{i=1}^{n}[L_i:L_{i-1}]=[L:K]\]
+			\item[$3)\Rightarrow 1)$] Sei $a\in L$. Dann ist $a$ algebraisch über $K$ und $K\subset K(a)\subset L$.\\
+			Dann gilt mit dem Gradsatz
+			\begin{align*}
+			[L:K]_S&=[L:K(a)]_S[K(a):K]_S\\
+			[L:K]&=[L:K(a)][K(a):K]
+			\end{align*}
+			Mit der Annahme dass $[L:K]=[L:K]_S$ und \ref{satz:abschSepGrad}
+			\begin{align*}
+			[L:K(a)]_S&\leq [L:K(a)]\\
+			[K(a):K]_S&\leq [K(a):K]
+			\end{align*}
+			folgt, dass
+			\[[K(a):K]_S\leq [K(a):K]\]
+			d.h. $a$ ist separabel über $K$.
+		\end{description}
+	\end{proof}
+
+	\begin{satz}
+		Sei $f\in K[X]\setminus K$ separabel. Dann ist auch der Zerfällungskörper von $f$ über $K$ separabel.
+	\end{satz}
+	\begin{proof}
+		Seien $a_1,...,a_n$ die Nullstellen von $f$ in $\ol K$. Dann ist $K(a_1,...,a_n)$ ein Zerfällungskörper von $f$ über $K$. Aus $f(a_i)=0$ folgt, dass $m_{a_i,K}|f$. Somit hat $m_{a_i,K}$ nur einfache Nullstellen in $\ol K$ d.h. $a_i$ ist separabel über $K$.
+	\end{proof}
+
+	\begin{kor}
+		Sei $L/K$ eine algebraische Körpererweiterung und $M\subset L$, sodass $L=K(M)$. Dann sind äquivalent
+		\begin{enumerate}
+			\item $L/K$ ist separabel
+			\item Alle $a\in M$ sind separabel über $K$.
+		\end{enumerate}
+		Ist ein dieser Bedingungen erfüllt, so gilt
+		\[[L:K]_S=[L:K]\]
+	\end{kor}
+	\begin{proof}
+		\begin{description}
+			\item[$1)\Rightarrow 2)$] klar.
+			\item[$2)\Rightarrow 1)$] Sei $c\in L$. Dann gibt es immer endlich viele $a_1,...,a_n\in M$, sodass $c\in K(a_1,...,a_n)$. Nach \ref{satz:endlicheVersion} ist $K(a_1,...,a_n)$ separabel über $K$ und somit auch $c$.
+		\end{description}
+		Für $L/K$ endlich gilt \ref{satz:endlicheVersion}.\\
+		Sei also $[L:K]=\infty$. Da $L/K$ separabel ist, gilt dies auch für jeden Zwischenkörper $K\subset E\subset L$. Falls $[E:K]<\infty$, so gilt
+		\[[L:K]_S=[L:E]_S[E:K]_S\geq[E:K]_S=[E:K]\]
+		Es folgt $[L:K]_S=\infty$, weil $L/K$ Zwischenkörper beliebig hohen aber endlichen Grad hat. 
+	\end{proof}
+
+	\begin{kor}
+		Seien $K\subset L\subset M$ algebraische Körpererweiterungen. Dann gilt $M/K$ ist genau dann separabel, wenn $M/L$ und $L/K$ separabel sind.
+	\end{kor}
+	\begin{proof}
+		\begin{description}
+			\item[$\Rightarrow$] Sei $M/K$ separabel. Dann ist auch $L/K$ separabel. Sei $a\in M$. Dann gilt $m_{a,L}|m_{a,K}$, d.h. $a$ ist separabel über $L$.
+			\item[$\Leftarrow$] Seien $M/L$ und $L/K$ separabel. Sei $a\in M$. Der Erweiterungskörper $L'$ von $K$ der von den Koeffizienten von $m_{a,L}$ erzeugt wird ist endlich über $K$.\\
+			Aus $L'\subset L$ folgt $m_{a,L}|m_{a,L'}$. Da $m_{a,L}\in L'[X]$ gilt aber auch $m_{a,L'}|m_{a,L}$. Also ist $m_{a,L}=m_{a,L'}$ und $L'(a)/L'$ ist separabel.
+		\end{description}
+	\end{proof}
+
+	\begin{theorem}[Satz vo primitiven Element]\label{satz:primElem}
+		Sei $L/K$ einen endliche separable Körpererweiterung. Dann gibt es ein $a\in L$, sodass $L=K(a)$
+	\end{theorem}
+	\begin{proof}
+		\begin{description}
+			\item[$K$ endlich] Sei $K$ endlich, so auch $L$. Sei $a$ ein Erzeuger von $L^*$, Dann ist $L=K(a)$.
+			\item[$K$ unendlich] Sei $K$ unendlich. Da $L/K$ einen endliche Erweiterung ist gibt es Elemente $a_1,...,a_n\in L$, sodass $L=K(a_1,...,a_n)$. Durch zusammenfassen $a_ia_j$ zu $c$ reicht es für $n=2$ zu zeigen:\\
+			Sei $L=K(a,b)$ für geeignete $a,b\in L$ gegeben. Sei $m=[L:K]_S$ und seien $\sigma_1,...,\sigma_m$ die verschiedenen Elemente in $\Hom_K(L,\ol K)$. Definiere
+			\[g=\prod_{i\neq j}\left(\big(\sigma_i(a)-\sigma_j(a)\big)+\big(\sigma_i(b)-\sigma_j(b)\big)\right)\in \ol K[X]\]
+			Dann ist $g$ nicht das Nullpolynom, denn für $i\neq j$ ist $\sigma_i(a)\neq \sigma_j(a)$ oder $\sigma_i(b)\neq \sigma_j(b)$. Da $K$ unendlich gibt es ein $c\in K$, sodass mit $g(c)\neq 0$. Es folgt
+			\[\left(\big(\sigma_i(a)-\sigma_j(a)\big)+\big(\sigma_i(b)-\sigma_j(b)\big)\right)c\neq 0\]
+			bzw. $\sigma_{i}(a+bc)\neq \sigma_j(a+bc)$ für alle $i\neq j$.\\
+			Die Elemente $\sigma(a+bc)$ si also paarweise verschieden. Sei $f$  das Minimalpolynom von $a+bc$ über $K$. Es folgt
+			\[[L:K]_S\=m\leq \deg(f)^=[K(a+bc):K]\leq [L:K]\]
+			Da $L/K$ separabel ist folgt Gleichheit.
+		\end{description}
+	
+	\end{proof}
+
+
+
+%VL 18.12.2017
+
+	\subsection{Endliche Körper}
+	\begin{definition}
+		Sei $p$ eine positiv Primzahl. Dann ist $\F_p=\Z/p\Z$ ein Körper mit $p$ Elementen und $\cha(\F_p)=p$.
+	\end{definition}
+
+	\begin{satz}\label{satz:primErweitEigenschaften}
+		%TODO unterscheidung \F_p und F_p
+		Sei $F$ ein endlicher Körper, dann ist $\cha(F)=p>0$ und $F$ enthält $q=p^n$ Elemente, wobei $n=[F:\F_p]$.\\
+		$F$ ist der Zerfällungskörper des Polynoms $X^q-X$ über $\F_p$. Die Erweiterung$F/\F_p$ ist normal.
+	\end{satz}
+	\begin{proof}
+		Da $F$ endlich ist hat $F$ einen endlichen Primkörper $\F_p$ und $\cha(F)=p$.\\
+		$F$ ist eine endlich-dimensionaler Vektorraum über $\F_p$, d.h. $F=\F_p^n$ mit $n=[F:\F_p]$ und $\abs{F}?p^n=q$.\\
+		Die multiplikative Gruppe $F^*$ hat $q-1$ Elemente, d.g. $a^{q-1}=1$ für alle $a\in F^*$.\\
+		Jedes $a\in F$ ist also Nullstelle von $f=X(X^{q-1}-1)=X^q-X$.\\
+		$F$ ist also der Zerfällungskörper von $f=X^q-X$ über $\F_p$.
+	\end{proof}
+
+	\begin{theorem}
+		Sei $p$ eine positive Primzahl. Dann gibt es zu jedem positiven $n\in \N$ einen Erweiterungskörper $\F_q/\F_p$ mit $q=p^n$ Elementen. $\F_q$ ist bis auf Isomorphie eindeutig charakterisiert, als der Zerfällungskörper von $X^q-X$ über $\F_p$ und besteht aus den $q$ Nullstellen. dieses Polynoms. Jeder endliche Körper ist isomorph zu genau einem Körper des Typs $\F_q$.
+	\end{theorem}
+	\begin{proof}
+		Sei $f=X^q-X\in \F_p[X]$ und $L\subset\ol{\F_p}$ der Zerfällungskörper von $f$ über $\F_p$.\\
+		Da $f'=-1$hat $f$ nur einfache Nullstellen in $\ol{\F}_p$.\\
+		Seien $a,b\in\ol{\F_p}$ zwei Nullfolge von $f$. Dann gilt
+		\begin{align*}
+		(a+b)^q&=\sum_{j=0}^{q}\binom{q}{j}a^{q-j}b^j\\
+		&=a^q+\underbrace{\binom{q}{1}}_{=0}a^{q-1}b+...+b^q\\
+		=q^q+b^q\\
+		&=a+b
+		\end{align*}
+		Da heißt $a-b$ ist Nullstelle von $f$ in $\ol{\F_p}$. Für $b\neq 0$ ist
+		\begin{align*}
+		(ab^{-1})^{q}&=a^q(b^{-1})^q\\
+		&=a^{q}(b^q)^{-1}\\
+		&=ab^{-1}
+		\end{align*}
+		D.h. $ab^{-1}$ ist Nullstelle von $f$.\\
+		Die Nullstellen von $f$ in $\ol{\F_p}$ bilden als einen Teilkörper von $\ol{\F_p}$.\\
+		Folglich besteht $L$ aus den $q$ Nullstellen von $f$ in $\ol{\F_p}$.\\
+		Sei $F$ ein zweiter Körper mit $q$ Elementen, dann ist na\ref{satz:primErweitEigenschaften} $F$ ein Zerfällungskörper von $X^q-X$ über seinem Primkörper $\F_p$. $F$ ist somit isomorph.
+	\end{proof}
+
+	\begin{bem}
+		Wir können di Körper $\F_q$ auch Konstruieren, indem wir die Nullstellen eines irreduziblen Polynoms zu $\F_p$ adjungiert.
+	\end{bem}
+
+	\begin{satz}
+		Sei $n\in\N$. Dann gibt es ein irreduzibles Polynom $f$ mit $\deg_{\F_p}(f)=n$.
+	\end{satz}
+	\begin{proof}
+		Sei $q=p^n$. Dann ist $\F_q/\F_p$ eine separable Erweiterung vom Grad $n$.\\
+		Nach dem Satz vom Primitven Element \ref{satz:primElem} ist $\F_q=\F_p(a)$ für ein $a\in\F_q$.\\
+		Dann ist $m_{a,\F_p}$ irreduzibel und vom Grad $n$.
+	\end{proof}
+
+	\begin{exm}
+		Das Polynom $X^2+1$ ist irreduzible über $\F_3$.\\
+		Also
+		\[\F_9=\F_3(\theta)=\{a+\theta b\mid a,b\in\F_3\})\F_3[X]/(X^2+1)\]
+		mit $\theta^2=-1$.
+	\end{exm}
+
+	\begin{satz}
+		Sei $F$ eine endlicher Körper und $K/F$ eine algebraische Erweiterung. Dann ist $K/F$ normal und separabel.
+	\end{satz}
+	\begin{proof}
+		Sei $\F_p$ der Primkörper von $F$ und $\ol K$ ein algebraischer Abschluss von $\F_p$.Dann ist $\ol K$ auch ein algebraischer Abschluss von $F_p$. Schreibe $\ol K=\ol{F_p}$ Dann
+		\[F_p\subset F\subset K\subset \ol{F_p}\]
+		Falls $\abs K\leq \infty$, so ist $K$ isomorph zu $\F_q$ mit $q=p^n$ und $K$ ist als Zerfällungskörper des separablen Polynom  $X^{q}-X$ normal und separabel über $F_p$ und somit über $F$.\\
+		Sei $\abs K=\infty$. Wähle $M\subset K$ mit $K=F(M)$.\\
+		Dann ist $K$ die Vereinigung von Körper $F(M')$ wobei $M'$ eine endliche Teilmenge von $M$ ist.\\
+		$F(M')$ ist eine endliche Erweiterung von $F$ und somit von $F_p$, d.h. $F(M')$ ist isomorph zu $F_q$. Somit ist $K$ normal und separabel über $F$.
+	\end{proof}
+
+	\begin{definition}
+		Sei $F_q$ mit $q=p^n$ ein endlicher Körper.\\
+		Dann ist die Abbildung
+		\begin{align*}
+		\Fr:F_q&\to F_q\\
+		x&\mapsto x^p
+		\end{align*}
+		ein $F_p$-Automorphismus von $F_q$. Diese wir als \textbf{Frobenius-Automorphismus} bezeichnet.
+	\end{definition}
+
+	\begin{theorem}
+		Sei$q=p^n$, dann ist die Gruppe $\Aut_{F_p}(F_q)$ zyklisch mit Ordnung $n$. Und $\Aut_{F_p}(F_q)=\grp{\Fr}$ wird vom Frobenius-Automorphismus erzeugt.
+	\end{theorem}
+	\begin{proof}
+		Sei $s$ die Ordnung von $\Fr$, d.h. $s=\abs{\grp{\Fr}}$.\\
+		Für $a\in F_q$ gilt
+		\[\Fr^n(a)=a^{p^n}=a^q=a\]
+		s.h. $s|n$. Andererseits ist $\Fr^s(a)=a^{p^s}=a$ für alle $a\in F_q$.\\
+		\\
+		Das Polynom $X^{p^s}-X$ hat höchsten $p^s$ verschiedene Nullstellen, d.h. $p^s\geq q=p^n$. Also gilt $s=n$.\\
+		Die Erweiterungen $F_q/F_p$ ist normal und separabel, sodass
+		\begin{align*}
+		\abs{\Aut_{F_p}(F_q)}&=\abs{\Hom_{F_p}(F_q,\ol F_p)}
+		\intertext{da $F_q/F_p$ normal ist.}
+		&=[F_q:F_p]_S\\
+		&=[F_q:F_p]
+		\intertext{Da $F_q/F_p$ separabel ist}
+		&=n
+		\end{align*}
+		d.h. $\Fr$ erzeugt $\Aut_{F_p}(F_q)$.
+	\end{proof}
+	
+	
+	
+	\section{Galois-Erweiterungen}
+	\begin{definition}
+		Eine algebraische, normale, separabele Körpererweiterung $L/K$ heißt \textbf{Galoiserweiterung}.
+	\end{definition}
+	\begin{definition}
+		Man bezeichnet $\Aut_K(L)$ als \textbf{Galoisgruppen} von $L/K$ und schreibt $G(L/K)$ für $\Aut_K(L)$.
+	\end{definition}
+	
+	\begin{exm}
+		\item Sei $F$ ein endlicher Körper und $K/F$ eine algebraische Körpererweiterung. Dann ist $K/F$ eine Galois-Erweiterung.
+		\item Sei $p$ ein positive Primzahl und $q=p^n$. $\F_q/\F_p$ ist eine Galois-Erweiterung. Die Galoisgruppe ist zyklisch der Ordnung $n$ und wird vom Frobenius-Automorphismus erzeugt.
+		\item $\C/\R$ ist eine Galois-Erweiterung. Die Galoisgruppe wird von der komplexen Konjugation erzeugt.
+	\end{exm}
+
+%VL 20.12.2017
+
+	\begin{satz}
+		Sei $L/K$ eine normale Körpererweiterung und $f\in K[X]$ irreduzible. Dann permutiert $\Aut_K(L)$ die Nullstellen von $f$ transitiv.
+	\end{satz}
+	\begin{proof}
+		Falls $f$ keine Nullstellen in $L$ hat so ist nichts zu zeigen.\\
+		Sei $a\in L$ eine Nullstelle von $f$ und $\varphi\in\Aut_K(L)$. Dann gilt
+		\[f\big(\varphi(a)\big)=\varphi\big(\underbrace{f(a)}_{=0}\big)=0\]
+		d.h. $\varphi(a)$ ist Nullstelle von $f$.\\
+		Weiterhin ist $f=cm_{a,K}$ für ein $c\in K$.\\
+		Sei nun $b$ eine weitere Nullstelle von $f$ in $L$. Dann ist $b$ auch Nullstelle von $m_{a,K}$ und die Einbettung
+		\[K\hookrightarrow \ol L\]
+		lässt sich fortsetzen als
+		\[K(a)\xhookrightarrow{a} \ol L\]
+		mit $\sigma(a)=b$zu einem $K$-Homomorphismus
+		\[L\xrightarrow{\sigma}\ol L\]
+		Da $L/K$ normal ist gilt $\sigma(L)=L$.\\
+		Somit ist $\sigma\in\Aut_K(L)$ mit $\sigma(a)=b$.
+	\end{proof}
+
+	\begin{satz}\label{satz:SepGradAut}
+		Sei $L/K$ eine normale Körpererweiterung dann gilt\[\abs{\Aut_K(L)}=[L:K]_S=\abs{\Hom_K(L,\ol K)}\]
+	\end{satz}
+	\begin{proof}
+		Sei $\ol L$ ein algebraischer Abschluss von $L$. Dann ist $\ol L$ auch ein algebraischer Abschluss von $K$.\\
+		Ist $\varphi:L\to\ol L$ ein $K$-Homomorphismus, so gilt $\varphi(L)=L$. Als ist die Abbildung
+		\[\Hom_K(L,\ol K)\to\Aut_K(L)\]
+		eine Bijektion.
+	\end{proof}
+	
+	\begin{satz}
+		Sei $L/K$ eine endliche Galois-Erweiterung. Dann ist
+		\[[L:K]=\abs{G(L/K)}\]
+	\end{satz}
+	\begin{proof}
+		Nach \ref{satz:SepGradAut} gilt mit Separabilität
+		\[\abs{\Aut_K(L)}=[L:K]_S=[L:K]\]
+	\end{proof}
+
+	\begin{definition}
+		Sei $L$ ein Körper und $G$ eine Untergruppe von $\Aut_K(L)$. Dann ist
+		\[L^G:=\{x\in L\mid g(x)=x\forall g\in G\}\]
+		ein Teilkörper von $L$. Dieser wird als \textbf{Fixkörper} von $G$ bezeichnet.
+	\end{definition}
+
+	\begin{satz}
+		Sei $L/K$ eine Galois-Erweiterung. Dann sit der Fixkörper von $G(L/K)$ genau $K$.
+	\end{satz}
+	\begin{proof}
+		Sei $G=G(L/K)$. Dann ist $\subset L^G$.\\
+		Sei $a\in L/K$. Dann ist $\deg(m_{a,K})\geq 2$. Da $L/K$ normal ist, zerfällt $m_{a,K}$ über $L$ in Linearfaktoren. Weil $L/K$ separabel ist, ist $a$ eine einfache Nullstelle von $m_{a,K}$. Es gibt als ein $b\in L$ mit $b\neq a$ mit $m_{a,K}(b)=0$. Da $G(L/K)$ die Nullstellen von $m_{a,K}$ transitiv permutiert gibt es ein $\varphi\in G(L/K)$ mit $\varphi(a)=b$.
+	\end{proof}
+
+	\begin{satz}
+		Sei $L$ ein Körper und $H$ eine endliche Untergruppe von $\Aut_K(L)$. Dann ist $L/L^H$ eine endliche Galois-Erweiterung mit Galoisgruppe $H$ und
+		\[[L:L^H]=\abs{H}\]
+	\end{satz}
+	\begin{proof}
+		Sei $a\in L$ un $Y_a=\{\varphi(a)\mid\varphi\in H\}\subset L$.\\
+		seine $a_1,...,a_n$ die verschiedenen Elemente von $Y_a$. Sei
+		\[f_a=\prod_{i=1}^{n}(X-a_i)\]
+		Dann ist für $\varphi\in H$ 
+		\[\varphi(f_a)=\prod_{i=1}^{n}\big(X-\varphi(a_i)\big)=f_a\]
+		Also ist $f_a\in L^H[X]$. Da $a$ Nullstelle des Polynoms $f_a$ ist ist $a$ separabel.\\
+		Die Erweiterung $L/L^H$ ist als separabel.\\
+		Dann ist $L$ der Zerfällungskörper der Polynome $F=\{f_a\mid a\in L\}$. Somit ist $L/L^H$ eien Galoiserweiterung.\\
+		Aus $m_{a,L^H}| f_a$ folgt 
+		\[\deg(m_{a,L^H})\leq \deg(f)\leq \abs{H}\tag{\star}\]
+		Ist $\abs{H}<[L:L^H]\leq\infty$, so gibt es eine endliche Teilmenge $S\subset L$, sodass für $M=L^H(S)$ gilt
+		\[\infty>[M:L^H]>\abs H\]
+		Zusätzlich ist $M/L^H$ separabel, da $L/L^H$ separabel ist.\\
+		Nach Satz \ref{satz:primElem} gibt es ein $c\in L$, sodass $M=L^H(c)$ ist. Dann gilt
+		\[\deg(m_{c,L^H})=[M:L^H]>\abs{H}\]
+		Widerspruch zu $(\star)$.\\
+		Also ist $[L:L^H]\leq\abs H$.\\
+		D.h. $L/L^H$ ist einen endliche Galoiserweiterung.\\
+		Aus $H\subset \Aut_{L^H}(L)$ folgt
+		\[\abs H\leq\abs{\Aut_{L^H}(L)}=[L:L^H]\leq\abs{H}\]
+		Somit gilt $H=\Aut_{L^H}(L)$
+	\end{proof}
+
+	\begin{bem}
+		Für $a\in  L$ ist $m_{a,L^H}=f_a$ in der Notation des Beweises.
+	\end{bem}
+	
+	\begin{theorem}[Hauptsatz der Galoistheorie]\label{satz:hsGal}
+		Sei $L/K$ eine endliche Galois-Erweiterung. Sei $U$ die Menge der Untergruppen von $G(L/K)$ und $Z$ die Menge der Zwischenkörper von $L/K$. Dann sind die Abbildungen
+		\begin{align*}
+		\Phi:Z&\to U&\Psi:U&\to Z\\
+		M&\mapsto G(L/M)&H&\mapsto L^H\\
+		\end{align*}
+		zueienander inverse Bijektionen. Für einen Zwischenkörper $M$ von $L/K$ ist die Erweiterung $M/K$ normal genau dann wenn $G(L/M)$ normal in $G(L/K)$ ist.\\
+		In diesem Fall ist
+		\begin{align*}
+		G(L/K)&\to G(M/K)\\
+		\sigma&\mapsto\sigma|_M
+		\end{align*}
+		eine surjektiver Gruppenhomomorphismus mit $\Kern()=G^0(L/M)$.\\
+		Dieser induziert einen Isomorphismus
+		\[G(M/K)\isom G(L/K)/G(L/M)\]
+	\end{theorem}
+	\begin{proof}
+		Sei $M$ ein Zwischenkörper von $L/K$. Dann ist $L/M$ eine Galois-Erweiterung und $G(L/M)=\Aut_M(L)$, sowie $c\Aut_K(L)=G(L/K)$, weil $L\subset M$.\\
+		Somit ist $\Phi$ wohldefiniert. Sei $M\in Z$, dann ist
+		\begin{align*}
+		M&=L^{G(L/M)}=L^{\Phi(M)}\\
+		&=\Psi(\Phi(M))
+		\end{align*}
+		Somit ist $\Psi\circ\Phi=\isom_Z$.\\
+		Sei $H\in U$. Dann ist $L/L^H$ eine Galois-Erweiterung mit Galoisgruppe $H$. Also ist
+		\begin{align*}
+		H&=G(L/L^H)=\Phi(L^H)\\
+		&=\Phi(\Psi(H))
+		\end{align*}
+		d.h. $\Phi\circ\Psi=\id_U$.\\
+		Somit sind $\Phi$ und $\Psi$ zueinander inverse Bijektionen.\\
+		\\
+		Sei $M$ ein Zwsichenkörper von $L/K$. Dann ist $M=L^H$ für ein $H\in U$.\\
+		Ist die Erweiterung $M/K$ normal, so ist die Abbildung
+		\begin{align*}
+		\varphi:G(L/K)&\to G(M/K)\\
+		\sigma&\mapsto \sigma_M
+		\end{align*}
+		ein surjektiver Gruppenhomomorphismus.\\
+		Sei $\ol L$ ein algebraischer Abschluss von $L$. Dann ist $\ol L$ auch ein algebraischer Abschluss von $K$ und von $M$. Sei $\sigma\in G(L/K)$. Dann ist
+		\[M\xrightarrow{\sigma}\ol L\]
+		Da $M$ normal ist gilt $\sigma(M)=M$ d.h. $\sigma|_M\in G(M/K)$.\\
+		Also ist $\varphi$ wohldefiniert. Weiterhin gilt
+		\[(\sigma_1\sigma_2)|_M=\sigma_1|_M\sigma_2|_M\]
+		Sei $\sigma\in G(M/K)$. Dann lässt sich die Abbildung
+		\[M\xrightarrow{\sigma}\ol L\]
+		fortsetzen zu einem $K$-Homomorphismus
+		\[L\xrightarrow{\sigma}\ol L\]
+		weil $L/M$ algebraisch ist. Da $L/K$ normal ist folgt $\sigma(L)=L$. $\varphi$ ist also surjektiv.
+	\end{proof}
 \end{document}
