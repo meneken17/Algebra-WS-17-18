@@ -829,6 +829,89 @@
 		\[x\sim y\Leftrightarrow \text{ ex gibt ein $k\in I$ mit $i\leq k$ und $j\leq k$ und $f_{ik}(x)=f_{jk}(x)$}\]
 	\end{proof}
 %VL 06.11.2017
+\section{Polynomringe}
+\subsection{Polynome mit einer Variable}
+Sei in diesem Abschnitt $A$ ein Ring.
+
+	\begin{definition}
+		Sei $A[X]$ die Menge der Folgen $(a_0,a_1,...,)$ mit $a_i\in A$ und $a_i=0$ für fast alle $i\in\N$.\\
+		Die Elemente dieser Menge heißen \textbf{Polynome}.
+	\end{definition}
+	
+	\begin{definition}
+		$A[X]$ ist ein Ring mit 
+		\begin{align*}
+		(a_0,a_1,...,)+(b_0,b_1,...)&=(a_0+b_0,a_1+b_1,...)\\
+		(a_0,a_1,...,)\cdot(b_0,b_1,...)&=(c_0,c_1,...)
+		\end{align*}
+		mit $c_n=\sum_{k=0}^n a_{n-k}b_k$.\\
+		Das Nullelement ist $0=(0,0,...)$ und $1=(1,0,0,...)$ ist das Neutrale Element der Multiplikation.\\
+	\end{definition}
+
+	\begin{definition}
+		$A[X]$ wird als der \textbf{Polynomring} in der \textbf{Variablen} $X$ bezeichnet.\\
+	\end{definition}
+
+	\begin{prop}
+		\begin{enumerate}
+			\item Die Abbildung $A\to A[X],a\mapsto(a,0,0,...)$ ist ein Injektiver Ringhomomorphismus und $A$ ist Unterring von $A[X]$.
+			\item Sei $X=(0,1,0,...)$. Dann ist $X^n=(0,0,...,0,1,0,...)$ an $n$-ter Stelle und $aX^n=(0,...,0,a,0,...)$. 
+			\item Polynome lassen sich schreiben als
+			\[(a_0,a_1,...)=\sum_{i=0}^na_iX^i\]
+			\item Dann gilt für Addition und Multiplkation:
+			\begin{align*}
+			\sum_{k}a_kX^k+\sum_kb_kX^k&=\sum_k(a_k+b_k)X^k
+			\left(\sum_{k}a_kX^k\right)\left(\sum_kb_kX^k\right)&=\sum_k c_kX^k
+			\end{align*}
+			mit $c_k=\sum_{i+j=k}a_ib_j$.
+		\end{enumerate}
+	\end{prop}
+
+	\begin{definition}
+		\begin{enumerate}
+			\item Für ein Polynom $f=\sum_ka_kX^k$ heißt $a_k$ der $k$-te \textbf{Koeffizient} von $f$.
+			\item Für $f\neq0$ heißt
+			\[\deg(f)=\max\{i\mid a_i\neq 0\}\]
+			der \textbf{Grad} von $f$. (Falls $f=0$, dann ist $\deg f:=-\infty$)
+			\item Der Koeffizient $a_n$ mit $n=\deg(f)$ heißt \textbf{Führender Koeffizient} von $f$.
+			\item Ist der führende Koeffizient $a_n=1$, so heißt $f$ \textbf{normiert}
+		\end{enumerate}
+	\end{definition}
+
+	\begin{theorem}
+		Seien $f,g\in A[X]$. \begin{enumerate}
+			\item Dann ist $\deg(f+g)\leq\max(\deg (f),\deg (g))$ und $\deg(fg)\leq\deg(f)+\deg(g)$.\\
+			\item Sind die führenden Koeffizienten von $f$ oder $g$ keine Nullteiler, so idt $\deg(fg)=\deg(f)+\deg (g)$.
+		\end{enumerate}
+	\end{theorem}
+
+	\begin{kor}
+		$A$ ist genau dann Integritätsbereich wenn $A[X]$ Integritätsbereich ist.\\
+		In diesem Fall gilt $A[X]^*=A^*$.
+	\end{kor}
+	\begin{proof}
+		\begin{description}
+			\item[$\Leftarrow$] Ist $A[X]$ ein Integritätsbereich, dann ist insbesondere $A\subset A[X]$.
+			\item[$\Rightarrow$] Sei $A$ ein Integritätsbereich. Dann gilt $\deg(fg)=\deg(f)+\deg(g)$. Sei zusätzlich $f,g\in A[X]$ mit $fg=0$, dann ist $\deg(fg)=-\infty$.\\
+			Also muss $\deg(f)=-\infty$ oder $\deg(g)=-\infty$. Damit $f=0$ oder $g=0$. Also ist $A[X]$ Integritätsbereich.
+		\end{description}
+		Sei nun $fg=1$, dann ist $\deg(fg)=0$, also muss $\deg(f)=\deg(g)=0$. Dann sind $f,g\in A$.
+	\end{proof}
+
+	%TODO
+	
+	\begin{exm}
+		Sei $I$ ein Ideal in $A$. Die Komposition $A\to A/I\to(A/I)[X]$ ist ein Ringhomomorphismus. Dieser induziert einen Ringhomomorphismus $\pi:A[X]\to(A/I)[X]$ mit $\pi(x)=x$.\\
+		Diese Abbildung ist die Reduktion der Koeffizienten modulo $I$.
+		\[\Kern(\pi)=\{\sum_ia_iX^i\mid a_i\in I\}=I[X]\]
+		und somit
+		\[(A/I)[X]\isom A[X/I[X]]\]
+	\end{exm}
+
+	\begin{lem}
+		Es gilt $I$ ist Primideal in $A$ $\Leftrightarrow$ $I[X]$ ist Primideal in $A[X]$.
+	\end{lem}
+
 %TODO
 
 %VL 08.11.2017
@@ -1326,7 +1409,7 @@
 	\begin{proof}
 		Wir nehmen an, dass $f$ primitiv ist.\\
 		Ist $f$ reduzibel über $K[X]$ so auch über $A[X]$.\\
-		Sei $f=gh$ mit $g,h\in A[X]\setminus A$. Da $p$ den höchsten Koeffiezienten von $f$ nicht teilt, gilt dies auch für $g$ und $h$ dun es gilt
+		Sei $f=gh$ mit $g,h\in A[X]\setminus A$. Da $p$ den höchsten Koeffizienten von $f$ nicht teilt, gilt dies auch für $g$ und $h$ dun es gilt
 		\[\pi(f)=\pi(gh)=\pi(g)\pi(h)\]
 		d.h. $\pi(f)$ zerfällt in $\big(A/(p)\big)[X]$.\\
 		Sei $f$ nun beliebig. Schreibe $f=c\tilde f$ mit $x\in A$ und $\tilde f\in A[X]$ primitiv.\\
@@ -1522,7 +1605,7 @@
 	\end{proof}
 
 	\begin{satz}
-		Ist $B\supset A$ ein Integritäsbereich so gilt
+		Ist $B\supset A$ ein Integritätsbereich so gilt
 		\[D(f)=0\Leftrightarrow\text{ $f$ hat Mehrfache Nullstellen in $B$}\]
 	\end{satz}
 
@@ -2359,6 +2442,923 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 		\[M\xrightarrow{\sigma}\ol L\]
 		fortsetzen zu einem $K$-Homomorphismus
 		\[L\xrightarrow{\sigma}\ol L\]
-		weil $L/M$ algebraisch ist. Da $L/K$ normal ist folgt $\sigma(L)=L$. $\varphi$ ist also surjektiv.
+		weil $L/M$ algebraisch ist. Da $L/K$ normal ist folgt $\sigma(L)=L$. $\varphi$ ist also surjektiv.\\
+		Es gilt $\Kern(\varphi)=G(L/M)$, d.h. $G(L/M)$ ist eine normaler Untergruppe von $G(L/K)$.\\
+		Sei nun $H$ eine normale Untergruppe von $G(L/K)$. Wir zeigen, dass die Erweiterung $L/L^H$ normal ist:\\
+		Sei $\ol L$ ein algebraischer Abschluss von $L$ und $\sigma:L^H\to\ol L$ ein $K$-Homomorphismus. Dann gilt $\sigma(L^H)=L^H$. Da $K\subset L^H\subset L\subset\ol L$ können wir $\sigma$ zu einem $K$-Homomorphismus $\sigma:L\to\ol L$ fortsetzen weil $L/L^H$ algebraisch ist. Da $L/K$ normal ist gilt $\sigma(L)=L$. Wir können $\sigma$ also auffassen als $K$-Homomorphismus $\sigma:L^H\to L$.\\
+		Sei $b\in\sigma(L^H)$. Dann ist $b=\sigma(a)$ für ein $a\in L^H$.\\
+		Sei $\tau\in H$. Da $H\sigma=\sigma H$ ist gibt es $\tau'\in H$, sodass
+		\[\tau(b)=\tau(\sigma(a))=\sigma(\underbrace{\tau'(a)}_{=a})=\sigma(a)=b\]
+		d.h. $b\in L^H$ und $\sigma(L^H)\subset L^H$.\\
+		\\
+		Zum Beweis der Gleichheit setzen wir den $K$-Homomorphismus
+		\[\underbrace{\sigma(L^H)}_{\subset L^H}\xrightarrow{\sigma^{-1}}L^H\to\ol L\]
+		zu einem $K$-Homomorphismus $\rho:L^H\to\ol L$ fort.\\
+		Diesen können wir wie oben als $K$-Homomorphismus $L^H\to L$ auffassen.\\
+		Dann ist $\rho(L^H)\subset L^H$ und
+		\[L^H\xrightarrow{\sigma}L^H\xrightarrow{\rho}L^H\]
+		ist die Identität auf $L^H$, d.h. $\rho\sigma=\id_{L^H}$.\\
+		\\
+		Analog konstruieren wir einen $K$-Homomorphismus $\eta:L^H\to L$ mit $\eta(L^H)\subset L^H$ und $\eta\rho=\id_{L^H}$.\\
+		Es folgt
+		\[\sigma\rho=\id_{L^H}\sigma\rho=\eta\rho\sigma\rho=\eta\rho=\id_{L^H}\]
+	\end{proof}
+
+	\begin{satz}
+		Sei $L/K$ eine endliche Galois-Erweiterung. Seien $L_1,L_2$ Zwischenkörper von $L/K$ die zu Untergruppen $H_1$ und $H_2$ von $G(L/K)$ korrespondieren.\\
+		Dann gilt für $\sigma\in G(L/K)$
+		\[\sigma(L_1)=L_2\Leftrightarrow\sigma H_1\sigma^{-1}=H_2\]
+	\end{satz}
+
+	\begin{satz}[Translationssatz]
+		Seien $L/K$ und $M/K$ Körpererweiterungen, sodass $L$ und $M$ in einem Gemeinsamen Erweiterungskörper von $K$ enthalten sind.\\
+		Ist $L/K$ eine endliche Galois-Erweiterung, so ist auch $L/K$ eine endliche Galois-Erweiterung und die Abbildung
+		\begin{align*}
+		G(L\cdot M/M)&\to G(L/K)\\
+		\sigma&\mapsto\sigma|_L
+		\end{align*}
+		definiert einen Isomorphismus 
+		\[G({L\cdot M}/M)\isom G(L/{L\cap M})\]
+		(Dabei ist $L\cdot M$ das Kompositum $L\cdot M:=L(M)=M(L)$)
+	\end{satz}
+	\begin{proof}
+		Sei $a$ ein Primelement der Erweiterung $L/K$ und seien $a_1,...,a_n$ die Nullstelle von $m_{a,K}$ in $L$. Dann ist
+		\[L=K(a_1,...,a_n)\]
+		und damit
+		\[L\cdot M=M(L)=M(a_1,...,a_n)\]
+		d.h. ${L\cdot M}/M$ ist eine endliche Galois-Erweiterung.\\
+		\begin{description}
+			\item[Wohldefiniertheit] Sei $\sigma\in G({L\cdot M}/M)$ und $b\in L$. Dann zerfällt $m_{b,K}$ in $L$, also
+			\[m_{b,K}=\prod_{j=1}^n(X-\underbrace{b_j}_{\in L})\]
+			und
+			\[m_{b,K}=\sigma(m_{b,K})=\prod_{j=1}^{n}(X-\underbrace{\sigma(b_i)}_{\in L})\]
+			Es folgt $\sigma(b)\in L$.\\
+			\item[Injektivität] Sei $\sigma\in G({L\cdot M}/M)$ mit $\sigma|_L=\id_L$. Aus $L\cdot M=M(L)=M(a_1,...,a_n)$ und $\sigma(a_i)=a_i$ folgt $\sigma=\id$.
+		\end{description}
+		Sei $H$ das Bild der Abbildung. Dann ist
+		\[L^H=L\cap (L\cdot M)^{G({L\cdot M}/M)}=L\cap M\]
+		Die Erweiterung $L/L^H$ ist eine endliche Galois-Erweiterung mit Galoisgruppe $H$. Aus der Injektivität der Abbildung folgt
+		\[G({L\cdot M}/M)\isom H=H(L/L^H)=G(L/{L\cap M})\]
+	\end{proof}
+
+	\begin{theorem}[Produktsatz]
+		Seien $L_1/K$ und $L_2/K$ endliche Galois-Erweiterungen, sodass $L_1$ und $L_2$ in einem gemeinsamen Erweiterungskörper enthalten sind. Dann ist ${L_1\cdot L_2}/K$ eine endliche Galois-Erweiterung und die Abbildung
+		\begin{align*}
+		G({L_1\cdot L_2}/K)\to G(L_1/K)\times G(L_2/K)\\
+		\sigma&\mapsto(\sigma|_{L_1},\sigma|_{L_2})
+		\end{align*}
+		definiert einen injektiven Gruppenhomomorphismus.\\
+		Ist $L_1\cap L_2=K$, so ist die Abbildung ein Isomorphismus.
+	\end{theorem}
+	\begin{proof}
+		Sei $L_1=K(a)$ und $L_2=K(b)$. Seien $a_1,...,a_n$ die Nullstellen von $m_{a,K}$ und $b_1,...,b_n$ die Nullstellen on $m_{b,K}$. Dann ist
+		\begin{align*}
+		L_1&=K(a_1,...,a_n)\\
+		L_2=K(b_1,...,b_m)\\
+		L_1\cdot L_2&=L_1(L_2)=L_2(L_1)\\
+		&=K(a_1,...,a_n,b_1,...,n_m)
+		\end{align*}
+		${L_1\cdot L_2}/K$ ist als einen endliche Galois-Erweiterung.\\
+		\begin{description}
+			\item[Wohldefiniertheit] wie oben.
+			\item[Injektivität] Sei $\sigma\in G({L_1\cdot L_2}/K)$ mit $\sigma|_{L_1}=\id_1$ und $\sigma|_{L_2}=\id_2$.\\
+			Dann folgt, aus $L_1\cdot L_2=L_1(L_2)$, dass $\sigma=\id_{l_1\cdot L_2}$ ist.\\
+			Die Gruppen $G({L_1\cdot L_2}/L_1)$ und $G({L_1\cdot L_2}/L_2)$ sind Untergruppen von $G({L_1\cdot L_2}/K)$.\\
+			Sei nun $L_1\cap L_2=K$. Dann
+			\[G({L_1\cdot L_2}/L_1)\cap G({L_1\cdot L_2}/L_2)=\{1\}\]
+			Aus dem Translationssatz folgt dann
+			\begin{align*}
+			G({L_1\cdot L_2}/L_1)&\isom G(L_2/{L_1\cap L_2}) = G(L_2/K)\\
+			G({L_1\cdot L_2}/L_2)&\isom G(L_1/{L_1\cap L_2}) = G(L_1/K)
+			\end{align*}
+			Die Abbildung ist in diesem Fall also ein Isomorphismus.
+		\end{description}
+	\end{proof}
+
+	\begin{theorem}
+		Sei $L/K$ eine endliche Galois-Erweiterung und sei $a$ ein primitives Element, d.h. $L=K(a)$. Sei außerdem $H\subset G(L/K)$. Dann ist\[L^H=K(a_0,...,q_1)\]
+		wobei die $a_i$ die Koeffizienten von
+		\[f=\prod_{\sigma\in H}(X-\sigma(a))=\sum_{i=0}^{n}a_iX^i\]
+		sind.
+	\end{theorem}
+
+	%VL 10.01.2018
+	%TODO Einschub: Zeta-Funktion
+	
+	\subsection{Die Galoisgruppe einer Gleichung}
+	In diesem Abschnitt sei $K$ ein Körper
+	\begin{definition}
+		Sei $f$ ein separabeles Polynom und $L$ ein Zerfällungskörper von $f$ über $K$. Dann ist $L/K$ einen endliche Galois-Erweiterung und $G(L/K)$ eird in diesem Falls als \textbf{Galoisgruppe von $f$ über $K$} bezeichnet.
+	\end{definition}
+
+	\begin{satz}
+		Sei $f\in K[X]\setminus K$ separabel und vom Grad $n$ mit Zerfällungskörper $L$ über $K$.\\
+		Seien $a_1,...,a_n$ die Nullstellen von $f$ in $L$. Dann definiert die Abbildung
+		\begin{align*}
+		G(L/K)&\to S(\{a_1,...,a_n\})\\
+		\sigma&\mapsto\sigma|_{\{a_1,...,a_n\}}
+		\end{align*}
+		einen injektiven Gruppenhomomorphismus. Insbesondere gilt $\abs{G(L/K)}|n!$.\\
+		$f$ ist genau dann irreduzible über $K$ wenn $G(L/K)$ transitiv auf dem Nullstellen on $f$ operiert.
+	\end{satz}
+	\begin{proof}
+		Sei $\sigma\in G(L/K)$. Da $\sigma(f)=f$ bildet $\sigma$ Nullstellen von $f$ in Nullstellen von $f$ ab.\\
+		Da $\sigma$ injektiv ist, ist die Einschränkung auf $\{a_1,...,a_n\}$ eine Bijektion.\\
+		Wegen $L=K(a_1,...,a_n)$ ist $\sigma\in G(L/K)$ eindeutig durch seine Operation auf $\{a_1,...,a_n\}$ festgelegt.\\
+		Somit ist $f$ injektiv.\\
+		\\
+		Wir haben bereits gesehen, dass $G(L/K)$ trasnitiv auf den Nullstellen von $f$ operiert, wenn $f$ irreduzibel ist.\\
+		Angenommen $G(L/K)$ permutiert die Nullstellen von $f$ transitiv.\\
+		Sei $a$ eine Nullstellen von $f$. Dann sind die Nullstellen von $f$ gegeben durch $\sigma_1(a),...,\sigma_n(a)$ für geeignete $\sigma_i\in G(L/K)$ und
+		\[f=c\prod_{i=1}^{n}\big(X-\sigma(a)\big)\]
+		Es ist $f=cm_{a,K}$, denn $\sigma_1(a),...,\sigma_n(a)$ sind auch Nullstellen on $m_{a,K}$. Somit ist $f$ irreduzibel.
+	\end{proof}
+
+	\begin{kor}\label{04korTeilbarkeit}
+		Sei $L/K$ eine endliche Galoiserweiterung vom Grad $n$. Dann ist $G(L/K)$ eine Untergruppe von $S_n$.
+	\end{kor}
+
+	\begin{exm}
+		Sei $K$ ein Körper mit $\cha(K)\neq 2$, $f\in K[X]$ ein irreduzibles, separables, normiertes Polynom vom Grad $3$ und $L$ ein Zerfällungskörper von $f$. Dann gilt
+		\[G(L/K)=\begin{cases}
+		\Z/3\Z&\text{, falls $\Delta f$ ein Quadrat in $K$ ist}\\
+		S_3&\text{, sonst}
+		\end{cases}\]
+	\end{exm}
+	\begin{proof}
+		Sei $a$ einen Nullstelle von $f$ in $L$. Dann ist
+		\[[L:K]=[L:K(a)]\underbrace{[K(a):K]}_{=3}\]
+		weil $f$ irreduzibel und nach \ref{04korTeilbarkeit} muss $[L:K]$ teilt $6$.\\
+		D.h. $[L:K]=3$ oder $=6$. Im ersten Fall ist $G(L/K)$ eine Untergruppe von $S_3$ mit Index $2$. Also muss $G(L/K)\isom A_3\isom\Z/3\Z$.\\
+		\\
+		Seiene $a_1,a_2,a_3$ die Nullstellen von $f$ in $L$. Dann ist
+		\[\delta:=(a_1-a_2)(a_1-a_3)(a_2-a_3)\neq 0\]
+		Dann ist $\Delta(f)=\delta^2$.\\
+		Falls $G(L/K)=S_3$ ist, so gilt
+		\[\tau(\delta)=\operatorname{sgn}(\tau)\delta\]
+		für alle $\tau\in G(L/K)$.\\
+		Ist $G(L/K)=A_3$, so gilt $\tau(\delta)=\delta$ für alle $\tau\in G(L/K)$.\\
+		Da $\cha(K)\neq 2$ folgt
+		\[G(L/K)=A_3\Leftrightarrow\tau(\delta)=\delta\forall\tau\in G(L/K)\Leftrightarrow\delta\in K\]
+	\end{proof}
+
+	\begin{exm}
+		Für $f=X^3+aX+b$ ist
+		\[\Delta(f)=-4a^3-27b^2\]
+		Das Polynom $f=X^3-x+1\in\Q[X]$ ist irreduzibel und hat Diskriminante 
+		\[\Delta(f)=4-27=-23\]
+		somit gilt für den Zerfällungskörper $L$ von $\Q$, dass $G(L/\Q)=S_3$.
+	\end{exm}
+
+	%VL 15.01.2018
+	\begin{exm}
+		Sei $f=X^4-2\in\Q[X]$. Dann gilt
+		\[f=(X-a)(X+a)(X-ia)(X+ia)\]
+		mit $a=\sqrt[4]{2}$. Der Zerfällungskörper von $f$ über $\Q$ ist $L=\Q(a,i)$.\\
+		Das Eisenstein Kriterium zeigt, dass $f$ irreduzibel über $\Q$ ist. Somit ist $f=m_{a,\Q}$ und $[Q(a),\Q]=4$.\\
+		Weiterhin ist $[L:\Q(a)]=2$, da $\Q(a)$ keine negativen Quadrate hat und damit nicht $i$ enthält. Es folgt
+		\[[L:\Q]=8\]
+		\\
+		Wir bestimmen die Galoisgruppe von $f$. Da $f$ 4 Nullstellen hat und die Galoisgruppe die Nullstellen permutiert muss $G(L/\Q)\subset S_4$ sein.\\
+		Jedoch muss zusätzlich für $\sigma\in G(L/K)$ gelte, dass
+		\begin{align*}
+		\sigma(-a)&=-\sigma(a)\\
+		\sigma(-ia)&=-\sigma(ia)
+		\end{align*}
+		Es gibt $8$ Permutationen in $S(\{a,-a,ia,-ia\})$ die die Bedingungen erfüllen.\\
+		Diese sind somit die Elemente in $G(L/\Q)$.\\
+		Seien $\sigma,\tau\in G(L/\Q)$ durch
+		\begin{align*}
+		\sigma(a)&=ia\\
+		\sigma(ia)&=-a
+		\end{align*}
+		(d.h. $\sigma(i)=i$)
+		\begin{align*}
+		\tau(a)&=-a\\
+		\tau(ia)&=ia
+		\end{align*}
+		(d.h. $\tau(i)=-i$)\\
+		\\
+		Die von $\sigma$ erzeugt Untergruppe $\grp{\sigma}$ hat Ordnung $4$ und ist somit normal in $G(L/\Q)$.\\
+		Weil $\tablename\notin\grp{\sigma}$ gilt
+		\begin{align*}
+		G(L/\Q)&=\grp{\sigma}\cup\grp{\sigma}\tau\\
+		&=\grp{\sigma}\cup\tau\grp{\sigma}\\
+		&=\{1,\sigma,\sigma^2\sigma^3,\tau,\tau\sigma,\tau\sigma^2,\tau\sigma^3\}
+		\end{align*}
+		$\tau$ und $\sigma$ genügen der Relation $\tablename\sigma=\sigma^3\tau$.\\
+		Für Untergruppen von $G(L/\Q)$ erhält man folgendes Schema \ref{fig:GalUG}
+		
+		\begin{figure}[h]
+			\centering
+			\[\begin{tikzcd}
+				&&G(L/\Q)\ar[lld]\ar[d]\ar[rrd]&&\\
+				\{1,\sigma,\sigma^2,\tau,\sigma^2\tau\}\ar[d]\ar[rd]\ar[rrd]&&\{1,\sigma,\sigma^2\sigma^3\}\ar[d]&&\{1,\sigma^2,\sigma\tau,\sigma^3\tau\}\ar[lld]\ar[ld]\ar[d]\\
+				\{1,\tau\}\ar[drr]&\{1,\sigma^2\tau\}\ar[rd]&\{1,\sigma^2\}\ar[d]&\{1,\sigma\tau\}\ar[dl]&\{1,\sigma^3\tau\}\ar[lld]\\
+				&&\{1\}&&
+			\end{tikzcd}\]
+			\caption{Untergruppen}
+			\label{fig:GalUG}
+		\end{figure}
+	\end{exm}
+	%TODO satz und def Trennen
+	\begin{definition}
+		Sei $L=K(X_1,...,X_n)$ der Quotientenkörper von $K[X_1,...,X_n]$. Die Element von $L$ sin die rationalen Funktionen $f/g$ mit $f,g\in K[X_1,...,X_n]$ und $g\neq 0$.\\
+		$S_n$ operiert durch Permutationen der $X_i$ auf $L$.\\
+		$M=L^{S_n}$ wird als Körper der \textbf{symetrischen rationalen Funktionen} bezeichnet.
+		Die Erweiterung $L/M$ ist eine endliche Galois-Erweiterung mit Galoisgruppe $S_n$.
+	\end{definition}
+	\begin{proof}
+		Es gilt $M=K(s_1,...,s_n)$:\\
+		Die Inklusionen $K(s_1,...,s_n)\subset M\subset L$ impliziert
+		\[L:K(s_1,...,s_n)=\underbrace{[L:M]}_{=n!}[M:K(s_1,...,s_n)]\]
+		Das Polynom
+		\[f=\prod_{i=1}^{n}(X-X_i)\in K(s_1,...,s_n)[X]\subset L[X]\]
+		ist separabel und hat $L$ als Zerfällungskörper. Also ist
+		\[[L:K(s_1,...,s_n)]\leq n!\]
+		Es folgt die Behauptung.
+	\end{proof}
+	
+	\begin{satz}
+		Sei $G$ eine endliche Gruppe, dann gibt es eine Galois-Erweiterung $L/K$ mit $G(L/K)\isom G$.
+	\end{satz}
+	\begin{proof}
+		Sei $n\abs{G}$. Für $a\in G$ definiere
+		\begin{align*}
+		\tau_a:G&\to G\\
+		g&\mapsto ag
+		\end{align*}
+		Dann ist $\tau_a$ eine Permutation von $G$. Weiterhin ist
+		\[\tau_{a}\tau_b=\tau_{ab}\]\\
+		Wir haben also eine Injektion
+		\[G\to S_n\]
+		Wir können $G$ also mit einer Untergruppe von $S_n$ identifizieren.\\
+		Dann operiert $G$ auf $L=K(X_1,...,X_n)$ durch Permutation der $X_i$.\\
+		Sei $M=L^G$ dann ist $L/M$ eine Galoiserweiterung mit Galoisgruppe $G$.
+	\end{proof}
+	
+	
+	
+	
+	\subsection{Kreisteilugspolynome}
+	In diesem Abschnitt sei $K$ ein Körper und $\ol K$ ein algebraischer Abschluss von $K$.
+	\begin{definition}
+		Die Nullstellen des Polynom $X^n-1$ $n\geq 0$ werden als $n$-te \textbf{Einheitswurzeln} in $\ol K$ bezeichnet.\\
+	\end{definition}
+	\begin{prop}
+		Die $n$-ten Einheitswurzeln bilden einer Untergruppe $U_n$ von $\ol K^*$.\\
+		Ist $\cha(K)=0$ oder $\cha(K)\not|n$, so haben $X^n-1$ und seine Ableitung $nX^{n-1}$ keine gemeinsamen Nullstellen. Also ist $X^n-1$ separabel.\\
+		In diesem Fall ist $\abs{U_n}=n$.\\
+		Falls $\cha(K)=p>0$ und $p|n$, so schreibt man $n?mp^r$ mit $(m,p)=1$.\\
+		Dann ist
+		\[(X^m-1)^{p^r}=X^n-1\]
+		Die Nullstellen von $X^m-1$ stimmen mit den Nullstellen von $X^n-1$ überein und $U_m=U_n$.\\
+	\end{prop}
+
+	\begin{satz}
+		Sei $K$ ein Körper und $n\in\Z$, $n>0$ mit $\cha(K)\not|n$, dann ist $U_n$ eine zyklische Gruppe der Ordnung $n$.
+	\end{satz}
+
+	\begin{definition}
+		$\xi\in U_n$ heißt \textbf{primitive} $n$-te Einheitswurzel, wenn $\xi$ die Gruppe $U_n$ erzeugt. 
+	\end{definition}
+
+	\begin{satz}
+		Seien $m,n\in\Z$, $m,n>0$ mit $(m,n)=1$ und $K$ ein Körper mit $\cha(K)\neq| mn$.\\
+		Dann ist die Abbildung
+		\begin{align*}
+		U_m\times U_n&\to U_{mn}\\
+		(\xi,\eta)&\mapsto\xi\eta
+		\end{align*}
+		ein Isomorphismus  von Gruppen.
+	\end{satz}
+
+	\begin{definition}
+		Für $n\in\Z$, $n>0$ definiert
+		\[\varphi(n)=\abs{(Z/n\Z)^*}\]
+		die \textbf{Eulersche $\varphi$-Funktion}.
+	\end{definition}
+
+	\begin{lem}
+		Ist $p$ eine Primzahl, so gilt
+		\[\varphi(p^k)=p^k-p^{k-1}=p^k(1-\frac{1}{p})\]
+	\end{lem}
+
+	\begin{satz}
+		Seien $m,n\in\Z$ mit $m,n>0$ und $(m,n)=1$. Dann ist
+		\[\varphi(mn)=\varphi(m)\varphi(n)\]
+	\end{satz}
+	\begin{proof}
+		Die aussage folgt aus dem Chinesischen Restsatz:\\
+		Der Ring-Isomorphismus
+		\begin{align*}
+		\Z/mn\Z&\to \Z/m\Z\times \Z/n\Z\\
+		(x\mod mn)&\mapsto(x\mod m,x\mod n)
+		\end{align*}
+		liefert einen Isomorphismus
+		\[(\Z/mn\Z)^*\to(\Z/m\Z\times \Z/n\Z)^*=(\Z/m\Z)^*\times (\Z/n\Z)^*\]
+		Daraus folgt die Multiplikativ der $\varphi$ Funktion.
+	\end{proof}
+
+	\begin{satz}
+		Sei $n\in\Z$, $n>0$. Ein Element $a$ erzeugt die additive zyklische Gruppe $\Z/n\Z$ genau dann wenn $a$ eine Einheit in $\Z/n\Z$ ist.
+	\end{satz}
+
+	\begin{satz}
+		Sei $K$ ein Körper und $n\in\Z$, $n\geq0$ mit $\cha(K)\not|n$. Dann enthält $U_n$ genau $\varphi(n)$ primitive $n$-te Einheitswurzeln.\\
+		Ist $\xi$ primitive $n$-te Einheitswurzel, so ist $\xi^r$ genau dann primitive $n$-te Einheitswurzel, wenn $(r,n)=1$ ist.
+	\end{satz}
+	
+	%Vl 17.01.2018
+	
+	\begin{satz}
+		Sei $\cha(K)\not|n$ und $\xi$ eine primitive Einheitswurzel.\\
+		Dann ist $K(\xi)$ der Zerfällungskörper
+		 von $X^n-1$.\\
+		 Außerdem ist $K(\xi)/K$ eine endliche Galois-Erweiterung.
+	\end{satz}
+	\begin{definition}
+		Falls $K=\Q$ ist so heißt $\Q(\xi)$ der \textbf{$n$-te Kreisteilungskörper}.
+	\end{definition}
+
+	\begin{theorem}
+		Sei $\xi\in\ol{\Q}$ eine primitive $n$-te Einheitswurzel. Dann ist $\Q(\xi)/\Q$ eine endliche Galois-Erweiterung mit 
+		\[[\Q(\xi):\Q]=\varphi(n)\]
+	\end{theorem}
+	\begin{proof}
+		Jedes $\sigma\in G(\Q(\xi)(\Q)$ bildet $U_n$ nach $U_n$ (Menge der $n$-ten Einheitswurzeln).\\
+		Insbesondere ist $\sigma(\xi)$ wieder eine primitive $n$-te Einheitswurzel. \\
+		Sei $f=m_{\xi,\Q}$. Da $f$  irreduzibel über $\Q$ ist operiert $G(\Q(\xi)/\Q)$ transivit auf den Nullstellen von $f$, d.h. jede Nullstelle von $f$ ist eine primitive $n$-te Einheitswurzel.\\
+		Also gilt
+		\[[Q(\xi):\Q]\leq\varphi(n)\]
+		Wir zeigen jetzt, dass jede primitive $n$-te Einheitswurzel Nullstelle von $f$ ist.\\
+		Da $\xi$ Nullstelle von $X^n-1$ ist gilt
+		\[X^n-1=fg\]
+		für ein normiertes $g\in\Q[X]$.\\
+		Sei $p$ Primzahl. Wir betrachten die $p$-adische Bewertung. Da $X^n-1$ nicht von $p$ geteilt wird ist  %TODO ref p-adische Bewertung
+		\begin{align*}
+		0&=\nu_p(fg)\\
+		0&=\underbrace{\nu_p(f)}_{\geq 0}+\underbrace{\nu_p(g)}_{\geq 0}
+		\end{align*}
+		Dann muss aber $\nu_p(f)=\nu_p(g)=0$ für alle Primzahlen $p$ gelten.\\
+		Somit ist $f,g\in\Z[X]$.\\
+		\\
+		Sei nun $p$ eine Primzahl mit $p\not|n$. Dann ist $\xi^p$ eine primitive $n$-te Einheitswurzel.\\
+		\\
+		Angenommen $f(\xi^p)\neq0$, dann muss $g(\xi^p)=0$ (da $\xi$ Nullstelle von $fg$).\\
+		D.h. $\xi$ ist Nullstelle von $X^p$, dann $f|g(X^p)$. Sei $g(X^p)=fh$, dann ist $h$ ein normiertes Polynom in $\Z[X]$.\\
+		Reduzieren der Koeffizienten $\mod p$ 
+		\[\Z[X]\to(\Z/p\Z)[X]\]
+		Dann geht
+		\[g=\sum_{j=0}^{m}a_jX^j\]
+		über in
+		\[\ol g=\sum_{j=0}^{m}\ol a_jX^j\]
+		In $\F_p$ gilt $a^p=a$, sodass
+		\begin{align*}
+		\ol g^p&=\left(\sum_{j=0}^{m}\ol a_jX^j\right)^p\\
+		&=\sum_{j=0}^{m}\ol a_j^pX^{jp}\\
+		&=\sum_{j=0}^{m}\ol a_jX^{jp}\\
+		&=\ol g(X^p)\\
+		&=\ol f\ol h
+		\end{align*}
+		Aus $\ol g^p=\ol f \ol h$ folgt, dass $\ol f$ und $\ol g$ nicht teilerfremd sind in $\F_p$. Somit hat $X^n-1=\ol f\ol g$ merhfache Nullstellen in $\F_p$. Dies widerspricht $p\not|n$!\\
+		Also muss $\xi^p$ eine Nullstelle von $f$.\\
+		\\
+		Sei nun $\eta$ eine beliebige primitive $n$-te Einheitswurzel. Dann ist $\eta=\xi^m$ mit $(m,n)=1$. Sei $m=p_1\cdot...\cdot p_k$ die Zerlegung von $m$ im Primfaktoren, sodass
+		\[\eta=\xi^m=(...(\xi^{p_1})^{p_2}...)^{p_k}\]
+		Also ist $\xi^{p_1}$ eine Nullstelle in $f$. $f$ ist auch das Minimaplolynom von $\xi^{p_1}$. Analog zeigt man, dass $(\xi^{p_1})^{p_2}$ eine Nullstelle von $f$ ist.\\
+		Es folgt schließlich, dass $\eta$ eine Nullstelle von $f$ ist.\\ 
+		\\
+		Dann folgt
+		\[\Q(\xi):\Q]=\varphi(n)\]
+	\end{proof}
+	
+	
+	\begin{satz}
+		Seien $\xi_m,\xi_n\in\ol{\Q}$ primitive $m$-te bzw $n$-te Einheitswurzeln mit $(m,n)=1$.\\
+		Dann ist
+		\[\Q(\xi_m)\cap \Q(\xi_n)=\Q\]
+	\end{satz}
+	\begin{proof}
+		Es ist $\xi_{mn}=\xi_n\xi_m$ auch primitive Einheitswurzel. Es folgt
+		\[\Q(\xi_{mn})=\Q(\xi_m,\xi_n)\]
+		und
+		\[\underbrace{[\Q(\xi_{mn}):\Q]}_{=\varphi(mn)}=[\Q(\xi_{mn}:\Q(\xi_m))]\underbrace{[\Q(\xi_m):\Q]}_{=m}\]
+		sodass
+		\[[\Q(\xi_{mn}):\Q(\xi_m)]=\varphi(m)\]
+		\begin{figure}[h]
+			\centering
+			\[\begin{tikzcd}
+				&\Q(\xi_{mn})\ar[dl,"\varphi(n)"]\ar[dr,"\varphi(m)"]&\\
+				\Q(\xi_m)\ar[dr,"\varphi(m)"]&&\Q(\xi_n)\ar["\varphi(n)",dl]\\
+				&\Q&
+			\end{tikzcd}\]
+			\caption{Körperdiagramm mit Erweiterungsgrad}
+			\label{fig:cdUnitRoot}
+		\end{figure}
+	
+		Sei $L=\Q(\xi_m)\cap\Q(\xi_n)$. Es ist
+		\begin{align*}
+		\deg(m_{\xi_m,\Q(\xi_n)}&)=\varphi(m)\\
+		\deg(m_{\xi_m,L}&)\geq\varphi(m)
+		\end{align*}
+		und
+		\[\Q\subset L\subset \Q(\xi_m)\]
+		\[\Q(\xi_m)\subset L(\xi_m)\subset \Q(\xi_m)\]
+		d.h.
+		\[L(\xi_m)=\Q(\xi_m)\]
+		Damit folgt
+		\[\underbrace{[L(\xi_m):\Q]}_{=\varphi(n)}=\underbrace{[L(\xi_m):L]}_{\geq \varphi(m)}[L:Q]\]
+		Also muss $[L:\Q]=1$, also $L=\Q$.
+	\end{proof}
+
+
+	\begin{satz}
+		Sei $\xi\in\ol K$ eine primitive $n$-te Einheitswurzel mit $\cha(K)\not|n$.\\
+		Dann gilt
+		\begin{enumerate}
+			\item $K(\xi)$ ist der Zerfällungskörper des separablen Polynom $X^n-1$ über $K$.\\
+			Und die Erweiterung $K(\xi)/K$ ist eine endliche Galois-Erweiterung mit Grad $\leq\varphi(n)$ und abelscher Galoisgruppe.
+			\item Zu jedem $\sigma\in G(K(\xi)/K)$ gibt es eine positive ganze Zahl, $r(\sigma)$ mit $\sigma(\xi)=\xi^{r(\sigma)}$, wobei die Restklasse $\ol{r(\sigma)}\in \Z/n\Z$ eine Einheit ist, die unabhängig von der Wahl von $\xi$ eindeutig durch $\sigma$ bestimmt ist.\\
+			\\
+			Und die Abbildung
+			\begin{align*}
+			G(K(\xi)/K)&\to(\Z/n\Z)^*\\
+			\sigma&\mapsto\ol{r(\sigma)}
+			\end{align*}
+			ist ein injektiver Gruppenhomomorphismus.
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\stepcounter{enumi}
+		\item Sei $\sigma\in G(K(\xi)/K)$. Dann ist $\sigma(U_n)=U_n$. Also $\sigma(\xi)=\xi^{r(\sigma)}$ für ein positive ganze Zahl $r(\sigma)$.\\
+		Da $\xi$ primtive $n$-te Einheitswurzel ist ist $r(\sigma)$ eundeutig modulo $n$ und $\big(n,r(\sigma)\big)=1$.\\
+		Es gilt
+		\begin{align*}
+		\sigma(\xi^s)=\sigma(\xi)^s&=(\xi^{r(\sigma)})^{s}=(\xi^s)^{r(\sigma)}
+		\end{align*}
+		sodass $r(\sigma)$ nicht von der Wahl von $\xi$ abhängt. Die Abbildung
+		\begin{align*}
+		\Psi:G(K(\xi)/K)&\to (\Z/n\Z)^*\\
+		\sigma&\mapsto\ol{r(\sigma)}
+		\end{align*}
+		ist ein Gruppenhomomorphismus, denn für $\sigma,\tau \in G(K(\xi)/K)$
+		\begin{align*}
+		(\sigma\tau)(\xi)&=\sigma(\tau(\xi))\\
+		&=\sigma(\xi^{r(\tau)})\\
+		&=(\xi^{r(\tau)})^{r(\sigma)}\\
+		&=\xi^{r(\tau)r(\sigma)}
+		\end{align*}
+		sodass
+		\begin{align*}
+		\Psi(\sigma\tau)&=\ol{r(\sigma\tau)}\\
+		&=\ol{r(\sigma)r(\tau)}\\
+		&=\ol{r(\sigma)}\ol{r(\tau)}\\
+		&=\Psi(\sigma)\Psi(\tau)
+		\end{align*}
+		Aus $\ol{r(\sigma)}=1$ folgt, dass $\sigma(\xi)=\xi$, also ist $\sigma$ die Identität auf $K(\xi)$.
+	\end{proof}
+	
+	
+	\begin{kor}
+		Sei $\xi\in\ol \Q$ eine primitive $n$-te Einheitswurzel. Dann ist $\Q(\xi)/\Q$ eine endliche Galois-Erweiterung mit Galoisgruppe $(\Z/n\Z)^*$.
+	\end{kor}
+	
+	Wir zeigen nun, dass sich jede endliche abelsche Gruppe als Galoisgruppe über $\Q$ realisieren lässt.
+	
+	\begin{theorem}[Dirichlet]\label{satz:Dirichlet}
+		Sei $a,b\in\Z$ mit $a,b>0$ und $(a,b)=1$. Dann enthält $\{a+nb\mid n\in\Z\}$ unendlich viele Primzahlen.
+	\end{theorem}
+
+%VL 22.01.2018
+	\begin{theorem}
+		Sei $G$ eine endliche abelsche Gruppe.Dann gibt es eine endliche Galoiserweiterung $K/\Q$ mit $G(K/\Q)\isom G$.
+	\end{theorem}
+	\begin{proof}
+		$G$ zerfällt in zyklische Gruppen, d.h.\[G=\bigoplus_{i=1}^n \Z/p_i^{l_i}\]
+		mit $p_i$ prim.\\
+		Nach \ref{satz:Dirichlet} gilt $\{1+m_ip_i^{l_i}\}$ enthält unendliche viele Primzahlen, d.h. wir können  teilerfremde Primzahlen $q_i$ wählen, mit
+		\[q_i=1\mod p_i^{l_i}\]
+		Schreibe $q_i=1-m_ip_i^{l_i}$. Sei $q=\prod_{i=1}^n q_i$, $\xi\in\ol{\Q}$ eine primitive $q$-te Einheitswurzel und wähle $K=\Q(\xi)$. Dann ist
+		\begin{align*}
+		G(K/\Q)\isom \left(\Z/q\Z \right)^*\\
+		&=\bigoplus_{i=1}^n\left(\Z/q_i\Z\right)^*\\
+		&=\bigoplus_{i=1}^n\Z/m_ip_i^{l_i}\Z\\
+		\end{align*}
+		Wähle nun
+		\[H_i=p_i^{l_i}\Z/m_ip_i^{l_i}\Z\]
+		dann ist $H_i$ eine Untergruppe von $\Z/m_ip_i1^{l_i}\Z$ mit
+		\[\frac{\Z/m_ip_i^{l_i}\Z}{H_i}=\Z/p_i^{l_i}\Z\]
+		\\
+		Definiere nun $H=\bigoplus_{i=1}^n H_i$. Dann ist
+		\[G(K/\Q)/H\isom G\]
+		d.h. $K^H/\Q$ ist eine Galoiserweiterung mit Galoisgruppe
+		\[G(K^H/\Q)=\frac{G(K/\Q)}{G(K/K^H)}=\frac{G(K/\Q)}{H}=G\] 
+	\end{proof}
+
+
+	\begin{theorem}[Kronecker-Weber]
+		Sei $K/\Q$ eine endliche Galoiserweiterung mit abelscher Galoisgruppe. Dann ist $K$ in einem Kreisteilungskörper enthalten.
+	\end{theorem}
+
+	\begin{definition}
+		Sei $n\in\Z$, $n>0$ und $\cha(K)\not|n$. Seien $\xi_1,...,\xi_m$ mit $m=\varphi(n)$ die primitiven $n$-ten Einheitswurzeln in $\ol K$.\\
+		Dann heißt
+		\[\Phi_{n,K}=\prod_{i=1}^{m}(X-\xi_i)\]
+		das $n$-te \textbf{Kreisteilungspolynom} über $K$.\\
+		Im Fall $K=\Q$schreiben wir $\Phi_n$ für $\Phi_{n,K}$.
+	\end{definition}
+
+	\begin{satz}
+		\begin{enumerate}
+			\item $\Phi_{n,K}$ ist ein normiertes separables POlynom über $K$ vom Grad $\phi(n)$
+			\item Für $K=\Q$ gilt $\Phi_n\in\Z[X]$ und $\Phi_n$ ist irreduzibel in $\Z[X]$ und in $\Q[X]$.
+			\item $X^n-1=\prod_{d|n}\Phi_{d,K}$
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{enumerate}
+			\item Sei $L=K(\xi_i)$. Dann ist $L/K$ eine Galoiserweiterung un $L^{G(L/K)}=K$. Sei $\sigma\in G(L/K)$.\\
+			Dann permutiert $\sigma$ die Primitiven Einheitswurzeln, d.h. $\Phi_{n,K}=\Phi_{n,K}$. Somit liegen die Koeffizienten von $\Phi_{n,K}$ in $K$.
+			\item Sei $\xi\in\ol \Q$ primitive $n$-te Einheitswurzel. Dann hat $m_{\xi,\Q}$ Grad $\varphi(n)$. Da $\Phi_n(\xi)=0$ ist und $\Phi_n$ Grad $\varphi(n)$ hat ist $\Phi_n=m_{\xi,\Q}$.\\
+			Somit ist $\Phi_n$ irreduzibel über $\Q$. Aus $\Phi_n|(X^n-1)$ und der Normiertheit von $\Phi_n$ folgt $\Phi_n\in\Z[X]$.
+			\item Es ist
+			\begin{align*}
+			X^n-1=\prod_{\xi\in U_n}(X-\xi)=\prod_{d|n}\prod_{\xi\in P_d}(X-\xi)\\
+			&=\prod_{d|n}\Phi_{d,K}
+			\end{align*} 
+			wobei $P_d$ die Menge der $d$-ten Einheitswurzeln in $U_n$ ist.
+		\end{enumerate}
+	\end{proof}
+
+	\begin{satz}
+		Sei $n\in\Z$, $n>0$ und $p$ prim mit $p\not| n$. Sei $e$ die Ordnung von $p$ in $\left(\Z/n\Z\right)^*$. Dann zerfällt $\Phi_{n,\F_p}$ in $\varphi(n)/e$ verschiedene Faktoren vom Grad $e$ über $\F_p$.
+	\end{satz}
+	\begin{proof}
+		Sei $f$ ein irreduzibler normierter Faktor von $\Phi_{n,\F_p}$. Dann ist $f$ das Minimalpolynom einer primitiven $n$-te Einheitswurzel $\xi\in\ol{\F_p}$ über $\F_p$. Sei $K=\F_p(\xi)$ und $m=[K:\F_p]$. Dann ist $m=\deg(f)$. \\
+		Wir zeigen $m=e$:\\
+		$\xi$ hat Ordnunng $n$ in $U_n$, $K^*$ ist zyklisch der Ordnung $P^{m-1}$. Es folgt
+		\begin{align*}
+			n&|p^m-1\\
+			p^{m}&=1\mod n\\
+			e&|m\\
+			e&\leq m
+		\end{align*}
+		Andererseits folgt aus $p^e=1\mod n$, dass
+		\[\xi^{p^e}=\xi^1=\xi\]
+		so dass di Abbildung
+		\begin{align*}
+		k&\to K\\
+		x&\mapsto x^{p^e}
+		\end{align*}
+		trivial auf $K$ ist, da das Polynom $X^{p^e}-X$ höchsten $p^e$ Nullstellen hat, ist
+		\begin{align*}
+		\abs{K}&\leq p^e\\
+		p^m&\leq p^e\\
+		m&\leq e
+		\end{align*}
+		Es folgt $m=e$.
+	\end{proof}
+
+	\begin{exm}
+		Sei $p$ eine ungerade Primzahl und $\xi\in\ol{F_p}$ eine primitive 8-te Einheitswurzel. Dann ist
+		\[G\left(\F_p(\xi)/\F_p\right)\hookrightarrow \left(\Z/8\Z\right)^*\]
+		$=\{1,3,5,7\}=\Z/2\Z\times\Z/2\Z$.\\
+		Somit ist
+		\[G(\F_p(\xi)/\F_p)=\begin{cases}
+		1&\text{, falls }p=1\mod 8\\
+		\Z/2\Z\text{, sonst}
+		\end{cases}\]
+	\end{exm}
+
+	\begin{bem}
+		Sei $p$ eine ungerade Primzahl. Dann ist $(\Z/p^n\Z)^*$ zyklisch der Ordnung $p^{n}-p^{n-1}$.\\
+		Für $p=2$ ist
+		\begin{align*}
+		\left(\Z/2\Z\right)^*&=1\\
+		\left(\Z/4\Z\right)^*&=\Z/2\Z\\
+		\left(\Z/2^n\Z\right)^*&=\Z/2\Z\times \Z/2^{n-2}\Z\text{ für $n\geq 3$}
+		\end{align*}
+	\end{bem}
+
+
+
+
+
+	\section{Moduln}
+	\subsection{Definitionen}
+	\begin{definition}
+		Sei $R$ ein Ring. Ein \textbf{Linksmodul} über $R$ ist eine abelsche Gruppe $M$ mit einer Abbildung
+		\[R\times M\to M\]
+		sodass
+		\begin{align*}
+		a(x+y)&=ax+ay\\
+		(a+b)x&=ax+bx\\
+		a(bx)&=(ab)x\\
+		1x&=x
+		\end{align*}
+		für alle $a,b\in R$ und $x,y\in M$.
+	\end{definition}
+
+	\begin{definition}
+		Seien $M',M$ $R$-Moduln. Eine Abbildung
+		\[f:M\to M'\]
+		heißt \textbf{$R-$linear} oder \textbf{Modulhomomorphismus}, wenn
+		\begin{align*}
+		f(x+y)&=f(x)+f(y)\\
+		f(ax)&=af(x)
+		\end{align*}
+		für alle $a\in R$ und $x,y\in M$.
+	\end{definition}
+
+	\begin{exm}
+		\begin{enumerate}
+			\item Sei $G$ eine abelsche Gruppe. Dann ist $G$ ein $\Z$-Modul unter
+			\[ng=\begin{cases}
+			\underbrace{g+...+g}_{\text{$n$ Summanden}}&n>0\\
+			0&n=0\\
+			\underbrace{(-g)+...+(-g)}_{\text{$n$ Summanden}}&n<0
+			\end{cases}\]
+			\item Jeder $\Z$-Modul ist eine abelsche Gruppe (indem man die Modul-Struktur vergisst)
+			\item Zwei $\Z$-Moduln sind genau dann isomorph, wenn sie als abelsche Gruppen isomorph sind.
+			%VL 24.10.218
+			\item Sei $R$ ein Ring und $M$ ein $R$-Modul und $f:M\to M$ ein Modulhomomorphismus. Dann ist $M$ ein $R[X]$-Modul unter
+			\begin{align*}
+			R[X]\times M&\to M\\
+			\left(a_iX^i,v\right)&\mapsto\sum a_if^i(v)
+			\end{align*}
+			\item Für zwei $R$-Moduln $M$ und $M'$ ist die Menge der $R$-linearen Abbildungen unter
+			\[(a f)(v)=af(v)\]
+			ein $R$-Modul
+		\end{enumerate}
+	\end{exm}
+
+	\begin{definition}
+		Sei $;$ ein $R$-Modul. Ein Untermodul von $M$ ist eine Untergruppe $N$ von $M$, die Invariant unter Operstionen von $R$ ist, d.h. $ax\in N$ für alle $a\in R$, $x\in N$.
+	\end{definition}
+
+	\begin{exm}
+		Sei $M$ ein $R$-Modul und $(M_i)_{i\in I}$ eine Familie von Untermoduln. Dann sind
+		\[\bigcap_{i\in I}M_i\quad\text{ und }\quad \sum_{i\in I}M_i=\{\sum_{i\in I}x_i\mid x_i\in M_i\text{, fast allle $x_i=0$}\}\]
+		Untermoduln von $M$.
+	\end{exm}
+	
+	\subsection{Faktormoduln}
+	\begin{definition}
+		Sei $M$ ein $R$-Modul und $N\subset M$ ein Untermodul, so erhält man auf der \textbf{Faktorgruppe} $M/N$ eine $R$-Modulstruktur. Mit $a(x+N)=ax+N$ für $x\in M$, $a\in R$ wird $M/N$ als \textbf{Faktormodul} bezeichnet.\\
+		Die Abbildung $\pi:M\to M/N$, $x\mapsto x+N$ ist ein Modulhomomorphismus.
+	\end{definition}
+
+	\begin{theorem}
+		Seien $M$, $M'$ $R$-Moduln, $f:M\to M'$ ein Modulhomomorphismus und $N\subset\Kern(f)$ ein Untermodul von $M$. Dann gibt es eine eindeutigen Homomorphismus $\ol f:M/N\to M'$, sodass
+		\begin{figure}[h]
+			\centering
+			\[\begin{tikzcd}
+				M\ar[r,"f"]\ar[d]& M'\\
+				M/N\ar[ur,"\ol f"]&
+			\end{tikzcd}\]
+		\end{figure}
+	\end{theorem}
+
+	\begin{satz}
+		Sei $M$ ein $R$-Modul und $N$ ein Untermodul. Dann insuziert die Projektion $\pi:M\to M/N$ eine Bijektion zwischen den Untermoduln von $M$ die $N$ enthalten und den Untermoduln von $M/N$.
+	\end{satz}
+
+	\subsection{Direkte Summen und Produkte}
+	\begin{definition}
+		Sei $(M_i)_{i\in I}$ eine Familie von $R$-Moduln. \\
+		Dann ist das \textbf{Modul-Produkt}
+		\[\prod_{i\in I}M_i=\{(x_i)_{i\in I}\mid x_i\in M_i\}\]
+		ein $R$-Modul und
+		\[\bigoplus_{i\in I}M_i=\{(x_i)_{i\in I}\mid x_i\in M_i\text{ und fast alle $x_i=0$}\}\]
+		ein Untermodul. Dieser wird als direkte Summe bezeichnet.
+	\end{definition}
+
+	\subsection{Erzeugendensysteme und Basen}
+	\begin{definition}
+		Sei $M$ ein $R$-Modul. Eine Familie $(x_i)_{i\in I}$ von Element in $M$ heißt \textbf{Erzeugendensystem} von $M$ über $R$, wenn
+		\[m=\sum_{i\in I}Rx_i\]
+		ist.\\
+		Besitzt $M$ ein endliches Erzeugendensystem, so heißt $M$ \textbf{endliche erzeugt} oder \textbf{endlich}er $R$-Modul.\\
+		Ein Familie $(x_i)_{i\in I}$ heißt \textbf{linear unabhängig}, wenn aus
+		\[\sum_{i\in I}a_ix_i=0\]
+		(mit fast alle $a_i=0$) folgt, dass alle $a_i=0$ sind.
+	\end{definition}
+	\begin{definition}
+		Ein linear unabhängiges Erzeugendensystem wird als \textbf{Basis} bezeichnet.\\
+		In diesem Falls lässt sich jedes $x\in M$ schreiben als
+		\[x=\sum_{i\in I}a_ix_i\]
+		mit eindeutig bestimmtem $a_i\in R$. In diesem Fall heißt $M$ \textbf{frei}.
+	\end{definition}
+
+	\begin{satz}
+		Sei $R$ ein Ring mit $1\neq 0$ und $M$ ein $R$-Modul.\\
+		Sind $(v_,...,v_m)$ und $(w_1,...,w_n)$ zwei $R$-Basen von $M$, so ist $m=n$.
+	\end{satz}
+
+	\subsection{Exakte Sequenzen}
+	\begin{definition}
+		Eine Folge von $R$-Moduln und $R$-linearen Abbildungen
+		\[...\to M_{i-1}\xrightarrow{f_i}M_i\xrightarrow{f_{i+1}}M_{i+1}\to...\]
+		heißt \textbf{exakt bei $M_i$}, wenn  $\Img(f_i)=\Kern(f_i)$.
+	\end{definition}
+	
+	\begin{definition}
+		Eine Sequenz heißt \textbf{exakte Sequenz}, wenn sie an jedem $M_i$ exakt ist.
+	\end{definition}
+
+	\begin{definition}
+		Ein \textbf{kurze exakte Sequenz} ist eine Sequenz der Form
+		\[0\to M'\xrightarrow{f}M\xrightarrow{g}M''\to 0\]
+		Exakheit bedeuet hierbei, dass $f$ injektiv, $g$ surjektiv und $\Img(f)=\Kern(g)$.
+	\end{definition}
+
+	\begin{exm}
+		Sei $M$ ein $R$-Modul und $N\subset M$ ein Untermodul. Dann ist
+		\[0\to N\hookrightarrow M\to M/N\to 0\]
+		eine kurze exakte Sequenz.
+	\end{exm}
+
+	\begin{satz}
+		Sei
+		\[0\to M'\xrightarrow{f}M\xrightarrow{g}M''\to 0\]
+		eine kurze exakte Sequenz von $R$-Moduln.\\
+		Dann sind äquivalent:
+		\begin{enumerate}
+			\item Es gibt einen Untermodul $N\subset M$ mit $M=N\oplus\Kern(g)$
+			\item Es gibt eine $R$-lineare Abbildung $s:M''\to M$ mit $g\circ s=\id_{M'}$
+			\item Es gibt eine $R$-lineare Abbildung $t:M\to M'$ mit $t\circ f=\id_{M'}$
+		\end{enumerate}
+	\end{satz}
+
+	%TODO Rest der VL 24.01.2018 (Bew, Satz+Bew)
+	
+%VL 29.01.2018
+	\begin{kor}
+		Sei
+		\[0\to M'\xrightarrow{f}M\xrightarrow{g}M''\to 0\]
+		eine kurze exakte Sequenz von $R$-Moduln. Sind $M'$ und $M''$  frei, so ist $M$ frei.
+	\end{kor}
+	\begin{proof}
+		Da $M''$ frei ist gilt $M\isom M'\oplus M''$.
+	\end{proof}
+
+	\subsection{Endlich erzeugbare Moduln}
+	\begin{definition}
+		Ein $R$-Modul $M$ heißt \textbf{endlich erzeugbar}, wenn $M$ ein endliches Erzeugendensystem hat.\\
+		Äquivalent: Es gibt einen surjektiven Homomorphismus $R^n\to M$.
+	\end{definition}
+
+	\begin{exm}
+		Sei $K$ ein Körper und $R=K[X_1,X_2,...]$ der Polynomring über $K$ in abzählbar vielen Variablen und sei
+		\[I=\{f\in R\mid \text{Konstanter Term }a_0=0\}\]
+		Dann ist $I$ ein Ideal in $R$, d.h. $I$ ist ein $R$-Untermodul von $R$.\\
+		Dann ist zwar $R$ endlich erzeugbar ($R^1\to R$) aber $I$ ist nicht endlich erzeugt als $R$-Modul.
+	\end{exm}
+
+	\begin{satz}
+		Sei
+		\[0\to M''\xrightarrow{f}M\xrightarrow{g}\to0\]
+		eine kurze Exakte Sequenz von $R$-Moduln. Dann gilt
+		\begin{enumerate}
+			\item Ist $M$ endlich erzeugt, so auch $M''$.
+			\item Sind $M'$ und $M''$ endlich erzeugt, so auch $M$.
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{enumerate}
+			\item Ist $(v_1,...,v_n)$ ein Erzeugendensystem von $M$, so ist $\big(g(v_1),...,v(v_n)\big)$ ein Erzeugendensystem von $M''$.
+			\item Sei $(v_1,...,v_N)$ ein Erzeugendensystem von $M'$ und $(x_1,...,w_m)$ ein Erzeugendensystem von $M''$. Setze
+			\[s_i=f(v_i)\quad w_i=g(t_i)\]
+			Dann ist $(s_1,...,s_n,t_1,...,t_m)$ ein Erzeugendensystem von $M$, denn:\\
+			Sei $x\in M$. Dann gilt
+			\begin{align*}
+			g(x)&=\sum_{i=1}^{n}a_iw_i=\sum_{i=1}^{n}a_ig(t_i)
+			\end{align*}
+			Dann folgt, dass insbesondere
+			\[g\left(x-\sum_{i=1}^{n}a_it_i\right)=0\]
+			also ist
+			\[x-\sum_{i=1}^{n}a_it_i\in\Kern(g)=\Img(f)\]
+			\[x-\sum_{i=1}^{n}a_it_i=\sum_{j=1}^{m}b_js_j\]
+			Sodass abschließend gilt
+			\[x=\sum_{j=1}^{m}b_js_j+\sum_{i=1}^{n}a_it_i\]
+		\end{enumerate}
+	\end{proof}
+
+	\begin{satz}
+		Seien $M_1,...,M_n$ $R$-Moduln und sei $M=\bigoplus_{i=1}^nM_i$. \\
+		Dann ist $M$ genau dann endlich erzeugt, wenn alle $M_i$ endlich erzeugt sind.
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[\enquote{$\Leftarrow$}] Klar: Endliche Menge von endlichen Erzeugendensystemen.
+			\item[\enquote{$\Rightarrow$}] Setze $M'=\bigoplus_{i\neq j}M_i$. Dann ist für jedes $j$
+			\[0\to M'\xrightarrow{ }M\xrightarrow{ }M_j\to0 \]
+			eine exakte Sequenz.\\
+			Dann ist $M_j$ endlich nach \ref{satzdavor1)}.
+		\end{description}
+	\end{proof}
+
+	\begin{definition}
+		Ein $R$-Modul heißt \textbf{noethersch}, wenn jeder Untermodul von $M$ endlich erzeugbar ist.
+	\end{definition}
+
+	\begin{satz}
+		Sei $M$ ein $R$-Modul. Dann sind äquivalent:
+		\begin{enumerate}
+			\item $M$ ist noethersch.
+			\item Jede aufsteigende Kette von Untermoduln wird stationär.
+			\item Jede nichtleere Teilmenge von Untermoduln von $M$ hat ein maximales Element
+		\end{enumerate}
+	\end{satz}
+
+	\begin{satz}
+		Sei \[0\to M'\xrightarrow{f}M\xrightarrow{g}M''\to0\]
+		eine kurze exakte Sequenz von $R$-Moduln. Dann ist $M$ genau dann noethersch, wenn $M'$ und $M''$ noethersch sind.
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[\enquote{$\Rightarrow$}] Sei $M$ noethersch. Dann ist $M'$ noethersch weil Untermoduln von $M'$ isomorph unter $f$ zu einem Untermodul von $M$ ist.\\
+			Jeder Untermodul von $M''$ ist das homomorphe Bild eines Untermoduls von $M$ unter $g$ und somit endlich erzeugbar.
+			\item[\enquote{$\Leftarrow$}] Seiene nun $M'$ und $M''$ noethersch. Sei $N$ ein Untermodul von $M$. Dann ist
+			\[0\to f^{-1}\xrightarrow{f}N\xrightarrow{g}g(N)\to0\]
+			exakte Sequenz. Da$f^{-1}(N)$ und $g(N)$ endlich erzeugt sind ist auch $N$ endlich erzeugt.
+		\end{description}
+	\end{proof}
+
+	\begin{satz}
+		Seien $M_1,...,M_n$ $R$-Moduln und sei $M=\bigoplus_{i=1}^n M_i$.\\
+		Dann ist $M$ genau dann noethersch, wenn jedes $M_i$ noethersch ist.
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[\enquote{$\Leftrightarrow$}] Durch Induktion über $n$. \\
+			Für $n=1$ ist $M=M_1$.\\
+			Sei $n>1$. Definiere $M'=\bigoplus_{i=1}^{n-1}M_i$. Dann definiert
+			\[0\to M'\xrightarrow{ }M\xrightarrow{ }M_n\to0\]
+			eine kurze exakte Sequenz bei der $M'$ und $M_n$ noethersch sind.\\
+			Somit ist $M$ noethersch.
+			\item[\enquote{$\Rightarrow$}] Sei $M'=\bigoplus_{i\neq j}$. Dann ist für jedes $j$
+			\[0\to M'\xrightarrow{ }M\xrightarrow{ }M_j\to0\]
+			eine kurze exakte Sequenz. Da $M$ noethersch ist auch $M_j$ noethersch.
+		\end{description}
+	\end{proof}
+
+	\begin{satz}
+		Sei $R$ ein noetherscher Ring und $M$ ein endlich erzeugbarer $R$-Modul. Dann ist $M$ noethersch.
+	\end{satz}
+	\begin{proof}
+		Es gibt einen subjektiven Homomorphismus $g:R^n\to M$ und eine exakte Sequenz
+		\[0\to \Kern(g)\xrightarrow{ }R^n\xrightarrow{g}M\to0\]
+		Somit ist $M$ noethersch.
+	\end{proof}
+
+
+
+
+	\section{Ganze Ringerweiterungen}
+	\subsection{Definitionen und Eigenschaften}
+	\begin{definition}
+		Sei $B$ ein Ring und $A\subset B$ ein Unterring.\\
+		$x\in B$ heißt \textbf{ganz} über $A$, wenn es ein normiertes $f\in A[X]$ mit $f(x)=0$ gibt.
+	\end{definition}
+
+	\begin{satz}
+		Sei $B$ ein Ring, $A\subset B$ ein Unterring und $x\in B$.\\
+		Dann sind äquivalent:
+		\begin{enumerate}
+			\item $x$ ist ganz über $A$.
+			\item Der Ring $A[x]$ ist ein endlich erzeugter $A$-Modul.
+			\item Der Ring $A[x]$ ist ein einem Unterring $C\subset B$ enthalten, sodass $C$ ein endlich erzeugter $A$-Modul ist.
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[\enquote{$1)\Rightarrow2)$}] Ist $x\in B$ ganz, so gibt es ein normiertes $f\in A[X]$ mit $f(x)=0$, d.h.
+			\[x^n+a_{n-1}x^{n-1}+...+a_0=0\]
+			für geeignete $a_i\in A$.\\
+			Es folgt, dass
+			\[x^n=-a_{n-1}x^{n-1}-...-a_0\]
+			D.h. $A[x]$ wird von $1,x,x^2,...,x^{n-1}$ als $A$-Modul erzeugt.
+			\item[\enquote{$2)\Rightarrow3)$}]Wähle $C=A[x]$.
+			\item[\enquote{$3)\Rightarrow1)$}] Sei $C=\sum_{i=1}^{n}Ac_i$.\\
+			Weil $A[x]\subset C$ gilt $xc_i\in C$.\\
+			Es gibt also $\gamma_{ij}\in A$ mit
+			\[xc_{i}=\sum_{j=1}^{n}\gamma_{ij}c_i\]
+			Wir können diese Gleichung schreiben als
+			\begin{align*}
+			\sum_{j=1}^{n}(xc_j\delta_{ij}-\gamma_{ij}c_j)&=0\\
+			\sum_{j=1}^{n}\underbrace{(x\delta_{ij}-\gamma_{ij})}_{:=m_{ij}}c_j&=0\\
+			Mu&=0
+			\end{align*}
+			Definiere nun $M=(m_{ij})$ und $u=(c_1,...,c_n)^T$.  Sei $M^{ad}$ die zu $M$ adjungierte Matrix. Dann ist
+			\[M^{ad}Mu=\det(M)u\]
+			Es folgt
+			\[\det(M)c_i=0\]
+			und damit
+			\[\det(M)c=0\]
+			für alle $c\in C$. Da $1\in C$ ist $\det(M)=0$.
+			%TODO
+		\end{description}
 	\end{proof}
 \end{document}
