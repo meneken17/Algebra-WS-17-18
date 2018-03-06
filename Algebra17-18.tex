@@ -50,6 +50,7 @@
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\C}{\ensuremath{\mathbb{C}}}
 \newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\A}{\ensuremath{\mathbb{A}}}
 
 \newcommand{\la}{\ensuremath{\lambda}}
 \newcommand{\al}{\ensuremath{\alpha}}
@@ -69,6 +70,7 @@
 \newcommand{\ord}{\operatorname{ord}}
 \newcommand{\weight}{\operatorname{gew}}
 \newcommand{\grp}[1]{\left\langle#1\right\rangle}
+\newcommand{\rad}{\operatorname{rad}}
 
 \newcommand{\Kern}{\operatorname{Kern}}
 \newcommand{\Img}{\operatorname{Im}}
@@ -224,7 +226,7 @@
 	\end{proof}
 
 	\begin{definition}
-		Das Ideal $N=\{a\in A\mid\text{$a$ ist Nilpotent}\}$ heißt das \textbf{Nilradikal} von $A$.
+		Das Ideal $N=\{a\in A\mid\text{$a$ ist Nilpotent}\}$ heißt das \textbf{Nilikal} von $A$.
 	\end{definition}
 
 	\begin{definition}
@@ -828,6 +830,8 @@
 		Seien $x,y\in \hat A$, d.h. $x\in A_i,y\in A_j$.
 		\[x\sim y\Leftrightarrow \text{ ex gibt ein $k\in I$ mit $i\leq k$ und $j\leq k$ und $f_{ik}(x)=f_{jk}(x)$}\]
 	\end{proof}
+
+
 %VL 06.11.2017
 \section{Polynomringe}
 \subsection{Polynome mit einer Variable}
@@ -895,10 +899,25 @@ Sei in diesem Abschnitt $A$ ein Ring.
 			\item[$\Rightarrow$] Sei $A$ ein Integritätsbereich. Dann gilt $\deg(fg)=\deg(f)+\deg(g)$. Sei zusätzlich $f,g\in A[X]$ mit $fg=0$, dann ist $\deg(fg)=-\infty$.\\
 			Also muss $\deg(f)=-\infty$ oder $\deg(g)=-\infty$. Damit $f=0$ oder $g=0$. Also ist $A[X]$ Integritätsbereich.
 		\end{description}
-		Sei nun $fg=1$, dann ist $\deg(fg)=0$, also muss $\deg(f)=\deg(g)=0$. Dann sind $f,g\in A$.
+		Sei nun $fg=1$, dann ist $\deg(fg)=0$, also muss $\deg(f)=\deg(g)=0$. Dann sind $f,g\in A^*$.
 	\end{proof}
 
-	%TODO
+	\begin{satz}
+		Sei $f:A\to B$ ein Ringhomomorphismus und $b\in B$. \\
+		Dann gibt es genau einen Homomorphismen $\varphi_A:A[X]\to B$ mit $\varphi_B\mid_A=\varphi$ und $\varphi_b(X)=b$.
+	\end{satz}
+
+	\begin{proof}
+		\begin{description}
+			\item[Existenz] Für $\varphi=\sum_j a_jX^j$ setze $\varphi_s(f)=\varphi_b(a)=\varphi(a)$ für alle $a\in A$ und $\varphi_b(X)=b$.\\
+			Dann ist $\varphi_s$ ein Homomorphismus.
+			\item[Eindeutigkeit] Sei $\psi:A[X]\to B$ ein zweiter Homomorphismus mit $\psi|_A=\varphi$ und $\psi(X)=b$. Dann ist
+			\begin{align*}
+			\psi(f)&=\psi\left(\sum_ja_jX^j\right)=\sum_j\psi(a_i)\psi(X)^j\\
+			&=\sum_j\varphi(a_i)b^j=\varphi_b(f)
+			\end{align*}
+		\end{description}
+	\end{proof}
 	
 	\begin{exm}
 		Sei $I$ ein Ideal in $A$. Die Komposition $A\to A/I\to(A/I)[X]$ ist ein Ringhomomorphismus. Dieser induziert einen Ringhomomorphismus $\pi:A[X]\to(A/I)[X]$ mit $\pi(x)=x$.\\
@@ -912,7 +931,59 @@ Sei in diesem Abschnitt $A$ ein Ring.
 		Es gilt $I$ ist Primideal in $A$ $\Leftrightarrow$ $I[X]$ ist Primideal in $A[X]$.
 	\end{lem}
 
-%TODO
+	\begin{theorem}
+		Sei $g\in A[X]$, $g\neq 0$ mit führendem Koeffizient $b_n\in A^*$ und sei $f\in A[X]$.\\
+		Dann existieren eindeutige Polynome $q,r\in A[X]$ mit $f=qg+r$ mit $\deg(r)<\deg(g)$.
+	\end{theorem}
+	\begin{proof}
+		\begin{description}
+			\item[Existenz] Falls $f=0$ dann gilt $q,r=0$. Falls $\deg(f)<\deg(g)$ dann ist $q=0,r=f$.\\
+			Sei als $f\neq 0$, $m=\deg(f)$ $h=\deg(g)$ und $m\geq h$.\\
+			$f,g$ lassen sich schreiben als
+			\begin{align*}
+			f&=\sum_{k=1}^{m}a_kX^k& g=\sum_{j=0}^{n}b_jX^j
+			\end{align*}
+			Dabei ist $b_n\in A^*$.\\
+			Durch Induktion:
+			\begin{description}
+				\item[$m=0$] Dann gilt $f=a_0$, $g=b_0$. Dann $q=a_0b_0^{-1}$ und $r=0$.
+				\item[$m\geq 1$] Definiere $h:=f-X^{m-n}a_mb_n^{-1}g$.\\
+				Dann ist $\deg(h)\leq m-1$. Nach der Induktionshypothese gibt es $q,r\in A[X]$ mit $h=qg+r$ und $\deg(r)<\deg(g)$.\\
+				Es folgt
+				\[f=X^{m-n}a_mb_n^{-1}qg+r=(X^{m-n}a_mb_n^{-1}+q)g+r\]
+			\end{description}
+			\item[Eindeutigkeit] Angenommen es gibt $q_1,q_2,r_1,r_2\in A[X]$, sodass $f=gq_1+r_1=gq_2+r_2$ und $\deg(r_1),\deg(r_2)<\deg(g)$.\\
+			Dann folgt aber
+			\begin{align*}
+			&\Rightarrow&(q_1-q_2)g&=r_2-r_1\\
+			&\Rightarrow&\deg(q_1-q_2)+\deg(g)&=\underbrace{\deg(r_1-r_2)}_{<\deg(g)}\\
+			&\Rightarrow&\deg(q_1-q_2)&\leq 0
+			\end{align*}
+			daraus folgt $q_1-q_2=0$ und damit $r_1=r_2$.
+		\end{description}
+	\end{proof}
+
+	\begin{kor}
+		Sei $K$ ein Körper. Dann ist $K[X]$ ein euklidischer Ring unter der $\deg$-Abbildung und somit ein Hauptidealring.\\
+		Die Einheiten sind die konstruieren Polynome.
+	\end{kor}
+
+	\begin{satz}
+		Sei $A$ ein Integritätsbereich. Dann ist
+		\[\text{A[X]\text{ ist Hauptidealring}\Leftrightarrow A\text{ ist Körper}}\]
+	\end{satz}
+
+	\begin{proof}
+		\begin{description}
+			\item[$\Rightarrow$] bereits gezeigt.
+			\item[$\Leftarrow$] Die Abbildung $\varphi_0:A[X]\to A$,$f\mapsto f(0)$ ist ein Ring-Homomorphismus. Dann ist
+			\[\Kern(\varphi_0)=\{f=\sum_{k=0}^{n}a_kX^k\in A[X]\mid a_0=0\}\]
+			Dann gilt $\Kern(\varphi_0)$ ist ein Primideal in $A[X]$ und somit ein maximales Ideal.\\
+			Also ist $A[X]/\Kern(\varphi_0)$ ist Körper und $A[X]/\Kern(\varphi_0)\isom A$.\\
+			Also ist $A$ Körper.
+		\end{description}
+	\end{proof}
+
 
 %VL 08.11.2017
 	\subsection{Nullstellen von Polynomen}
@@ -1097,6 +1168,7 @@ Sei in diesem Abschnitt $A$ ein Ring.
 	\end{satz}
 
 	%VL 13.11.2017
+	%TODO
 	%VL 15.11.2017
 	
 	\subsection{Bewertungen}
@@ -3359,6 +3431,430 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 			\[\det(M)c=0\]
 			für alle $c\in C$. Da $1\in C$ ist $\det(M)=0$.
 			%TODO
+		\end{description}
+	\end{proof}
+
+%VL 30.01.2018
+	\begin{kor}
+		Sei $B$ ein Ring und $A$ ein Unterring.
+		\begin{enumerate}
+			\item Sind $x_1,...,x_n\in B$ ganz über $A$, so ist $A[x_1,...,x_n]$ ein endlich erzeugter $A$-Modul.
+			\item Sei $B$ ein Unterring eines Rings $C$. Ist $B$ ein endlich erzeugter $A$-Modul und $y\in C$ ganz über $B$, so ist $y$ ganz über $A$.
+		\end{enumerate}
+	\end{kor}
+	\begin{proof}
+		\begin{enumerate}
+			\item Durch Induktion über $n$. Im Fall $n=1$ gilt \ref{letzter Satz}.\\
+			Sei $n>1$. Nach Induktionsvoraussetzung ist $A[x_1,...,a_{n-1}]$ ein endlich erzeugter $A$-Modul.\\
+			$x_n$ ist ganz über $A$, somit ist $x_n$ auch ganz über $A[x_1,...,x_{n-1}]$. Somit ist $A[x_1,...,x_{n-1}][x_n]$ ein endlich erzeugter $A[x_1,...,x_{n-1}]$-Modul.
+			\begin{align*}
+			A[x_1,...,x_{n-1}]&=\sum_{i=1}^{k}Af_i
+			\intertext{mit $f_i\in A[x_1,...,x_{n-1}]$}
+			A[x_1,...,x_n]&=\sum_{j=1}^{l}A[x_1,...,x_{n-1}]g_j
+			\intertext{mit $g_j\in A[x_1,...,x_{n}]$}
+			=\sum_{j=1}^{l}\sum_{i=1}^{k}Af_ig_j
+			\end{align*}
+			Dann ist auch $A[x_1,...,x_n]$ ein endlich erzeugter $A$-Modul.
+			
+			\item $B[y]$ ist ein endlich erzeugter $B$-Modul. Da $B$ ein endlich erzeugter $A$-Modul ist gilt $A[y]\subset B[y]$ un dann mit \ref{satz davor}, dass $y$ ganz über $A$ ist.
+		\end{enumerate}
+	\end{proof}
+
+	\begin{definition}
+		Sei $B$ ein Ring und $A\subset B$ ein Unterring. Dann nennt man
+		\[\ol A:=\{x\in B\mid \text{$x$ ist ganz über $A$}\}\]
+		die \textbf{ganze Hülle} von $A$ in $B$.
+	\end{definition}
+	
+	\begin{satz}
+		Sei $B$ ein Ring und $A\subset B$ ein Unterring. Dann ist die ganze Hülle $\ol A$ von $A$ über $B$ ein Unterring von $B$.
+	\end{satz}
+	\begin{proof}
+		Sind $x,y\in B$ ganz über $A$, so ist $A[x,y]$ ein endlich erzeugter $A$-Modul. Dieser enthält $x-y$, $x+y$ und $xy$. Somit sind diese Elemente ganz über $A[x,y]$ und somit auch über $A$.
+	\end{proof}
+
+	\begin{definition}
+		Ist $\ol A=B$, so heißt $B$ \textbf{ganz} über $A$.
+	\end{definition}
+
+	\begin{satz}
+		Seien $A\subset B\subset C$ Ringerweiterungen.\\
+		Ist $C$ ganz über $B$ und $B$ ganz über $A$, so ist auch $B$ ganz über $A$.
+	\end{satz}
+
+	\begin{proof}
+		Sei $c\in C$. Dann ist
+		\[x^n+b_{n-1}c^{n-1}+...+b_0=0\]
+		für geeigente $b_i\in B$.\\
+		Sei $R=A[b_0,...,b_{n-1}]$. Dann ist $R[c]$ ein endlcih erzeugter $R$-Modul\\
+		Da die $b_i$ ganz sind ist $R$ ein endlich erzeugter $A$-Modul. Somit ist $R$ ein endlich erzeugter $A$-Modul.\\
+		Es folgt, dass $\ol A$  ganz abgeschlossen ist (also $x\in B$ ist ganz über $\ol A$ und $\ol A$ ist ganz über $A$. Also ist $x$ ganz über $A$).
+	\end{proof}
+
+	\begin{definition}
+		Ein Integritätsbereich heißt \textbf{ganz abgeschlossen}, wenn er ganz abgeschlossen in seinem Quotientenkörper ist.
+	\end{definition}
+
+	\begin{satz}
+		Sei $A$ ein faktorieller Integritätsbereich.\\
+		Dann ist $A$ ganz abgeschlossen.
+	\end{satz}
+	\begin{proof}
+		Sei $K$ der Quotientenkörper von $A$.\\
+		Sei $\frac{a}{b}\in K$ mit $a,b\in A$,$(a,b)=1$ und ganz über $A$. Dann ist
+		\[(\frac{a}{b})^n+c_{n-1}(\frac{a}{b})^{n-1}+...+c_0=0\]
+		für geeignete $c_i\in A$.
+		Multiplikation mit $b^n$ liefert
+		\[a^n+c_{n-1}a^{n-1}b+...+c_0b^n=0\]
+		d.h. $b|a^n$.\\
+		Somit muss $b$ eine Einheit sein, also $\frac{a}{b}\in A$.
+	\end{proof}
+
+
+	\begin{satz}
+		Sei $A$ ein Integritätsbereich mit Quotientenkörper $K$ und sei $A$ ganz abgeschlossen in $K$. Sei $L/K$ ein algebraisch Körpererweiterung.\\
+		Dann ist $\al\in L$ genau dann ganz über $A$, wenn $m_{\al,K}\in A[X]$ liegt.
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[\enquote{$\Leftarrow$}] Klar weil $m_{\al,K}$ normiert ist.
+			\item[\enquote{$\Rightarrow$}] Sei $\al\in L$ ganz über $A$. Es gibt als eine normiertes Polynom $f\in A[X]$ mit $f(\al)=0$.\\
+			In $K[X]$ gilt $m_{\al,K}|f$ \\
+			Über einem geeigneten algebraisch Abschluss $\ol L$ von $L$ zerfällt $m_{\al,K}$ d.h.
+			\[m_{\al,K}=\prod_{i=1}^n(X-\al_i)\]
+			Aus $m_{\al,K}|f$ folgt, dass $f(\al_i)=0$ für alle $\al_i$.\\
+			Somit ist jedes $\al_i$ ganz über $A$.\\
+			Dann sind auch die Koeffizienten von $m_{\al,K}$ ganz über $A$.\\
+			Da $A$ ganz abgeschlossen in $K$ ist gilt $m_{\al,K}\in A[X]$. 
+		\end{description}
+	\end{proof}
+
+
+
+\subsection{Dedekindringe}
+	\begin{definition}
+		Ein Integritätsbereich $A$ heißt \textbf{Dedekindring}, wenn
+		\begin{enumerate}
+			\item $A$ noethersch
+			\item $A$ ist ganz abgeschlossen
+			\item Jedes Primideal $\neq 0$ ist maximal.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{definition}
+		Ein \textbf{algebraischer Zahlkörper} $K$ ist eine endliche Erweiterung von $\Q$.
+	\end{definition}
+
+	\begin{definition}
+		Die ganze Hülle von $\Z$ in $K$ wird als \textbf{Ring der ganzen Zahlen} in $K$ bezeichnet. Man schreibt diesen als
+		\[O_K:=\{a\in K|\exists f\in \Z[X]\text{ normiert mit }f(a)=0 \}\]
+	\end{definition}
+
+	\begin{theorem}
+		Sei $K$ ein algebraischer Zahlkörper. Dann ist $O_K$ ein Dedekindring.
+	\end{theorem}
+
+	\begin{exm}
+		Sei $d\in\Z$, $n\neq 1$ und quadratfrei.\\
+		Wähle $K=\Q(\sqrt{d})$ und
+		\[\omega_d=\begin{cases}
+		\sqrt d&\text{, falls $d=2,3\mod 4$}\\
+		\frac{1}{2}(1+\sqrt{d})&\text{, falls $d=1\mod 4$}
+		\end{cases}\]
+		Dann ist
+		\[O_K=\Z+\Z\omega_d\]
+		\\
+		Betrachte nun $\Q(\sqrt{-5})$. Dann ist in
+		$O_K$
+		\[21=3\cdot 7=(1-2\sqrt{-5})(1+2\sqrt{-5})\]
+		D.h. man erhält Faktorisierungen in Primafaktoren von 21, die nicht zueinander assoziiert sind.
+	\end{exm}
+
+	\begin{theorem}
+		Sei $A$ ein Dedekindring, $I\neq 0$ und $I\neq A$ ein Ideal in $A$.\\
+		Dann gilt
+		\[I=P_1...P_n\]
+		mit eindeutigen Primidealen $P_i$.
+	\end{theorem}
+
+
+
+	\subsection{Der Noethersche Normalisierungssatz}
+	Der Noethersche Normalisierungssatz impliziert den Hilbertschen Nullstellensatz und ist daher für die algebraische Geometrie von großer Bedeutung.
+	
+	\begin{theorem}\label{satz:501NeoNorm}
+		Sei $K$ ein Körper und $B=[b_1,...,b_n]$ endlich erzeugter Ring. Dann existieren Elemente $x_1,...,x_r\in B$, die algebraisch unabhängig über $K$ sind, sodass $B$ als Modul endlich erzeugt über $K[x_1,...,x_r]$ ist.
+	\end{theorem}
+%VL 05.02.2018
+	\begin{proof}
+		Sind $b_1,...,b_n$ algebraisch unabhängig über $K$ so kann man $x_1,...,x_r\in B$ finden, die algebraisch unabhängig sind.\\
+		Angenommen $b_1,...,b_n$ sind algebraisch abhängig über $K$. Dann existiert eine Relation
+		\[\sum_{(\nu_1,...,\nu_n)\in I}a_{\nu_1,...,\nu_n}b_1^{\nu_i}...b_n^{\nu_n}=0\autotag\label{eq:NoeNormP1}\]
+		mit $a_{\nu_1,...,\nu_n}\in K\setminus\{0\}$ und endlichem $I$.\\
+		Sei
+		\begin{align*}
+		x_1&=b_1-b_n^{s}\\
+		&\vdots\\
+		x_{n-1}=b_{n-1}-b_n^{s_n-1}
+		\end{align*}
+		mit $s_1,...,s_{n-1}\in\N\setminus\{0\}$. Dann ist
+		\begin{align*}
+		B=K[b_1,...,b_n]\\
+		&=K[x_1,...,x_{n-1},b_n]\\
+		&=K[x_1,...,x_{n-1}][b_n]\\
+		\end{align*}
+		Setzt man $b_i=x_i+b_n^{s_i}$ in \ref{eq:NoeNormP1} und spaltet
+		\[b_i^{\nu_i}=(x_i+b_n^{s_i})^{\nu_i}=b_n^{s_i\nu_i}+...\]
+		so erhält man
+		\[\sum_{(\nu_1,...,\nu_n)\in I} a_{\nu_1,...,\nu_n}b_n^{s_1\nu_1+s_2\nu_2+...+s_{n-1}\nu_{n-1}+\nu_n}+\underbrace{f(x_1,...,c_{n-1},b_n)}_{\in K[x_1,...,x_{n-1},b_n]}=0\autotag\label{eq:NoeNormP2}\]
+		Dabei ist $f(x_1,...,x_{n-1},b_n)$ ein Polynom in $b_n$ mit Koeffizient in $K[x_1,...,x_{n-1}]$ wobei der Grad in $b_n$ echt kleiner ist als das Maximum der Summe $s_1\nu_1+...+s_{n-1}\nu_{n-1}+\nu_n$ mit $(\nu_1,...,\nu_n)\in I$.\\
+		Wir können nun die Exponenten $s_1,...,s_{n-1}$ so wählen, dass die Summen $x_1\nu_1+...+s_{n-1}\nu_{n_1}+\nu_n$ für alle $(\nu_1,...,\nu_n)\in I$ paarweise verschieden sind.\\
+		($\Q^n$ wird nicht durch endlich viele Hyperebenen ausgeschöpft)\\
+		Dann ist \ref{eq:NoeNormP2} eine Gleichung der Form
+		\[\underbrace{ab_n^{N}}_{\in K\setminus\{0\}}+\underbrace{g(x_1,...,x_{n-1,b_n})}_{\in K[x_1,...,x_{n-1}][b_n]}=0\]
+		wobei $b_n^N$ die höchste Auftretenden Potenz von $b_n$ ist.
+		Multiplikation mit $a^{-1}\in K$ zeigt, dass $b_n$ ganz über $K[x_1,...,x_{n-1}]$ ist.\\
+		Somit ist
+		\[B=K[x_1,...,x_{n-1}][b_n]\]
+		ein endlich erzeugter $K[x_1,...,x_{n-1}]$-Modul.\\
+		Sind $x_1,...,x_{n-1}$ algebraisch unabhängig über $K$ gilt die Behauptung. Ansonsten wenden wir das Verfahren auf den RIng $K[x_1,...,x_{n-1}]$ an und finden $y_1,...,y_{n-1}$, sodass $K[x_1,...,x_{n-1}]$ ein endlich erzeugter $K[y_1,...,y_{n-2}]$-Modul ist.\\
+		Auf diese weise fährt man fort, bis man ein eine über $K$ algebraisch unabhängigen System gelangt ist.
+	\end{proof}
+
+	\begin{satz}
+		Sei $A\subset B$ eine Ringerweiterungen, $B$ ganz über $A$ und seien $A$ und $B$ Integritätsbereiche.\\
+		Dann ist $A$ genau dann Körper, wenn $B$ Körper ist.
+	\end{satz}
+	\begin{proof}
+		Sei $A$ ein Körper und $b\in B\setminus\{0\}$. Wähle $f\in A[X]$ normiert udn minimalen Grades, sodass $f(b)=0$. Dann ist
+		\[f=X^n+a_1X^{n-1}+...+a_n\]
+		mit $a_n\neq 0$ und
+		\begin{align*}
+		b(b^{n-1}+a_{n-1}b^{n-1}+...+a_{n-1})&=0\\
+		b\underbrace{\left(-\frac{1}{a_n}\right)}_{\in A}\underbrace{\left(b^{n-1}+a_{n-1}b^{n-2}+...+a_{n-1}\right)}_{\in B}=1
+		\end{align*}
+		Also ist $b\in B^*$.\\
+		Sei $B$ ein Körper und $a\in A\setminus\{0\}$. Dann ist $a^{-1}\in B$ und $a^{-1}$ ist ganz über $A$, d.h.
+		\[(a^{-1})^n+a_i(a^{-1})^{n-1}+...+a_n=0\]
+		für geeignete $a_i\in A$.\\
+		Es folgt 
+		\begin{align*}
+		a^{-n}&=-a_1a^{-n+1}-...-a_n\\
+		a^{-1}&=\underbrace{-a_1-...-a_na^{n-1}}_{\in A}
+		\end{align*}
+		Also ist $A$ ein Körper.
+	\end{proof}
+
+
+	\begin{theorem}
+		Sei $L/K$ eine Körpererweiterung und $L=K[x_1,...,x_n]$ für geeignete $x_1,...,x_n\in L$. Dann ist $L/K$ endlich.
+	\end{theorem}
+	\begin{proof}
+		Nach dem Noetherschen Normalisierungssatz \ref{satz:501NeoNorm} gibt es über $K$ algebraisch unabhängige Elemente $y_1,...,y_r\in L$, sodass $L$ ein endlich erzeugter $K[y_1,...,y_r]$-Modul ist. Aus
+		\[K[y_1,...,y_r]\subset L\] 
+		folgt, dass $K[y_1,...,y_r]$ ein Körper ist. Also ist $r=0$.
+	\end{proof}
+
+	\begin{satz}
+		Sei $K$ ein Körper und $\mathfrak m\subset K[X_1,...,X_n]$ ein maximales Ideal.\\
+		Dann ist $L/K$ mit $L=K[X_1,...,X_n]/\mathfrak m$ eine endliche Körpererweiterung.
+	\end{satz}
+	\begin{proof}
+		Es gilt $L=K[x_1,...,x_n]$ mit $x_i=X_i+m$.
+	\end{proof}
+
+
+
+
+	\subsection{Anfänge der algebraischen Geometrie}
+	
+	\begin{definition}
+		Sei $K$ ein beliebiger Körper.
+		\[A^n=A_K^n:=\{(a_1,...,a_n)\mid a_i\in K\}\]
+		$A^n$ wird als \textbf{$n$-dimensionaler affiner Raum} bezeichnet.\\
+	\end{definition}
+	\begin{definition}
+		Für $F\in K[x_1,...,x_n]$ definiert man
+		\[V(F):=\{p\in A^n\mid F(p)=0\}\]
+		die \textbf{V???-Menge}.\\
+		Für $S\subset K[X_1,...,X_n]$ sei
+		\[V(S):=\{p\in A^n\mid F(p)=0\forall_{F\in S}\}=\bigcap_{F\in S}V(F)\]
+	\end{definition}
+
+	\begin{exm}
+		Sei $n=2$, $K=\R$, $F=X^2_1-X_2$.
+	\end{exm}
+
+	\begin{definition}
+		Eine Teilmenge $Y\subset A_n$ heißt algebraisch, wenn $y=V(S)$ für ein $S\subset K[X_1,...,X_n]$ ist.
+	\end{definition}
+
+	\begin{satz}
+		Sei $S\subset K[X_1,...,X_n]$ und $I=(S)$ das erzeugte Ideal. Dann gilt
+		\[V(S)=V(I)\]
+	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[$\supset$] Ist klar.
+			\item[$\subset$] Sei $p\in V(S)$ und $F\in I$. Dann ist $F=\sum c_iF_i$ mit $c_i\in K[X_1,...,X_n]$, $F_i\in S$ und
+			\[F(p)=\sum c_i(p)\underbrace{F_i(p)}_{=0}=0\]
+			Da $K[X_1,...,X_n]$ noethersch ist (Hilbertscher Basissatz \ref{HlbBasis}) ist
+			\[I=(F_1,...,F_m)=\sum_i K[X_1,...,X_n]F_i\]
+			für geeignete $F_i\in I$.\\
+			Wie eben sieht man 
+			\[V(I)=V\big((F_1,...,F_m)\big)=V(F_1,...,F_m)\]
+		\end{description}
+	\end{proof}
+	
+	%VL 07.02.2018
+	
+	\begin{definition}
+		Sei $K$ ein Körper und $n\in\N$, dann ist $\A_K^n$ die Menge der Algebraischen Mengen in $K^n$.
+		%TODO stimmt das so?
+	\end{definition}
+	
+	\begin{exm}
+		Betrachte $V\big(Y^2-X(X^2-1)\big)\subset \A^2_\R$.
+		%TODO Img: X(X^2-1)
+	\end{exm}
+
+	\begin{satz}
+		Die Abbildung
+		\[V:\left\{\text{Ideale in}\atop{K[X_1,...,X_n]}\right\}\to\left\{\text{Algebraische Teilmengen von $\A^n_K$}\right\}\]
+		hat folgende Eigenschaften
+		\begin{enumerate}
+			\item $V(0)=\A_K^n$, $V\big(K[X_1,...,X_n]\big)=\emptyset$
+			\item Wenn $I\subset J$, dann gilt $V(J)\subset V(I)$.
+			\item Für das Produkt gilt: $V(IJ)=V(I\cap J)=V(I)\cup V(J)$
+			\item Für die Summe gilt: $V(\sum_i J_i)=\bigcap_i V(J_i)$
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		\begin{enumerate}
+			Wir zeigen nur
+			\addtocounter{enumi}{2}
+			\item Es gilt
+			\begin{align*}
+			IJ\subset I\cap J&\subset I\\
+			IJ\subset I\cap J&\subset J
+			\end{align*}
+			dann mit 2):
+			\begin{align*}
+			V(IJ)\supset V(I\cap J)&\supset V(I)\\
+			V(IJ)\supset V(I\cap J)&\supset V(J)
+			\end{align*}
+			es folgt, dass
+			\[V(IJ)\supset V(I\cap J)\supset V(I)\cup V(J)\]
+			Sei nun $p\in \A_K^n\setminus(V(I)\cup V(J))$.\\
+			Dann gibt es ein $f\in I$ mit $f(p)\neq 0$ und ein $g\in J$ mit $g(p)\neq 0$. Also ist 
+			\[0\neq\underbrace{(fg)}_{\in IJ}(p)\]
+			d.h. $p\notin V(IJ)$. Also ist $V(IJ)\subset V(I)\cup V(J)$ und es gilt Gleichheit.
+		\end{enumerate}
+	\end{proof}
+
+	
+	\begin{satz}
+		Die Abbildung $I$ 
+		\begin{align*}
+		I:\left\{\text{Algebraische Teilmengen von $\A^n_K$}\right\}&\to\left\{\text{Ideale in}\atop{K[X_1,...,X_n]}\right\}\\
+		M&\mapsto \{f\in K[x_1,...,x_n]\mid f(p)=0\forall p\in M\}
+		\end{align*}
+		hat folgende Eigenschaften:
+		\begin{enumerate}
+			\item Sei $M\subset N$, dann gilt $I(M)\supset I(N)$
+			\item Für eine beliebige Teilmenge $M\subset \A_K^n$ gilt
+			\[M\subset V\big(I(M)\big)\]
+			Gleichheit gilt genau dann wenn $M$ algebraisch ist.
+			\item Für ein Ideal $J\subset K[X_1,....,X_n]$ gilt
+			\[J\subset I\big(V(J)\big)\]
+		\end{enumerate}
+	\end{satz}
+	\begin{proof}
+		Wir zeigen:
+		\begin{enumerate}
+			\stepcounter{enumi}
+			\item \begin{description}
+				\item[\enquote{$\Rightarrow$}] Sei $M=V\big(I(M)\big)$, so ist $M$ algebraisch.
+				\item[\enquote{$\Leftarrow$}] Sei $M$ algebraisch, dann ist $M=V(J)$ für ein Ideal $J$. Dann ist
+				\begin{align}
+				J&\subset I(M)\\
+				V(J)&\supset V\big(I(M)\big)
+				\end{align}
+				Es folgt Gleichheit.
+			\end{description}
+		\end{enumerate}
+	\end{proof}
+
+	\begin{definition}
+		Sei eine Menge $\A_K^n$ abgeschlossen wenn sie algebraisch ist und deren Komplemente offen.\\
+		Die erzeugte Topologie wird als \textbf{Zariski-Topologie} bezeichnet.
+	\end{definition}
+
+	\begin{exm}
+		Sei $K$ algebraisch abgeschlossen. Dann sind in $\A_K^1$ die Menge $\A_K^1$ und $\{\}$ offen und abgeschlossen.\\
+		Sei $M\subsetneqq\A^1_K$ abgeschlossen. Dann ist
+		\begin{align*}
+		M&\overset{\text{$M$ alg.}}{=}V(I)\overset{\text{$K[X]$ HIR}}{=}V(f)\\
+		&=V\big((X-a_1)...(X-a_n)\big)\\
+		\overset{\text{$K$ alg. abg.}}{=}\{a_1,...,a_n\}
+		\end{align*}
+		d.h. $M$ ist endlich. Die nicht-leeren offenen Teilmengen von $\A_K^1$ sind dicht in $A_K^1$.\\
+		Die nicht-leere offenen Teilmenge von $A_K^1$ sind dicht in $A_K^1$.
+	\end{exm}
+	
+	\begin{satz}
+		Seien $a_1,...,a_n\in K$. Dann ist
+		\[J=(X_1,a_1,x_2-a_2,...,X_n-a_n)\]
+		maximal in $K[X_1,...,X_n]$ und $K$ ist isomorph zu $K[X_1,...,X_N]/J$
+	\end{satz}
+	\begin{proof}
+		Sei $f\in  K[X_1,...,X_n]=K[X_1,...,X_{n-1}][X_n]$. Dann ist
+		\[f=(X_n-a_n)g_n+c_n\]
+		wobei $(X_n-a_n)$ Grad $1$ in $X_n$ hat, $g_n\in K[X_1,...,X_{n-1}][X_n]$ ist und $c_n$ Grad $0$ in $X_n$ hat, d.h. $c_n\in K[X_1,....,X_{n-1}]$. Dann folgt
+		\begin{align*}
+		f&=(X_n-a_n)g_n+(X_{n-1}a_{n-1})g_{n-1}+c_{n-1}\\
+		&\vdots\\
+		&=(X_n-a_n)g_n+...+(X_1-a_1)g_1+\underbrace{c_1}_{\in K}
+		\end{align*}
+		Also ist $K[X_1,...,X_n]/J=K$ und $J$ ist maximal.
+	\end{proof}
+
+	\begin{theorem}[Schwacher Nullteilersatz]
+		Sei $K$ algebraisch abgeschlossen und
+		\[J\subsetneqq K[X_1,...,X_n]\]
+		Dann ist $V(J)\neq\emptyset$.
+	\end{theorem}
+	\begin{proof}
+		$J$ ist in einem maximalen Ideal $\mathfrak m$ enthalten und $V(\mathfrak m)\subset V(J)$.\\
+		Die Abbildung
+		\[K\hookrightarrow K[X_1,...,X_n]\xrightarrow{\pi}L:=K[X_1,...,X_n]/\mathfrak m\]
+		Liefert eine Einbettung $K\hookrightarrow L$.\\
+		Sei $a_i=\pi(X_i)\in L$. Dann folgt aus dem Noethersche Normalisierungssatz \ref{satz:501NeoNorm}, dass $L=K[a_1,...,a_n]$ und dass $L/K$ algebraisch ist.\\
+		Da $K$ algebraisch abgeschlossen ist folgt $K=L$.\\
+		Weiterhin ist $X_i-a_i\in\mathfrak m$ und $(X_1-a_1,...,X_n-a_n)\subset \mathfrak m$. Da $(X_1-a_1,...,X_n-a_n)$ maximal ist folgt
+		\[(X_1-a_1,...,X_n-a_n)=\mathfrak m\]
+		Es folgt, dass
+		\[V(\mathfrak m)=\{(a_1,...,a_n)\}\]
+	\end{proof}
+
+	\begin{theorem}[Hilbertscher Nullstellensatz]
+		Sei $K$ algebraisch abgeschlossen und $J$ ein Ideal in $K[X_1,...,X_n]$. Dann gilt
+		\[I\big(V(J)\big)=\rad(J)=\{f\in K[X_1,...,X_n]\exists n>0:\id f^n\in J\}\]
+	\end{theorem}
+	\begin{proof}[Rabinowitsch]
+		\begin{description}
+			\item[$\rad(J)\subset I\big(V(J)\big)$]: Sei $f\in \rad(J)$, dann ist $f^n$ in $J$. Dann $f^n\in I\big(V(J)\big)$, dann $f^n(p)=0\forall p\in V(J)$, dann $f(p)=0\forall p\in V(J)$ und damit $f\in I\big(V(J)\big)$.
+			\item[$\rad(J)\supset I\big(V(J)\big)$] Sei $g\in I\big(V(J)\big)$. Schreibe $J=(f_1,...,f_t)$ und definiere
+			\[I=(f_1,...,f_tX_{n+1}g-1)\subset K[X_1,...,X_n,X_{n+1}]\]
+			Dann ist
+			\begin{align*}
+			f_1(x_1,...,x_n)&=0\\
+			&\vdots\\
+			f_t(x_1,...,x_n)&=0\\
+			x_{n+1}f(x_1,...,x_n)-1&=0
+			\end{align*}
+			Dann ist $V(I)\subset A_K^{n+1}$ leer.\\
+			%TODO Rest der VL
 		\end{description}
 	\end{proof}
 \end{document}
