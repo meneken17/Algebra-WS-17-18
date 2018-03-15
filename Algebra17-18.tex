@@ -5,6 +5,9 @@
 \usepackage[utf8]{luainputenc}
 \usepackage{fontspec}
 
+%\usepackage[utf8]{inputenc}
+%\usepackage{fontenc}
+
 \usepackage[german]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -105,10 +108,18 @@
 \newtheorem{exm}[theorem]{Beispiel}
 \newtheorem*{exm*}{Beispiel}
 
-\title{Algebra WS17-18}
+\title{Algebra WiSe 17/18}
+\author{Prof. Scheithauer\\
+Mitschrift von Daniel Kallendorf}
 
 
 \begin{document}
+	
+	\maketitle
+	\tableofcontents
+	
+	\section{Wiederholung}
+	
 	\begin{satz}
 		Seien $\mathfrak a\subset A$, dann
 		\begin{enumerate}
@@ -889,7 +900,7 @@ Sei in diesem Abschnitt $A$ ein Ring.
 		\end{enumerate}
 	\end{theorem}
 
-	\begin{kor}
+	\begin{kor}\label{kor:IBPily1V}
 		$A$ ist genau dann Integritätsbereich wenn $A[X]$ Integritätsbereich ist.\\
 		In diesem Fall gilt $A[X]^*=A^*$.
 	\end{kor}
@@ -970,7 +981,7 @@ Sei in diesem Abschnitt $A$ ein Ring.
 
 	\begin{satz}
 		Sei $A$ ein Integritätsbereich. Dann ist
-		\[\text{A[X]\text{ ist Hauptidealring}\Leftrightarrow A\text{ ist Körper}}\]
+		\[\text{$A[X]$ ist Hauptidealring}\Leftrightarrow A\text{ ist Körper}\]
 	\end{satz}
 
 	\begin{proof}
@@ -1022,7 +1033,7 @@ Sei in diesem Abschnitt $A$ ein Ring.
 		mit $c,a_1,...,a_m\in A$ und $n_1,...,n_m\in\N$, dann sag man $f$ \textbf{zerfällt in Linearfaktoren}.
 	\end{definition}
 
-	\begin{satz}
+	\begin{satz}\label{satz:polyNst}
 		Sei $A$ ein Integritätsbereich. Dann hat $f\in A[X]$ mit $f\neq 0$ höchsten $n=\deg(f)$ verschiedene Nullstellen in $A$.
 	\end{satz}
 	\begin{proof}
@@ -1168,7 +1179,135 @@ Sei in diesem Abschnitt $A$ ein Ring.
 	\end{satz}
 
 	%VL 13.11.2017
-	%TODO
+	%TODO?
+	\subsection{Polynome mehrerer Veränderlicher}
+	\begin{definition}
+		Sei $A$ ein Ring. Dann ist der \emph{Polynomring in mehreren Variablen} $A[X_1,...,X_n]$ induktiv definiert als 
+		\begin{align*}
+		A[X_1,X_2]&:=A[X_1][X_2]\\
+		A[X_1,...,X_n]&:=A[X_1,...,X_{n-1}][X_n]
+		\end{align*}
+		und ein Polynom $f\in A[X_1,...,X_n]$ lässt sich schrieben als
+		\[f=\sum_{i_1,...,i_n}\underbrace{a_{i_1...i_n}}_{\in A}X_1^{i_1}...X_n^{i_n}\]
+	\end{definition}
+
+	\begin{definition}
+		Die Elemente $X_1^{i_1}...X_n^{i_n}\in A[X_1,...,X_n]$ heißen \emph{primitve Monome}.
+	\end{definition}
+
+	\begin{definition}
+		Der \emph{Grad} des Polynoms $f\in A[X_1,....,X_n]$ ist definiert als
+		\[\deg(f)=\max\left\{\sum_{j=1}^{n}i_j\mid a_{i_1...i_n}\neq 0\right\}\]
+		falls $f\neq 0$ und sonst $=-\infty$.
+	\end{definition}
+
+	\begin{definition}
+		Ein Polynom $f\in A[X_1,...,X_n]$ heißt \emph{homogen vom Grad $m$}, falls alle Monome in $f$ Grad $m$ haben.
+	\end{definition}
+
+	\begin{satz}
+		Sei $\varphi:A\to B$ ein Ringhomomorphismus und $b_1,...,b_n\in B$.\\
+		Dann existiert genau ein Ringhomomorphismus $\psi:A[X_1,...,X_n]\to B$ mit $\psi|_A=\varphi$ und $\psi(X_i)=b_i$ für alle $i$.
+	\end{satz}
+
+	\begin{satz}
+		Sei $B$ ein Ring und $A\subset B$ ein Unterring. Seien $b_1,...,b_n\in B$. Die Inklusion $\iota:A\hookrightarrow B$ lässt sich eindeutig fortsetzen zu einem Homomorphismus $\varphi:A[X_1,...,X_n]\to B$ mit $\varphi|_A=\iota$ und $\varphi(X_j)=b_j$.
+	\end{satz}
+
+	\begin{kor}
+		Sei $B$ ein Ring und $A\subset B$ ein Unterring. Seien $b_1,...,b_n\in B$.\\
+		Dann ist $A[b_1,...,b_n]$ der Kleinste Unterring von $B$ der $A$ und $b_1,...,b_n$ enthält.
+	\end{kor}
+
+	\begin{kor}
+		Ist $\varphi:A[X_1,...,X_n]\to B$ mit $\varphi(X_j)=b_j$ injektiv, so ist $A[b_1,...,b_n]$ isomorph zu $A[X_1,...,X_n]$.
+	\end{kor}
+
+	\begin{definition}
+		Ist $\varphi:A[X_1,...,X_n]\to B$ mit $\varphi(X_j)=b_j$ injektiv, so nennt man die $b_j$ \emph{algebraisch unabhängig}.\\
+		Ist $\varphi$ nicht injektiv, so heißen die $b_j$ \emph{algebraisch abhängig}.
+	\end{definition}
+
+	\begin{satz}[\ref{kor:IBPily1V} für mehrere Variablen]
+		Sei $A$ ein Ring
+		\[\text{$A$ ist Integritätsbereich }\Leftrightarrow\text{ $A[X_1,...,X_n]$ ist Integritätsbereich}\]
+	\end{satz}
+	\begin{proof}
+		Korollar \ref{kor:IBPily1V} iterativ anwenden.
+	\end{proof}
+
+	\begin{satz}
+		Sei $A$ Integritätsbereich. Dann gilt
+		\[A^*=A[X_1,...,X_n]^*\]
+	\end{satz}
+
+	\begin{satz}
+		%TODO Entfernen für offizielle Fassung
+		Es war einmal ein Integritätsbereich $A$. Der Integritätsbereich $A$ hatte unendliche Teilmengen $T_1,...,T_n\subset A$ als Freunde.\\
+		Dann kam ein nettes $f\in A[X_1,...,X_n]$ für welches $f(t_1,...,t_n)=0$ für alle $t_1\in T_1,...,t_n\in T_n$ war.\\
+		Der Held wusste sofort, dass $f=0$ gellten musste.\footnote{by Sandra}
+	\end{satz}
+	\begin{proof}
+		Induktion über $n$:
+		\begin{description}
+			\item[$n=1$] durch Negation von $\ref{satz:polyNst}$.
+			\item[$n>1$] Schreibe $f\in A[X_1,...,X_n]$ als
+			\[f=\sum_{j=0}^n\underbrace{\varphi_j(X_1,...,X_{n-1})}_{\in A[X_1,...,X_n]}X_n^j\]
+			Angenommen es existieren $t_1,...,t_{n-1}$, sodass $\varphi_j(t_1,...,t_{n-1})\neq 0$ für ein $j$.\\
+			Dann ist $f$ ein Polynom welches unendlich viele verschieden Nullstellen hat aber $\neq 0$ ist. Widerspruch!\\
+			Also muss $f=0$.
+		\end{description}
+	\end{proof}
+
+	\begin{definition}
+		Sei $I\neq\emptyset$ ein Indexmenge. Dann bezeichnet $\N^(I)$ die Menge der Form $(a_i)_{i\in I}$ mit $a\in\in\N_0$ und $a_i=0$ für fast alle $i\in I$.\\
+		Die Addition auf $\N^{(I)}$ ist definiert durch
+		\[(a_i)_{i\in I}+(b_i)_{i\in I}=(a_i+b_i)_{i\in I}\]
+		mit neutralem Element $0=(0)_{i\in I}$.
+	\end{definition}
+
+	\begin{definition}
+		Für Indexmengen $I$ ist $A[(X_i)_{i\in I}]$ definiert als die Menge der Abbildungen $\varphi:\N^{(I)}\to A$ mit $\varphi(\al)=0$ für fast alle $\al\in \N^{(I)}$, mit Addition und Multiplikation
+		\begin{align*}
+		(f+g)(\al)&=f(\al)+g(\al)\\
+		(fg)(\al)&=\sum_{\substack{\beta+\gamma=\al\\\beta,\gamma\in N(I)}}f(\beta)g(\gamma)
+		\end{align*}
+		Dann ist $A[(X_i)_{i\in I}]$ ein Ring mit neutralem Element der Addition $0=0(\al)$ und der Multiplikation $e(\al)=1$ falls $\al=0$ und $e(\al)=0$ sonst.
+	\end{definition}
+
+	\begin{bem*}
+		Einem Element $a\in A$ ordnen wir die Abbildung $\zeta$ mit \[\zeta(\al)\begin{cases}
+		a&=\al=0\\
+		0\al\neq 0
+		\end{cases}\]
+		Dies liefert eine Einbettung von $A$ in $A[(X_i)_{i\in I}]$ mit
+		\[X^\al(\beta)=\begin{cases}
+		0&\beta\neq \al\\
+		1&\beta=\al
+		\end{cases}\]
+		Für ein beliebiges $f\in A[(X_i)_{i\in I}]$ ist dann
+		\[\zeta=\sum_{\al\in\N^{(I)}}f(\al)X^\al\]
+		und es gilt $X^\al X^\beta=X^{\al+\beta}$ und für $f=\sum f(\al)X^\al$ $g=\sum g(\al)X^\al$ ist
+		\begin{align}
+		f+g&=\sum\big(f(\al)+g(\al)\big)X^\al\\
+		f\cdot g&=\sum h(\al)X^\al
+		\text{mit }h(\al)&=\sum_{\beta+\gamma=\al}f(\beta)g(\gamma)
+		\end{align}
+	\end{bem*}
+
+	\begin{bem}
+		Für jedes $j\in I$ setzen wir $e_j=(b_i)_i$ mit $b_j=1$, $b_i=0$ f+r $j\neq i$.\\
+		Dann könne wir ein beliebiges $\al=(a_i)_i$ schreiben als $\al=\sum a_ie_i$.\\
+		Wir definieren $X^{e_i}:=X_i$. Dann ist
+		\[X^\al=X^{\sum a_ie_i}=\prod X^{a_ie_i}=\prod X_i^{a_i}\]
+		Die $X^\al$ sind die primitiven Monome in den Variablen $X_i$ und die Elemente aus $A[(X_i)_{i\in I}]$ lass sich eindeutig schreiben als
+		\[\sum_{\al\in \N^{(I)}}c_\al\prod X_i^{a_i}\]
+		mit eindeutig bestimmten Koeffizienten $c_\al$ die fast alle verschwinden.
+	\end{bem}
+
+
+
+	
 	%VL 15.11.2017
 	
 	\subsection{Bewertungen}
@@ -1468,7 +1607,7 @@ Sei in diesem Abschnitt $A$ ein Ring.
 
 	\begin{exm}
 		Sei $p\in\Z$ eine positive Primzahl. dann ist das $p$-te Kreisteilunsgpolynom
-		\[f=X^{p-1}üX^{p-2}+...+1\]
+		\[f=X^{p-1}+X^{p-2}+...+1\]
 		irreduzibel in $Z[X]$.
 	\end{exm}
 
@@ -1807,11 +1946,181 @@ Sei in diesem Abschnitt $A$ ein Ring.
 
 	\subsection{Algebraische Körpererweiterungen}
 	\begin{definition}
-		Sei $L/K$ eine Körpererweiterung. $\al\in L$ heißt \textbf{algebraische} über $K$, wenn es eine 
+		Sei $L/K$ eine Körpererweiterung. $\al\in L$ heißt \textbf{algebraische} über $K$, wenn es ein Polynom $g\in K[X]\setminus 0$ gibt, mit $g(\al)=0$.\\
+		Äquivalent:Der Homomorphismus $K[X]\to L$,$f\mapsto f\al$ hat nicht trivialen Kern.
 	\end{definition}
 
 	%VL 04.12.2017
-	%TODO
+
+	\begin{definition}
+		Ist $\al\in L$ nicht algebraisch, so nennt man es \emph{transzendent}.
+	\end{definition}
+
+	\begin{definition}
+		Der Körper $L$ heißt \emph{algebraisch} über $K$, wenn alle $\al\in A$ algebraisch sind.
+	\end{definition}
+
+	\begin{exm}
+		$\pi$ und $e$ sind transzendent über $\Q$.
+	\end{exm}
+
+	\begin{definition}
+		Sei $L/K$ eine Körpererweiterung und $\al\in L$ algebraisch über $K$. Sei $m_{\al,K}\in K[X]$ normiert und erzeuge den Kern von $\varphi:K[X]\to L,f\mapsto f(\al)$.\\
+		Man nennt es das \emph{Minimalpolynom} in $\al$ über $K$.
+	\end{definition}
+
+	\begin{kor}
+		$m_{\al,K}$ ist eindeutig und irreduzibel.
+	\end{kor}
+
+	\begin{satz}
+		Sei $L/K$ eine Körpererweiterung und $a\in L$ algebraisch über $K$. Sei $\varphi:K[X]\to L$,$g\mapsto g(\al)$ und $\Img(\varphi)=K[\al]$.\\
+		Dann induziert $\varphi$ eine Isomorphismus
+		\[K[X]/(m_{\al,K})\isom K[\al]\]
+		Insbesondere ist $K[\al]$ Körper und es gilt
+		\[[K[\al]:K]=\deg(m_{\al,K})\]
+	\end{satz}
+
+	\begin{proof}
+		Da $m_{\al,K}$ irreduzibel ist ist $(m_{\al,K})$ ein Maximales Ideal in $K[X]$ und damit $K[X]/(m_{\al,K})$ Körper.\\
+		Aus der Isomorphie folgt dass $K[\al]$ Körper ist.\\ %TODO Woher Isomorphie?
+		Sei nun $g\in K[X]$. Dann ist $g=qm_{\al,K}+r$ mit $q,r\in K[X]$ und $\deg(r)<\deg(m_{\al,K})$.\\
+		Somit bilden die Restklassen $(m_{\al,K}),X+(m_{\al,K}),...,X^{n-1}(m_{\al,K})$ mit $n=\deg(m_{\al,K})$ eine Basis von $K[X]/(m_{\al,K})$ über $K$.\\
+		Dann bildet auch $1,\al,...,\al^{n-1}$ eine Basis von $K[\al]$ über $K$.
+	\end{proof}
+
+	\begin{exm}
+		Sei $n\in\Z$, $n>0$ und $p$ eine positive Primzahl. Dann ist $\sqrt[n]{p}$ eine Nullstelle von $f=X^n-p$.\\
+		D.h. $\sqrt[n]{p}$ ist algebraisch über $\Q$.\\
+		Das Eisenstein-Kriterium zeigt, dass $f$ ireduzibel über $\Q$ und $[\Q(\sqrt[n]{p}):\Q]=n$ ist.
+	\end{exm}
+
+	\begin{satz}
+		Eine endliche Körpererweiterung $L/K$ ist algebraisch.
+	\end{satz}
+
+	\begin{proof}
+		Sei $[L:K]=n$, $n<\infty$ und $\al\in L$.\\
+		Dann sind ie Elemente $\al^0,\al^1,...a^n$ linear abhängig über $K$.\\
+		(d.h. es existieren nicht trivial $c_0,...,c_n\in K$ sodass $c_0\al^0+...+c_n\al^n=0$.\\
+		Also ist $\al$ Nullstelle des Polynoms un damit algebraisch.)
+	\end{proof}
+
+	\begin{definition}
+		Eine Körpererweiterung heißt \emph{einfach}, wenn es $\al\in L$ gibt mit $L=K(\al)$.
+	\end{definition}
+
+	\begin{definition}
+		Eine Körpererweiterung heißt \emph{endlich erzeugt}, wenn es endlich viele Element $\al_1,...,\al_n$ gibt sodass $L=K(\al_1,...,\al_n)$.
+	\end{definition}
+
+	\begin{satz}
+		Sei $L=K(\al_1,...,\al_n)$ eine endlich erzeugte Körpererweiterung und $\al_1,...,\al_n$ algebraisch über $K$. Dann gilt
+		\begin{enumerate}
+			\item $L=K(\al_1,...,a_n))K[\al_1,...,\al_n]$
+			\item $L$ ist endlich und somit insbesondere algebraische Erweiterung von $K$.
+		\end{enumerate}
+	\end{satz}
+
+	\begin{proof}
+		jeweils durch Induktion über $n$
+		\begin{enumerate}
+			\item Angenommen die Aussage gelte für $n$:
+			\begin{align*}
+				K[\al_1,...,\al_{n+1}]&=K[\al_1,...,\al_n][\al_{n+1}]\\
+				&\overset{=}{IH}K(\al_1,...,\al_n)[\al_{n+1}]
+				\intertext{Da $\al_{n+1}$ algebraisch über $K\subseteq K(\al_1,...,\al_n)$}
+				&=K(\al_1,...,\al_n)(\al_{n+1})\\
+				&=K(\al_1,...,\al_{n+1})
+			\end{align*}
+			\item Es gilt
+			\[[K(\al_1,...,\al_{n+1}):K]=\underbrace{[K(\al_1,...,\al_n):K(\al_1,..,\al_n)]}_{<\infty}[K(\al_1,...,\al_n):K]<\infty\]
+			da $\al_{n+1}$ algebraisch über $K$.
+		\end{enumerate}
+	\end{proof}
+	
+	\begin{kor}
+		Sei $L/K$ eine Körpererweiterung. Dann sind äquivalent
+		\begin{enumerate}
+			\item $L/K$ ist endlich
+			\item $L$ wird über $K$ von endlich vielen Elementen erzeugt.
+			\item $L$ ist eine endlich erzeugte algebraische Erweiterung.
+		\end{enumerate}
+	\end{kor}
+
+	\begin{kor}
+		Sei $L/K$ eine Körpererweiterung. Dann sind äquivalent
+		\begin{enumerate}
+			\item $L/K$ ist algebraisch.
+			\item $L$ wird über $K$ von algebraisch Elementen erzeugt.
+		\end{enumerate}
+	\end{kor}
+	\begin{proof}
+		\begin{description}
+			\item[$1)\Rightarrow2)$] $K(L)=L$ ist algebraisch
+			\item[$2)\Rightarrow1)$] Sei $K=L(m)$ für $ m\subset L$ algebraisch über $K$.\\
+			Sei $\al\in L$. Dann gibt es $\al_1,...,\al_n\in M$ mit $\al\in K(\al_1,...,\al_n)$. Also ist $\al$ algebraisch über $K$.
+		\end{description}
+	\end{proof}
+
+	\begin{satz}
+		Seien $K\subset L\subset M$ Körpererweiterungen, sei $L/K$ algebraisch und $\al\in M$ algebraisch über $L$.\\
+		Dann ist $\al$ algebraisch über $K$.\\
+		Insbesondere:
+		\[\text{$M/K$ ist algebraisch }\Leftrightarrow\text{$L/K$ ist algeraisch über $M/L$}\]
+		%TODO?
+	\end{satz}
+	\begin{proof}
+		Sei $\al$ algebraisch.  Dann existiert ein Polynom $G=\sum_{i=0}^{n}a_iX^i\in L[X]$ mit $g(\al)=0$.\\
+		Also ist $a\in K(a_0,...,a_n,\al)=K(a_0,...,a_n)(\al)$.\\
+		Durch $n$-faches anwenden des Gradsatzes folgt $[K(a_0,...,a_n):K]<\infty$.\\
+		Da $\al$ algebraisch über $a_1,...,a_n$  gilt
+		\[[K(a_0,...,a_n,\al):K(a_0,...,a_n)]<\infty\]
+		Also ist auch $[K(a_0,...,a_n,\al):K]<\infty$ und daher folgt, dass $\al$ algebraisch über $K$ ist.
+	\end{proof}
+	
+	\begin{definition}
+		Sei $L/K$ eine Körpererweiterung. Dann ist
+		\[L_{alg}:=\{a\in L\mid\text{$a$ algebraisch über $K$}\}\]
+		der \emph{algebraische Abschluss} von $L$ in $K$.
+	\end{definition}
+
+	\begin{kor}
+		Seien $a,b\in L$ algebraisch über $K$. Dann ist $K(a,b)$ algebraisch über $K$.\\
+		Also ist auch $a-b\in K(a,b)$ algebraisch über $K$ und falls $b\neq0$ auch $ab^{-1}\in K(a,b)$.
+	\end{kor}
+
+	\begin{exm}
+		Der algebraische Abschluss von $\Q$ in $\C$ ist algebraisch über $\Q$ aber nicht endlich über $\Q$da er u.a. die Teilkörper $\Q(\sqrt[n]{p})$ ($p$ prim) enthält.
+	\end{exm}
+
+
+
+
+
+	\subsection{Der algebraische Abschluss eines Körpers}
+	
+	\begin{satz}[von Kronecker]
+		Sei $K$ ein Körper $f\in K[X]\setminus K$.\\
+		Dann gibt es eine algebraische Erweiterung $L/K$ sodass $f$ eine Nullstelle in $L$ hat.\\
+		Ist $f$ irreduzibel, so kann man $L=K[X]/(f)$ setzen.
+	\end{satz}
+	\begin{proof}
+		Sei $f\in K[X]\setminus K$ und sei $f$ irreduzibel.\\
+		Dann ist $(f)$ ein maximales Ideal in $K[X]$ und daher $K[X]/(f)$ Körper.\\
+		Die Komposition $K\hookrightarrow K[X]\xrightarrow{\Pi} K[X]/(f)$ ist ein Homomorphismus von Körpern und daher injektiv.\\
+		Fasse nun $K$ als Teilkörper von $L$ auf und definiere
+		\[a:=\Pi(X)=X+(f)\]
+		Dann gilt mit $f=\sum_{i=0}^{n}a_iX^i$, dass
+		\begin{align*}
+		f(a)=\sum_{i=0}^{n}a_ia^i&=\sum_{i=0}^{n}a_i\Pi(X^i)=\Pi\left(\sum_{i=0}^{n}a_iX^i\right)\\
+		&=\Pi(f)\equiv 0
+		\end{align*}
+		D.h. $a$ ist Nullstelle von $f$.\\
+		Sei nun $f$ nicht irreduzibel ist $a$ Nullstelle eines irreduziblen Faktors.\\
+		Aus der Polynomdivision folgt, dass $[L:K]=\deg(f)<\infty$ und somit ist $L/K$ algebraisch.
+	\end{proof}
+
 	%VL 06.12.2017
 	\begin{definition}
 		Ein Körper $K$ heißt \textbf{algebraisch abgeschlossen} wenn jedes Polynom $f\in K[X]\setminus K$ eine Nullstelle in $K$ hat.\\
@@ -1912,7 +2221,8 @@ Sei in diesem Abschnitt $A$ ein Ring.
  		\end{enumerate}
  	\end{satz}
  	\begin{proof}
- 		\begin{itemize}
+ 		Wir zeige nur b)
+ 		\begin{enumerate}
  			\setcounter{enumi}{1}
  			\item Sei $\beta\in L$ Nullstelle von $\sigma(m_{\al,K})$ und sei
  			\begin{align*}
@@ -1933,7 +2243,7 @@ Sei in diesem Abschnitt $A$ ein Ring.
  			invertierbar. Definiere $\sigma':=\ol{\psi}\circ\ol{\varphi}^{-1}$.\\
  			Dann ist $\sigma:K[\al]\to L$ und \[\sigma'(\al)=\ol{\psi}\big(X+(m_{\al,K})\big)=\psi(X)=\beta\]
  			Das beweist die Existenz von $\sigma'$. Die Eindeutigkeit folgt draus, dass jedes Fortsetzung $\sigma'$ durch ihren Wert auf $\al$ festgelegt ist.
- 		\end{itemize}
+ 		\end{enumerate}
  	\end{proof}
  
 	 \begin{theorem}[Fortsetzungssatz]\label{satz:Fortsetzung}
@@ -2247,7 +2557,7 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 			\[\left(\big(\sigma_i(a)-\sigma_j(a)\big)+\big(\sigma_i(b)-\sigma_j(b)\big)\right)c\neq 0\]
 			bzw. $\sigma_{i}(a+bc)\neq \sigma_j(a+bc)$ für alle $i\neq j$.\\
 			Die Elemente $\sigma(a+bc)$ si also paarweise verschieden. Sei $f$  das Minimalpolynom von $a+bc$ über $K$. Es folgt
-			\[[L:K]_S\=m\leq \deg(f)^=[K(a+bc):K]\leq [L:K]\]
+			\[[L:K]_S=m\leq \deg(f)=[K(a+bc):K]\leq [L:K]\]
 			Da $L/K$ separabel ist folgt Gleichheit.
 		\end{description}
 	
@@ -2364,7 +2674,9 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 		d.h. $\Fr$ erzeugt $\Aut_{F_p}(F_q)$.
 	\end{proof}
 	
-	
+	%Einschub 10.01.2018
+	%TODO Einschub: Zeta-Funktion 
+	%Ende Einschub
 	
 	\section{Galois-Erweiterungen}
 	\begin{definition}
@@ -2448,7 +2760,7 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 		Die Erweiterung $L/L^H$ ist als separabel.\\
 		Dann ist $L$ der Zerfällungskörper der Polynome $F=\{f_a\mid a\in L\}$. Somit ist $L/L^H$ eien Galoiserweiterung.\\
 		Aus $m_{a,L^H}| f_a$ folgt 
-		\[\deg(m_{a,L^H})\leq \deg(f)\leq \abs{H}\tag{\star}\]
+		\[\deg(m_{a,L^H})\leq \deg(f)\leq \abs{H}\tag{$\star$}\]
 		Ist $\abs{H}<[L:L^H]\leq\infty$, so gibt es eine endliche Teilmenge $S\subset L$, sodass für $M=L^H(S)$ gilt
 		\[\infty>[M:L^H]>\abs H\]
 		Zusätzlich ist $M/L^H$ separabel, da $L/L^H$ separabel ist.\\
@@ -2615,7 +2927,7 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 	\end{theorem}
 
 	%VL 10.01.2018
-	%TODO Einschub: Zeta-Funktion
+	
 	
 	\subsection{Die Galoisgruppe einer Gleichung}
 	In diesem Abschnitt sei $K$ ein Körper
@@ -3232,7 +3544,7 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 	\begin{definition}
 		Eine Folge von $R$-Moduln und $R$-linearen Abbildungen
 		\[...\to M_{i-1}\xrightarrow{f_i}M_i\xrightarrow{f_{i+1}}M_{i+1}\to...\]
-		heißt \textbf{exakt bei $M_i$}, wenn  $\Img(f_i)=\Kern(f_i)$.
+		heißt \textbf{exakt bei $M_i$}, wenn  $\Img(f_i)=\Kern(f_{i+1})$.
 	\end{definition}
 	
 	\begin{definition}
@@ -3250,20 +3562,57 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 		\[0\to N\hookrightarrow M\to M/N\to 0\]
 		eine kurze exakte Sequenz.
 	\end{exm}
-
+	
+	\begin{definition}
+			Sei
+		\[0\to M'\xrightarrow{f}M\xrightarrow{g}M''\to 0\]
+		eine kurze exakte Sequenz von $R$-Moduln.\\
+		Die Sequenz \emph{spaltet}, wenn es einen Untermodul $N\subset M$ mit $M=N\oplus\Kern(g)$ gibt.
+	\end{definition}
+	
 	\begin{satz}
 		Sei
 		\[0\to M'\xrightarrow{f}M\xrightarrow{g}M''\to 0\]
 		eine kurze exakte Sequenz von $R$-Moduln.\\
 		Dann sind äquivalent:
 		\begin{enumerate}
-			\item Es gibt einen Untermodul $N\subset M$ mit $M=N\oplus\Kern(g)$
+			\item Die Sequenz spaltet (Es gibt einen Untermodul $N\subset M$ mit $M=N\oplus\Kern(g)$)
 			\item Es gibt eine $R$-lineare Abbildung $s:M''\to M$ mit $g\circ s=\id_{M'}$
 			\item Es gibt eine $R$-lineare Abbildung $t:M\to M'$ mit $t\circ f=\id_{M'}$
 		\end{enumerate}
 	\end{satz}
+	\begin{proof}
+		\begin{description}
+			\item[$1)\Rightarrow2)$] $g|_N'$ ist injektiv und
+			$g(N')=g(M)+g(\Kern g)=M''$ %TODO Was? Warum?
+			sodass $g:N\to M''$ einen Isomorphismus liefert.\\
+			Wir erhalte die Abbildung $M''\xrightarrow{g^{-1}}N\hookrightarrow M$.\\
+			Sei $s$ die Komposition dieser Abbildungen, dann isz $g\circ s=\id_{M''}$.
+			\item[$1)\Rightarrow3)$] Es ist $M=\Kern(g)\oplus N'=f(M')\oplus N'$ und $f:M'\to M$ ist injektiv, also ist $M'\isom M'$, sodass wir die Abbildung $M\to f(M')\xrightarrow{f^{-1}} M'$ erhalten.\\
+			Die Komposition erfüllt $f\circ f=\id_{M'}$.
+			\item[$2)\Rightarrow1)$] Setze $N'=s(M'')$ und sei $x\in M$. Dann ist
+			\[x=\underbrace{x-s\big(g(x)\big)}_{\in\Kern(g)}+\underbrace{s\big(g(x)\big)}_{\in N'}\]
+			denn
+			\[g\big(x-s(g(x))\big)=g(x)-gs\big(g(x)\big)=g(x)-\id g(x)=0\]
+			Sei nun $y\in M''$ und $s(y)\in \Kern(g)$, dann ist $y=g\big(s(y)\big)=0$.
+			\item[$3)\Rightarrow1)$]
+		\end{description}
+	\end{proof}
 
-	%TODO Rest der VL 24.01.2018 (Bew, Satz+Bew)
+	\begin{satz}
+		Sei $0\to M'\xrightarrow{f}M\xrightarrow{g}M''\to 0$ eine kurze exakte Sequenz von $R$-Moduln.\\
+		Ist $M''$ frei, so spaltet die Sequenz $M\isom M'\oplus M''$.
+	\end{satz}
+	\begin{proof}
+		Sei $(v_i)$ eine $R$-Basis von $M''$, $x_i\in M$ mit $g(x_i)=v_i$ für alle $i\in I$ und $s:M''\to M$ definiert durch $s(v_i)=x_i$.\\
+		Dann gilt $g\circ s=\id_M$, d.h. die Folge spaltet.\\
+		Außerdem gilt
+		\begin{align*}
+		N&\isom\Kern(g)\oplus s(M'')\\
+		&\isom\Img(f)\oplus M''\\
+		&\isom M'\oplus M''
+		\end{align*}
+	\end{proof}
 	
 %VL 29.01.2018
 	\begin{kor}
@@ -3429,8 +3778,8 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 			\[\det(M)c_i=0\]
 			und damit
 			\[\det(M)c=0\]
-			für alle $c\in C$. Da $1\in C$ ist $\det(M)=0$.
-			%TODO
+			für alle $c\in C$. Da $1\in C$ ist $\det(M)=0$.\\
+			Da $\det(M)$ ein normiertes Polynom in $X$ mit Koeffizienten in $A$ ist, ist $X$ ganz.
 		\end{description}
 	\end{proof}
 
@@ -3676,7 +4025,7 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 	\begin{definition}
 		Für $F\in K[x_1,...,x_n]$ definiert man
 		\[V(F):=\{p\in A^n\mid F(p)=0\}\]
-		die \textbf{V???-Menge}.\\
+		die \textbf{V???-Menge}.\\ %TODO Varietäten?
 		Für $S\subset K[X_1,...,X_n]$ sei
 		\[V(S):=\{p\in A^n\mid F(p)=0\forall_{F\in S}\}=\bigcap_{F\in S}V(F)\]
 	\end{definition}
@@ -3854,7 +4203,18 @@ In diesem Abschnitt bezeichne $K$ ein Körper.
 			x_{n+1}f(x_1,...,x_n)-1&=0
 			\end{align*}
 			Dann ist $V(I)\subset A_K^{n+1}$ leer.\\
-			%TODO Rest der VL
+			(Denn: Sei $f_1(x_1,...,x_n)=0$,...,$f_t(x_1,...,x_n)=0$, dann ist $(x_1,...,x_n)\in V(J)$.\\
+			Außerdem ist $x_{n+1}g(x_1,...,x_n)-1=0$ mit $g(x_1,...,x_n)=0$ auf $V(J)$. Widerspruch!)\\
+			Aus dem Schwartzschen Nullstellensatz folgt $I=K[X_1,...,X_n]$.\\
+			Schreibe nun 
+			\[\sum_{i=1}^{t}A_i(x_1,...,x_{n+1})f_i+B(x_1,...,x_{n+1})(x_{n+1}g-1)=1\]\\
+			Sei $x_{n+1}=\frac{1}{y}$.\\
+			Multipliziert man mit einer genügend hohen Potenz von $Y$, so erhält man
+			\[\sum_{i=1}^tC_i(X_1,...,X_n,Y)f_i+D(X_1,...X_n,Y)(g-Y)=Y\]
+			dabei sind $C_i(X_1,...,X_n,Y),D(X_1,...,X_n,Y)\in K[X_1,...,X_n,Y]$.\\
+			Setze $Y=g$, dann ist
+			\[g^n=\sum_{i=1}^{t}\underbrace{C_i(X_1,...,X_n,g)}_{\in K[X_1,...,X_n]}f_i\in J\]
+			Also ist $g\in\rad(J)$.
 		\end{description}
 	\end{proof}
 \end{document}
