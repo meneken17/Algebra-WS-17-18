@@ -1,0 +1,4 @@
+\begin{XTRdefinition}
+Sei eine Menge $\A_K^n$ abgeschlossen wenn sie algebraisch ist und deren Komplemente offen.\\
+Die erzeugte Topologie wird als \textbf{Zariski-Topologie} bezeichnet.
+\end{XTRdefinition}
